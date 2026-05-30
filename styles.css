@@ -108,21 +108,7 @@ img {
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
   min-width: 0;
-}
-
-.brand-mark {
-  display: grid;
-  place-items: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 7px;
-  background: var(--ink);
-  color: #fff;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 0.92rem;
-  font-weight: 900;
 }
 
 .brand strong,
@@ -240,7 +226,8 @@ h2 {
 h1 {
   font-size: 5.8rem;
   line-height: 0.96;
-  word-break: keep-all;
+  overflow-wrap: anywhere;
+  word-break: normal;
 }
 
 .home-page h1 {
@@ -588,17 +575,41 @@ h3 {
   padding: 96px 0 34px;
 }
 
+.split-page-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.78fr) minmax(360px, 0.72fr);
+  gap: 42px;
+  align-items: center;
+}
+
+.page-hero-copy {
+  min-width: 0;
+}
+
 .page-hero h1 {
   max-width: 880px;
   font-size: 4.45rem;
   line-height: 1.03;
 }
 
-.page-hero p:last-child {
+.page-hero p:last-child,
+.page-hero-copy > p {
   max-width: 720px;
   color: var(--muted);
   font-size: 1.08rem;
   line-height: 1.82;
+}
+
+.page-visual {
+  margin: 0;
+}
+
+.page-visual img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius);
+  object-fit: cover;
+  box-shadow: 0 18px 50px rgba(76, 65, 48, 0.08);
 }
 
 .compact-heading h2 {
@@ -1246,14 +1257,18 @@ h3 {
   }
 
   .hero-art {
-    animation: heroFloat 7s ease-in-out infinite;
+    animation: heroFloat 8s var(--ease) infinite;
   }
 
-  .hero-art img {
+  .hero-art img,
+  .page-visual img,
+  .knowledge-index-visual img {
     transition: transform 900ms var(--ease);
   }
 
-  .hero-art:hover img {
+  .hero-art:hover img,
+  .page-visual:hover img,
+  .knowledge-index-visual:hover img {
     transform: scale(1.025);
   }
 
@@ -1295,6 +1310,7 @@ h3 {
 @media (max-width: 1120px) {
   .home-page .hero-shell,
   .knowledge-index-section,
+  .split-page-hero,
   .benchmark-band,
   .section-heading,
   .composer-section,
@@ -1323,6 +1339,11 @@ h3 {
 
   .hero-art img {
     height: auto;
+  }
+
+  .page-visual {
+    max-width: 860px;
+    margin: 0 auto;
   }
 
   .library-layout {
@@ -1451,11 +1472,6 @@ h3 {
   .site-header {
     width: min(100% - 20px, var(--max));
     grid-template-columns: 1fr;
-  }
-
-  .brand-mark {
-    width: 38px;
-    height: 38px;
   }
 
   .nav-cta {

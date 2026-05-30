@@ -612,7 +612,7 @@ function setupEvents() {
 
 function setupReveals() {
   const items = document.querySelectorAll(
-    ".hero-copy, .hero-art, .knowledge-index-visual, .knowledge-index-copy, .index-link, .page-hero, .section-heading, .library-sidebar, .library-main, .detail-panel, .composer-board, .schema-grid article, .timeline li"
+    ".hero-copy, .hero-art, .page-visual, .knowledge-index-visual, .knowledge-index-copy, .index-link, .page-hero, .section-heading, .library-sidebar, .library-main, .detail-panel, .composer-board, .schema-grid article, .timeline li"
   );
 
   if (!("IntersectionObserver" in window)) {
