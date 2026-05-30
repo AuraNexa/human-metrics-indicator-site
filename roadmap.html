@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>制作路线 · Human Metrics</title>
+    <meta name="description" content="人类指标库的数据结构、内容模型和后续制作路线。" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#model">跳到数据模型</a>
+    <header class="site-header">
+      <a class="brand" href="./index.html" aria-label="Human Metrics 首页">
+        <span class="brand-mark">HM</span>
+        <span>
+          <strong>Human Metrics</strong>
+          <small>人类指标库</small>
+        </span>
+      </a>
+      <nav class="top-nav" aria-label="主导航">
+        <a href="./index.html">首页</a>
+        <a href="./library.html">指标库</a>
+        <a href="./custom.html">组合指标</a>
+        <a href="./roadmap.html" aria-current="page">制作路线</a>
+      </nav>
+      <a class="nav-cta" href="./library.html">进入指标库</a>
+    </header>
+
+    <main id="top">
+      <section class="page-hero" aria-labelledby="roadmap-title">
+        <p class="section-kicker">制作路线</p>
+        <h1 id="roadmap-title">先标准化，再做自测和会员体系。</h1>
+        <p>
+          素材包内容很厚，必须先把大类、指标组、单项指标、场景套餐拆清楚。否则后期搜索、报告和复测都会混乱。
+        </p>
+      </section>
+
+      <section id="model" class="model-section" aria-labelledby="model-title">
+        <div class="section-heading compact-heading">
+          <p class="section-kicker">内容模型</p>
+          <h2 id="model-title">建议的数据结构</h2>
+          <p>先用稳定的数据结构承接素材包，再决定哪些内容公开、哪些内容会员可见。</p>
+        </div>
+        <div class="schema-grid">
+          <article>
+            <span>01</span>
+            <h3>大类 Category</h3>
+            <p>修行、孩子、婚恋、职场、学校、普通人基础状态、项目总纲。</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>指标组 Pack</h3>
+            <p>每套指标有编号、公开/内部属性、适用对象、指标数量、来源文件和免责声明。</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>指标 Indicator</h3>
+            <p>每个指标保留定义、正反向、评分口径、高低分表现、调整建议和关联指标。</p>
+          </article>
+          <article>
+            <span>04</span>
+            <h3>场景 Bundle</h3>
+            <p>用户可以按“孩子写作业”“选择男友”“员工风险”等真实问题进入，而不是先理解目录。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="release-section" aria-labelledby="release-title">
+        <div>
+          <p class="section-kicker">阶段</p>
+          <h2 id="release-title">版本路线</h2>
+        </div>
+        <ol class="timeline">
+          <li>
+            <strong>第一版：公开展示</strong>
+            <span>静态页面，分类、搜索、详情、免责声明，Cloudflare Pages 可直接部署。</span>
+          </li>
+          <li>
+            <strong>第二版：轻量自测</strong>
+            <span>用户本地打分，生成雷达图和“优先调整项”，不强制注册。</span>
+          </li>
+          <li>
+            <strong>第三版：会员组合</strong>
+            <span>登录、保存指标包、周期复测、分享链接、PDF 或图片报告。</span>
+          </li>
+          <li>
+            <strong>第四版：内容后台</strong>
+            <span>编辑权限、版本管理、操作日志、公开/内部内容分级。</span>
+          </li>
+        </ol>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <strong>Human Metrics 人类指标库</strong>
+        <p>日常观察 · 了解当下 · 辅助修正</p>
+      </div>
+      <p>内容仅供娱乐和日常交流参考，不构成专业建议。</p>
+    </footer>
+  </body>
+</html>

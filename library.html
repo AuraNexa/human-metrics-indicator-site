@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>指标库 · Human Metrics</title>
+    <meta name="description" content="按场景浏览人类指标库，查看指标包、样例指标和解释边界。" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#library">跳到指标库</a>
+    <header class="site-header">
+      <a class="brand" href="./index.html" aria-label="Human Metrics 首页">
+        <span class="brand-mark">HM</span>
+        <span>
+          <strong>Human Metrics</strong>
+          <small>人类指标库</small>
+        </span>
+      </a>
+      <nav class="top-nav" aria-label="主导航">
+        <a href="./index.html">首页</a>
+        <a href="./library.html" aria-current="page">指标库</a>
+        <a href="./custom.html">组合指标</a>
+        <a href="./roadmap.html">制作路线</a>
+      </nav>
+      <a class="nav-cta" href="./custom.html">组合指标</a>
+    </header>
+
+    <main id="top">
+      <section class="page-hero" aria-labelledby="library-hero-title">
+        <p class="section-kicker">指标库</p>
+        <h1 id="library-hero-title">按场景进入，按指标拆解。</h1>
+        <p>
+          第一版先把公开展示、内部指标池和场景套餐统一到一个浏览结构里。你可以按分类筛选，也可以直接搜索具体指标。
+        </p>
+      </section>
+
+      <section id="library" class="library-section library-page-section" aria-labelledby="library-title">
+        <div class="section-heading compact-heading">
+          <p class="section-kicker">浏览</p>
+          <h2 id="library-title">指标包</h2>
+          <p>选择一个指标包后，右侧会显示结构、适用场景、样例指标和表达边界。</p>
+        </div>
+
+        <div class="library-layout">
+          <aside class="library-sidebar" aria-label="指标分类">
+            <div class="search-box">
+              <label for="searchInput">搜索指标或场景</label>
+              <input
+                id="searchInput"
+                type="search"
+                placeholder="例如：正行、记忆力、婚恋、管理"
+                autocomplete="off"
+              />
+            </div>
+            <div class="category-list" id="categoryList"></div>
+            <div class="source-note">
+              <strong>素材包已识别</strong>
+              <span>49 个文件，覆盖项目总纲、修行、孩子、婚恋、学校、员工、管理、普通人基础状态。</span>
+            </div>
+          </aside>
+
+          <section class="library-main" aria-live="polite">
+            <div class="toolbar">
+              <div>
+                <span id="resultCount">0</span>
+                <small>套指标包</small>
+              </div>
+              <div class="view-pills" role="group" aria-label="显示模式">
+                <button class="pill is-active" type="button" data-density="full">完整</button>
+                <button class="pill" type="button" data-density="compact">紧凑</button>
+              </div>
+            </div>
+            <div id="packGrid" class="pack-grid"></div>
+          </section>
+
+          <aside class="detail-panel" aria-label="指标详情">
+            <div class="detail-card" id="detailPanel">
+              <p class="empty-title">选择一个指标包</p>
+              <p class="empty-copy">点击任意指标包，即可查看结构、样例指标和表达边界。</p>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <strong>Human Metrics 人类指标库</strong>
+        <p>日常观察 · 了解当下 · 辅助修正</p>
+      </div>
+      <p>内容仅供娱乐和日常交流参考，不构成专业建议。</p>
+    </footer>
+  </body>
+</html>
