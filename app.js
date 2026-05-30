@@ -43,7 +43,7 @@ const indicatorPacks = [
     audience: "普通用户 / 近期状态观察",
     summary:
       "从气运、身体、睡眠、情绪、压力、头脑、行动、人气等角度，看一个人当下和近期状态。",
-    tags: ["对外报告", "近期状态", "低门槛"],
+    tags: ["对外说明", "近期状态", "低门槛"],
     groups: [
       { name: "身体与恢复", note: "身体疲劳度、睡眠恢复度、能量水平。" },
       { name: "情绪与压力", note: "情绪稳定度、焦虑感、怒火值、怨气值、压力值。" },
@@ -295,7 +295,7 @@ const indicatorPacks = [
     source: "评价一个人的总指标体系_V0.2_完整总指标池.docx",
     audience: "内部识人 / 筛人 / 育人 / 用人",
     summary:
-      "28 个横向模块构成完整总指标池，适合作为所有场景指标包的上游母库。",
+      "28 个横向模块构成完整总指标池，适合作为所有场景目录的上游母库。",
     tags: ["母库", "28 类", "内部组合"],
     groups: [
       { name: "内在与认知", note: "心性、人品、自我认知、智慧、事实识别、主心骨。" },
@@ -303,7 +303,7 @@ const indicatorPacks = [
       { name: "人生场景", note: "事业、管理、家庭、亲密关系、子女教育、修行、能量状态。" },
     ],
     indicators: [
-      createIndicator("POOL-01", "内在心性", "母类", "作为个人判断的底层模块，影响其他能力如何被使用。", "心性底盘弱，能力可能反向放大风险。", "心性稳定时，能力更容易用于成事。", "产品化时拆成普通人版、员工版、修行人版。"),
+      createIndicator("POOL-01", "内在心性", "母类", "作为个人判断的底层模块，影响其他能力如何被使用。", "心性底盘弱，能力可能反向放大风险。", "心性稳定时，能力更容易用于成事。", "对外整理时拆成普通人版、员工版、修行人版。"),
       createIndicator("POOL-02", "事实识别", "母类", "观察能不能分清事实、解释、情绪和幻想。", "容易被话术、情绪或偏见带偏。", "能抓住事实和证据。", "所有关系判断都应先过事实层。"),
       createIndicator("POOL-03", "关系合作", "母类", "观察在合作、亲密、人际和团队中的稳定性。", "容易纠缠、误判或破坏合作。", "边界清楚，合作成本低。", "按场景抽取，不做大而全打分。"),
       createIndicator("POOL-04", "修行专项", "母类", "为修行人保留专项指标，如心性、能量、状态和行为落地。", "容易只听道理不落地。", "能持续修正并稳定行动。", "和日常自查指标联动。"),
@@ -328,7 +328,7 @@ const indicatorPacks = [
     indicators: [
       createIndicator("MAN-01", "展示真相", "阶段", "先让人看到过去没有看到的真相。", "只停留在安慰，问题结构看不清。", "能看见自己反复卡住的底层逻辑。", "首页可作为品牌理念入口。"),
       createIndicator("MAN-02", "认知重构", "阶段", "用新的思维模型替换旧认知、旧判断和旧关系模式。", "知道痛苦但仍用旧模型处理。", "判断方式开始改变。", "用案例和指标详情支撑。"),
-      createIndicator("MAN-03", "指标化检查", "阶段", "通过指标系统看见真实状态、问题结构和短板。", "只能凭感觉判断自己。", "知道自己现在在哪里、缺什么。", "网站核心功能围绕这一项展开。"),
+      createIndicator("MAN-03", "指标化检查", "阶段", "通过指标系统看见真实状态、问题结构和短板。", "只能凭感觉判断自己。", "知道自己现在在哪里、缺什么。", "网站核心内容围绕这一项展开。"),
       createIndicator("MAN-04", "规则学习", "阶段", "理解问题背后的运行规则。", "只看结果，不知道为什么重复出错。", "能从规则层面找到修正方向。", "把每个指标都连接到规则解释。"),
     ],
   },
@@ -337,7 +337,6 @@ const indicatorPacks = [
 const state = {
   category: "all",
   query: "",
-  density: "full",
   selectedPackId: null,
   activeIndicatorKey: null,
   selectedIndicators: new Map(),
@@ -387,7 +386,7 @@ function renderCategories() {
           : indicatorPacks.filter((pack) => pack.category === category.id).length;
       return `
         <button class="category-button ${state.category === category.id ? "is-active" : ""}" type="button" data-category="${category.id}">
-          ${category.label}
+          <strong>${category.label}</strong>
           <span>${count}</span>
         </button>
       `;
@@ -403,10 +402,10 @@ function renderPacks() {
     .map((pack) => {
       const category = categories.find((item) => item.id === pack.category);
       return `
-        <button class="pack-card ${state.density === "compact" ? "compact" : ""} ${state.selectedPackId === pack.id ? "is-active" : ""}" type="button" data-pack="${pack.id}">
+        <button class="pack-card ${state.selectedPackId === pack.id ? "is-active" : ""}" type="button" data-pack="${pack.id}">
           <div class="pack-meta">
             <span class="pack-code">${pack.code}</span>
-            <span>${category ? category.short : ""} · ${pack.count} 项</span>
+            <span>${category ? category.label : ""} / ${pack.count} 项</span>
           </div>
           <h3>${pack.title}</h3>
           <p>${pack.summary}</p>
@@ -432,8 +431,8 @@ function renderDetail(pack, indicator = null) {
   const host = byId("detailPanel");
   if (!pack) {
     host.innerHTML = `
-      <p class="empty-title">选择一个指标包</p>
-      <p class="empty-copy">点击左侧任意指标包，即可查看结构、适用场景、样例指标和表达边界。</p>
+      <p class="empty-title">选择一个指标目录</p>
+      <p class="empty-copy">点击任意目录条目，即可查看结构、适用场景、样例指标和表达边界。</p>
     `;
     return;
   }
@@ -441,12 +440,15 @@ function renderDetail(pack, indicator = null) {
   const activeIndicator = indicator || pack.indicators[0];
   state.activeIndicatorKey = `${pack.id}:${activeIndicator.code}`;
   host.innerHTML = `
-    <span class="detail-stat">${pack.code}</span>
-    <span class="detail-stat">${pack.count} 项</span>
-    <span class="detail-source">${pack.audience}</span>
+    <p class="detail-meta-line">
+      <span>${pack.code}</span>
+      <span>${pack.count} 项</span>
+      <span>${pack.audience}</span>
+    </p>
     <h3>${pack.title}</h3>
     <p>${pack.summary}</p>
 
+    <p class="detail-subtitle">结构</p>
     <div class="detail-groups">
       ${pack.groups
         .map(
@@ -460,6 +462,7 @@ function renderDetail(pack, indicator = null) {
         .join("")}
     </div>
 
+    <p class="detail-subtitle">样例指标</p>
     <div class="indicator-list" aria-label="样例指标">
       ${pack.indicators
         .map(
@@ -474,8 +477,10 @@ function renderDetail(pack, indicator = null) {
     </div>
 
     <div class="indicator-detail">
-      <span class="detail-stat">${activeIndicator.code}</span>
-      <span class="detail-stat">${activeIndicator.polarity}</span>
+      <p class="detail-meta-line">
+        <span>${activeIndicator.code}</span>
+        <span>${activeIndicator.polarity}</span>
+      </p>
       <h3>${activeIndicator.name}</h3>
       <dl>
         <div>
@@ -496,7 +501,7 @@ function renderDetail(pack, indicator = null) {
         </div>
       </dl>
       <button class="add-button" type="button" data-add-indicator="${activeIndicator.code}">
-        加入组合
+        摘入组合草稿
       </button>
     </div>
   `;
@@ -522,7 +527,7 @@ function renderComposer() {
     hint.textContent = "首版建议每个自定义组合至少 15 项，避免样本太少导致解释过轻。";
   } else {
     status.textContent = "组合数量已达标";
-    hint.textContent = "后续版本可保存为专属指标包，并生成分享页或报告。";
+    hint.textContent = "后续版本可保留为专属目录，并生成复查页或说明页。";
   }
 
   list.innerHTML = Array.from(state.selectedIndicators.values())
@@ -590,16 +595,6 @@ function setupEvents() {
     state.selectedPackId = packs[0] ? packs[0].id : null;
     renderPacks();
     renderDetail(packs[0] || null);
-  });
-
-  document.querySelector(".view-pills")?.addEventListener("click", (event) => {
-    const button = event.target.closest("[data-density]");
-    if (!button) return;
-    state.density = button.dataset.density;
-    document
-      .querySelectorAll("[data-density]")
-      .forEach((item) => item.classList.toggle("is-active", item === button));
-    renderPacks();
   });
 
   document.querySelectorAll("[data-jump]").forEach((node) => {

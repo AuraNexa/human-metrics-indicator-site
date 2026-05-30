@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>指标库 · Human Metrics</title>
-    <meta name="description" content="按场景浏览人类指标库，查看指标包、样例指标和解释边界。" />
+    <meta name="description" content="按场景浏览人类指标库，查看指标目录、样例指标和解释边界。" />
     <link rel="stylesheet" href="./styles.css" />
     <script src="./app.js" defer></script>
   </head>
@@ -32,57 +32,51 @@
           <p class="section-kicker">指标库</p>
           <h1 id="library-hero-title">按场景进入，按指标拆解。</h1>
           <p>
-            第一版先把公开展示、内部指标池和场景套餐统一到一个浏览结构里。你可以按分类筛选，也可以直接搜索具体指标。
+            第一版先把公开展示、内部指标池和场景组合整理成可阅读的目录。你可以顺着分类翻，也可以直接查一个具体词。
           </p>
         </div>
         <figure class="page-visual">
-          <img src="./assets/library-archive-v2.png" alt="整齐排列的知识档案夹、索引卡和放大镜" />
+          <img src="./assets/catalog-reading-v3.png" alt="打开的纸质目录、索引页、标签和读书札记" />
         </figure>
       </section>
 
       <section id="library" class="library-section library-page-section" aria-labelledby="library-title">
         <div class="section-heading compact-heading">
-          <p class="section-kicker">浏览</p>
-          <h2 id="library-title">指标包</h2>
-          <p>选择一个指标包后，右侧会显示结构、适用场景、样例指标和表达边界。</p>
+          <p class="section-kicker">目录检索</p>
+          <h2 id="library-title">指标目录</h2>
+          <p>像翻一本手册一样查看指标。左边是大类，中间是目录条目，右边是当前条目的读书札记。</p>
         </div>
 
         <div class="library-layout">
           <aside class="library-sidebar" aria-label="指标分类">
             <div class="search-box">
-              <label for="searchInput">搜索指标或场景</label>
+              <label for="searchInput">在目录里查找</label>
               <input
                 id="searchInput"
                 type="search"
-                placeholder="例如：正行、记忆力、婚恋、管理"
+                placeholder="输入：正行、记忆力、婚恋、管理"
                 autocomplete="off"
               />
             </div>
             <div class="category-list" id="categoryList"></div>
             <div class="source-note">
-              <strong>素材包已识别</strong>
+              <strong>资料范围</strong>
               <span>49 个文件，覆盖项目总纲、修行、孩子、婚恋、学校、员工、管理、普通人基础状态。</span>
             </div>
           </aside>
 
           <section class="library-main" aria-live="polite">
-            <div class="toolbar">
-              <div>
-                <span id="resultCount">0</span>
-                <small>套指标包</small>
-              </div>
-              <div class="view-pills" role="group" aria-label="显示模式">
-                <button class="pill is-active" type="button" data-density="full">完整</button>
-                <button class="pill" type="button" data-density="compact">紧凑</button>
-              </div>
+            <div class="catalog-summary">
+              <span><strong id="resultCount">0</strong> 套目录</span>
+              <small>点击任意条目，右侧展开结构和样例指标。</small>
             </div>
             <div id="packGrid" class="pack-grid"></div>
           </section>
 
           <aside class="detail-panel" aria-label="指标详情">
             <div class="detail-card" id="detailPanel">
-              <p class="empty-title">选择一个指标包</p>
-              <p class="empty-copy">点击任意指标包，即可查看结构、样例指标和表达边界。</p>
+              <p class="empty-title">选择一个指标目录</p>
+              <p class="empty-copy">点击任意目录条目，即可查看结构、样例指标和表达边界。</p>
             </div>
           </aside>
         </div>
