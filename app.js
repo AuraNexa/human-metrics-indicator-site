@@ -516,8 +516,8 @@ function renderRoleGallery() {
               .map(
                 (pack) => `
                   <a class="role-card" href="${indicatorHref(pack.id)}">
-                    <span class="role-card-visual" aria-hidden="true">
-                      <span>${pack.count}</span>
+                    <span class="role-card-visual">
+                      <img src="./assets/indicator-art/${pack.id}.webp" alt="${pack.title}插画" loading="lazy" />
                     </span>
                     <span class="role-card-code">${categoryLabel(pack.category)} · ${pack.count} 项</span>
                     <strong>${pack.title}</strong>
