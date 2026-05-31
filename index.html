@@ -10,10 +10,10 @@
     <title>人类指标资料库</title>
     <meta
       name="description"
-      content="人类指标资料库：按方向查阅指标资料，并把需要继续看的指标加入自己的组合清单。"
+      content="人类指标资料库：按方向查阅指标资料，并把以后想搭配查询的指标加入自己的组合。"
     />
     <meta property="og:title" content="人类指标资料库" />
-    <meta property="og:description" content="按方向查指标，把需要继续看的指标加入组合清单。" />
+    <meta property="og:description" content="按方向查指标，把以后想搭配查询的指标加入组合。" />
     <meta property="og:image" content="https://human-metrics-indicator-site.pages.dev/assets/share-cover.webp" />
     <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./styles.css" />
@@ -31,6 +31,7 @@
       <nav class="top-nav" aria-label="主导航">
         <a href="./index.html" aria-current="page">首页</a>
         <a href="./library.html">指标库</a>
+        <a href="./catalog.html">全部目录</a>
       </nav>
       <button class="nav-cta selection-trigger" type="button" data-selection-trigger>
         我的组合 <span data-selection-count>0</span>
@@ -38,16 +39,26 @@
     </header>
 
     <main id="top">
-      <section class="home-type-hero" aria-labelledby="hero-title">
-        <p class="section-kicker">指标资料库</p>
-        <h1 id="hero-title">把问题拆成可查的指标</h1>
-        <p>
-          先选一个方向，再进入具体目录。看到需要反复阅读的指标，可以加入自己的组合清单，方便集中查看。
-        </p>
-        <div class="hero-actions">
-          <a class="text-action primary-link" href="./library.html">进入指标库</a>
-          <button class="text-action home-cart-action" type="button" data-selection-trigger>查看我的组合</button>
+      <section class="home-cover" aria-labelledby="hero-title">
+        <div class="home-cover-copy">
+          <p class="section-kicker">指标资料库</p>
+          <h1 id="hero-title">把问题拆成可查的指标</h1>
+          <p>
+            每套指标先回答一个具体问题：它观察什么、适合在哪些场景查阅、哪些细项值得继续看。
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="./library.html">进入指标库</a>
+            <button class="button secondary home-cart-action" type="button" data-selection-trigger>查看我的组合</button>
+          </div>
+          <div class="home-cover-stats" aria-label="资料概览">
+            <span><strong>14</strong> 套目录</span>
+            <span><strong>7</strong> 个方向</span>
+            <span><strong>49</strong> 份资料来源</span>
+          </div>
         </div>
+        <figure class="home-cover-visual">
+          <img src="./assets/library-archive-v2.webp" alt="指标资料整理桌面" />
+        </figure>
       </section>
 
       <section id="home-directions" class="home-directions" aria-labelledby="home-directions-title">
@@ -82,7 +93,8 @@
       <section class="home-flow" aria-labelledby="home-flow-title">
         <div class="home-flow-head">
           <p class="section-kicker">查阅方式</p>
-          <h2 id="home-flow-title">像整理书签一样组合指标</h2>
+          <h2 id="home-flow-title">查目录，看细项，加入组合</h2>
+          <p>遇到以后想搭配查询的指标，可以先放进自己的组合，之后围绕同一个问题一起查看。</p>
         </div>
         <div class="home-flow-grid">
           <article>
@@ -98,7 +110,7 @@
           <article>
             <span>三</span>
             <h3>加入组合</h3>
-            <p>把需要继续看的指标加入组合清单，之后集中回看。</p>
+            <p>把相关指标放进组合，之后可以按同一个问题搭配查询。</p>
           </article>
         </div>
       </section>
@@ -113,8 +125,7 @@
 
     <footer class="site-footer">
       <div>
-        <strong>人类指标资料库</strong>
-        <p>日常观察 · 了解当下 · 辅助修正</p>
+        <strong>人类指标资料库 | 日常观察 · 了解当下 · 辅助修正</strong>
       </div>
       <p><a href="./notice.html">阅读须知</a> · 所有内容仅供娱乐和日常交流参考。</p>
     </footer>

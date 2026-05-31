@@ -899,7 +899,7 @@ function renderPacks() {
     .map((pack, index) => {
       const category = categories.find((item) => item.id === pack.category);
       return `
-        <a class="pack-card" href="${indicatorHref(pack.id)}">
+        <a class="pack-card category-${pack.category}" href="${indicatorHref(pack.id)}">
           <div class="pack-meta">
             <span class="pack-number">${String(index + 1).padStart(2, "0")}</span>
             <span>${category ? category.label : ""} / ${pack.count} 项</span>
@@ -931,6 +931,7 @@ function renderPacks() {
 function renderDetail(pack, indicator = null) {
   const host = byId("detailPanel");
   if (!pack) {
+    host.className = "detail-card";
     host.innerHTML = `
       <p class="detail-eyebrow">当前目录</p>
       <p class="empty-title">选择一个指标目录</p>
@@ -939,6 +940,7 @@ function renderDetail(pack, indicator = null) {
     return;
   }
 
+  host.className = `detail-card theme-${pack.category}`;
   const activeIndicator = indicator || pack.indicators[0];
   const guide = readingGuideFor(pack);
   const standaloneDetail = Boolean(byId("indicatorHero"));
@@ -1046,7 +1048,7 @@ function renderComposer() {
   const list = byId("selectedIndicators");
 
   if (count === 0) {
-    status.textContent = "还没有加入阅读清单";
+    status.textContent = "还没有加入组合";
     hint.textContent = "可以先按一个真实问题，挑出至少 15 项相关指标，形成一条阅读线索。";
     list.innerHTML = "";
     return;
@@ -1057,7 +1059,7 @@ function renderComposer() {
     hint.textContent = "建议至少覆盖 15 项，避免只看单个角度。";
   } else {
     status.textContent = "已形成完整查阅路径";
-    hint.textContent = "这一组可以用来复看同一个真实问题。";
+    hint.textContent = "这一组可以围绕同一个真实问题搭配查询。";
   }
 
   list.innerHTML = Array.from(state.selectedIndicators.values())
@@ -1100,7 +1102,7 @@ function renderSelectionUi() {
     list.innerHTML = `
       <div class="selection-empty">
         <strong>还没有加入指标</strong>
-        <p>阅读指标详情时，可以把需要复看的条目加入这里，形成自己的组合清单。</p>
+        <p>阅读指标详情时，可以把以后想搭配查询的条目加入这里，形成自己的组合。</p>
         <a href="./catalog.html">去全部目录看看</a>
       </div>
     `;
@@ -1163,9 +1165,9 @@ function setupSelectionDrawer() {
             <p class="section-kicker">我的组合</p>
             <h2 id="selection-title">已加入的指标</h2>
           </div>
-          <button class="selection-close" type="button" data-selection-close aria-label="关闭组合清单">关闭</button>
+          <button class="selection-close" type="button" data-selection-close aria-label="关闭组合">关闭</button>
         </div>
-        <p class="selection-copy">组合清单只保存在当前设备，方便你把需要复看的指标放在一起。</p>
+        <p class="selection-copy">组合只保存在当前设备，方便你把以后想搭配查询的指标放在一起。</p>
         <div class="selection-summary">
           <span data-selection-total>0 项</span>
           <button type="button" data-selection-clear>清空</button>
@@ -1295,7 +1297,7 @@ function setupDetailPanelEvents() {
 
 function setupReveals() {
   const items = document.querySelectorAll(
-    ".hero-copy, .hero-art, .page-visual, .knowledge-index-visual, .knowledge-index-copy, .index-link, .question-list a, .page-hero, .type-hero, .section-heading, .library-left-panel, .library-sidebar, .library-main, .composer-board, .sample-index-card, .sample-side, .sample-doc, .topic-list article, .notice-section article, .schema-grid article, .version-grid article, .timeline li"
+    ".home-cover-copy, .home-cover-visual, .hero-copy, .hero-art, .page-visual, .knowledge-index-visual, .knowledge-index-copy, .index-link, .question-list a, .page-hero, .type-hero, .section-heading, .library-left-panel, .library-sidebar, .library-main, .composer-board, .sample-index-card, .sample-side, .sample-doc, .topic-list article, .notice-section article, .schema-grid article, .version-grid article, .timeline li"
   );
 
   if (!("IntersectionObserver" in window)) {
@@ -1391,6 +1393,7 @@ function renderIndicatorHero(pack) {
   const host = byId("indicatorHero");
   if (!host) return;
 
+  document.body.setAttribute("data-section-tone", pack.category);
   host.className = `indicator-pack-hero tone-${pack.category}`;
   host.innerHTML = `
     <div class="indicator-hero-copy">
