@@ -244,7 +244,7 @@ const indicatorPacks = [
     id: "management-pro",
     category: "work",
     code: "HM-MGT-421",
-    title: "管理人员评价指标体系 Pro",
+    title: "管理人员评价指标体系",
     count: 536,
     source: "management_evaluation_indicators_pro_v3_2.docx",
     audience: "选人 / 用人 / 防风险 / 管理画像",
@@ -344,6 +344,49 @@ const state = {
   pathQuery: "",
   activePathId: "child-homework",
 };
+
+const selectionStorageKey = "hmMetricSelection";
+
+function indicatorOrder(pack, indicator) {
+  return Math.max(1, pack.indicators.findIndex((item) => item.code === indicator.code) + 1);
+}
+
+function indicatorLabel(pack, indicator) {
+  return `第 ${indicatorOrder(pack, indicator)} 项`;
+}
+
+function selectionKey(pack, indicator) {
+  return `${pack.id}:${indicator.code}`;
+}
+
+function selectionFromPack(pack, indicator) {
+  return {
+    key: selectionKey(pack, indicator),
+    packId: pack.id,
+    indicatorCode: indicator.code,
+    packTitle: pack.title,
+    category: categoryLabel(pack.category),
+    order: indicatorOrder(pack, indicator),
+    name: indicator.name,
+    polarity: indicator.polarity,
+  };
+}
+
+function saveSelection() {
+  writeStoredJson(selectionStorageKey, Array.from(state.selectedIndicators.values()));
+}
+
+function restoreSelection() {
+  const stored = readStoredJson(selectionStorageKey, []);
+  state.selectedIndicators = new Map();
+  stored.forEach((item) => {
+    const pack = packById(item.packId);
+    const indicator = pack?.indicators.find((entry) => entry.code === item.indicatorCode);
+    if (!pack || !indicator) return;
+    const next = selectionFromPack(pack, indicator);
+    state.selectedIndicators.set(next.key, next);
+  });
+}
 
 const readingPaths = [
   {
@@ -768,9 +811,9 @@ function renderPathBuilder() {
       ${indicators
         .map(
           (item) => `
-            <a class="path-indicator-card" href="./library.html?category=${primaryPack.category}">
+            <a class="path-indicator-card" href="${indicatorHref(primaryPack.id)}&indicator=${encodeURIComponent(item.code)}">
               <strong>${item.name}</strong>
-              <span>${item.code} · ${item.polarity}</span>
+              <span>${indicatorLabel(primaryPack, item)} · ${item.polarity}</span>
             </a>
           `
         )
@@ -789,7 +832,7 @@ function renderPathBuilder() {
           .map(
             ({ pack, note }) => `
               <a href="./library.html?category=${pack.category}">
-                <span>${pack.code}</span>
+                <span>${categoryLabel(pack.category)} · ${pack.count} 项</span>
                 <strong>${pack.title}</strong>
                 <small>${note}</small>
               </a>
@@ -898,18 +941,17 @@ function renderDetail(pack, indicator = null) {
 
   const activeIndicator = indicator || pack.indicators[0];
   const guide = readingGuideFor(pack);
-  const relatedPacks = relatedPacksFor(pack);
-  const recentPacks = recentPacksFor(pack);
   const standaloneDetail = Boolean(byId("indicatorHero"));
+  const activeSelectionKey = selectionKey(pack, activeIndicator);
+  const activeIsSelected = state.selectedIndicators.has(activeSelectionKey);
   const packHeader = standaloneDetail
     ? ""
     : `
       <p class="detail-eyebrow">当前目录</p>
       <p class="detail-meta-line">
-        <span>${pack.code}</span>
+        <span>${categoryLabel(pack.category)}</span>
         <span>${pack.count} 项</span>
         <span>${pack.audience}</span>
-        <button class="copy-code-button" type="button" data-copy-code="${pack.code}">复制编号</button>
       </p>
       <h3>${pack.title}</h3>
       <p>${pack.summary}</p>
@@ -955,7 +997,7 @@ function renderDetail(pack, indicator = null) {
           (item) => `
           <button class="indicator-row ${item.code === activeIndicator.code ? "is-active" : ""}" type="button" data-indicator="${item.code}">
             <strong>${item.name}</strong>
-            <span>${item.code} · ${item.polarity}</span>
+            <span>${indicatorLabel(pack, item)} · ${item.polarity}</span>
           </button>
         `
         )
@@ -965,7 +1007,7 @@ function renderDetail(pack, indicator = null) {
     <div class="indicator-detail">
       <p class="detail-eyebrow">当前指标</p>
       <p class="detail-meta-line">
-        <span>${activeIndicator.code}</span>
+        <span>${indicatorLabel(pack, activeIndicator)}</span>
         <span>${activeIndicator.polarity}</span>
       </p>
       <h3>${activeIndicator.name}</h3>
@@ -987,44 +1029,10 @@ function renderDetail(pack, indicator = null) {
           <dd>${activeIndicator.improve}</dd>
         </div>
       </dl>
-      <a class="add-button" href="./custom.html">
-        按专题继续查
-      </a>
+      <button class="add-button ${activeIsSelected ? "is-selected" : ""}" type="button" data-add-pack="${pack.id}" data-add-indicator="${activeIndicator.code}">
+        ${activeIsSelected ? "已加入组合" : "加入组合"}
+      </button>
     </div>
-
-    <p class="detail-subtitle">继续阅读</p>
-    <p class="detail-next-copy">${guide.next}</p>
-    <div class="related-pack-list" aria-label="相关目录">
-      ${relatedPacks
-        .map(
-          (item) => `
-          <a class="related-pack-button" href="${indicatorHref(item.id)}">
-            <strong>${item.title}</strong>
-            <span>${item.code} · ${item.count} 项</span>
-          </a>
-        `
-        )
-        .join("")}
-    </div>
-    ${
-      recentPacks.length
-        ? `
-          <p class="detail-subtitle">最近阅读</p>
-          <div class="related-pack-list" aria-label="最近阅读目录">
-            ${recentPacks
-              .map(
-                (item) => `
-                <a class="related-pack-button" href="${indicatorHref(item.id)}">
-                  <strong>${item.title}</strong>
-                  <span>${item.code} · ${item.count} 项</span>
-                </a>
-              `
-              )
-              .join("")}
-          </div>
-        `
-        : ""
-    }
   `;
   rememberPack(pack);
 }
@@ -1055,6 +1063,154 @@ function renderComposer() {
   list.innerHTML = Array.from(state.selectedIndicators.values())
     .map((item) => `<span>${item.name}</span>`)
     .join("");
+}
+
+function updateAddButtons() {
+  document.querySelectorAll("[data-add-indicator]").forEach((button) => {
+    const pack = packById(button.dataset.addPack || state.selectedPackId);
+    if (!pack) return;
+    const indicator = pack.indicators.find((item) => item.code === button.dataset.addIndicator);
+    if (!indicator) return;
+    const selected = state.selectedIndicators.has(selectionKey(pack, indicator));
+    button.classList.toggle("is-selected", selected);
+    button.textContent = selected ? "已加入组合" : "加入组合";
+  });
+}
+
+function renderSelectionUi() {
+  const count = state.selectedIndicators.size;
+  document.querySelectorAll("[data-selection-count]").forEach((node) => {
+    node.textContent = String(count);
+    node.hidden = count === 0;
+  });
+
+  const total = document.querySelector("[data-selection-total]");
+  if (total) total.textContent = `${count} 项`;
+
+  const clearButton = document.querySelector("[data-selection-clear]");
+  if (clearButton) clearButton.disabled = count === 0;
+
+  const list = document.querySelector("[data-selection-list]");
+  if (!list) {
+    updateAddButtons();
+    return;
+  }
+
+  if (!count) {
+    list.innerHTML = `
+      <div class="selection-empty">
+        <strong>还没有加入指标</strong>
+        <p>阅读指标详情时，可以把需要复看的条目加入这里，形成自己的组合清单。</p>
+        <a href="./catalog.html">去全部目录看看</a>
+      </div>
+    `;
+    updateAddButtons();
+    return;
+  }
+
+  list.innerHTML = Array.from(state.selectedIndicators.values())
+    .map(
+      (item) => `
+        <article class="selection-item">
+          <a href="${indicatorHref(item.packId)}&indicator=${encodeURIComponent(item.indicatorCode)}">
+            <span>${item.category} · ${item.order} 项</span>
+            <strong>${item.name}</strong>
+            <small>${item.packTitle}</small>
+          </a>
+          <button type="button" aria-label="移除${item.name}" data-selection-remove="${item.key}">移除</button>
+        </article>
+      `
+    )
+    .join("");
+
+  updateAddButtons();
+}
+
+function openSelectionDrawer() {
+  const drawer = document.querySelector("[data-selection-drawer]");
+  if (!drawer) return;
+  drawer.classList.add("is-open");
+  drawer.setAttribute("aria-hidden", "false");
+  document.querySelectorAll("[data-selection-trigger]").forEach((trigger) => {
+    trigger.setAttribute("aria-expanded", "true");
+  });
+  window.setTimeout(() => {
+    drawer.querySelector("[data-selection-close]")?.focus();
+  }, 80);
+}
+
+function closeSelectionDrawer() {
+  const drawer = document.querySelector("[data-selection-drawer]");
+  if (!drawer) return;
+  drawer.classList.remove("is-open");
+  drawer.setAttribute("aria-hidden", "true");
+  document.querySelectorAll("[data-selection-trigger]").forEach((trigger) => {
+    trigger.setAttribute("aria-expanded", "false");
+  });
+}
+
+function setupSelectionDrawer() {
+  if (!document.querySelector("[data-selection-drawer]")) {
+    const drawer = document.createElement("aside");
+    drawer.className = "selection-drawer";
+    drawer.setAttribute("data-selection-drawer", "");
+    drawer.setAttribute("aria-hidden", "true");
+    drawer.innerHTML = `
+      <div class="selection-backdrop" data-selection-close></div>
+      <section class="selection-panel" role="dialog" aria-modal="true" aria-labelledby="selection-title">
+        <div class="selection-panel-head">
+          <div>
+            <p class="section-kicker">我的组合</p>
+            <h2 id="selection-title">已加入的指标</h2>
+          </div>
+          <button class="selection-close" type="button" data-selection-close aria-label="关闭组合清单">关闭</button>
+        </div>
+        <p class="selection-copy">组合清单只保存在当前设备，方便你把需要复看的指标放在一起。</p>
+        <div class="selection-summary">
+          <span data-selection-total>0 项</span>
+          <button type="button" data-selection-clear>清空</button>
+        </div>
+        <div class="selection-list" data-selection-list></div>
+      </section>
+    `;
+    document.body.appendChild(drawer);
+  }
+
+  document.addEventListener("click", (event) => {
+    const trigger = event.target.closest("[data-selection-trigger]");
+    if (trigger) {
+      event.preventDefault();
+      openSelectionDrawer();
+      return;
+    }
+
+    if (event.target.closest("[data-selection-close]")) {
+      closeSelectionDrawer();
+      return;
+    }
+
+    const removeButton = event.target.closest("[data-selection-remove]");
+    if (removeButton) {
+      state.selectedIndicators.delete(removeButton.dataset.selectionRemove);
+      saveSelection();
+      renderComposer();
+      renderSelectionUi();
+      return;
+    }
+
+    if (event.target.closest("[data-selection-clear]")) {
+      state.selectedIndicators.clear();
+      saveSelection();
+      renderComposer();
+      renderSelectionUi();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeSelectionDrawer();
+  });
+
+  renderSelectionUi();
 }
 
 function selectCategory(categoryId) {
@@ -1123,16 +1279,16 @@ function setupDetailPanelEvents() {
 
     const addButton = event.target.closest("[data-add-indicator]");
     if (addButton) {
-      const pack = indicatorPacks.find((item) => item.id === state.selectedPackId);
+      const pack = indicatorPacks.find((item) => item.id === addButton.dataset.addPack || item.id === state.selectedPackId);
       const indicator = pack?.indicators.find((item) => item.code === addButton.dataset.addIndicator);
       if (!pack || !indicator) return;
-      const key = `${pack.id}:${indicator.code}`;
-      state.selectedIndicators.set(key, {
-        name: indicator.name,
-        code: indicator.code,
-        pack: pack.title,
-      });
+      const selected = selectionFromPack(pack, indicator);
+      state.selectedIndicators.set(selected.key, selected);
+      saveSelection();
       renderComposer();
+      renderSelectionUi();
+      updateAddButtons();
+      openSelectionDrawer();
     }
   });
 }
@@ -1242,7 +1398,7 @@ function renderIndicatorHero(pack) {
       <h1>${pack.title}</h1>
       <p>${pack.summary}</p>
       <div class="indicator-hero-meta" aria-label="当前目录信息">
-        <span>${pack.code}</span>
+        <span>${categoryLabel(pack.category)}</span>
         <span>${pack.count} 项</span>
         <span>${pack.audience}</span>
       </div>
@@ -1264,7 +1420,7 @@ function renderIndicatorSiblings(pack) {
       .map(
         (item) => `
         <a class="${item.id === pack.id ? "is-active" : ""}" href="${indicatorHref(item.id)}">
-          <span>${item.code}</span>
+          <span>${categoryLabel(item.category)} · ${item.count} 项</span>
           <strong>${item.title}</strong>
         </a>
       `
@@ -1277,20 +1433,26 @@ function initIndicatorDetail() {
   if (!byId("indicatorHero")) return;
   const params = new URLSearchParams(window.location.search);
   const pack = packById(params.get("pack")) || indicatorPacks[0];
+  const requestedIndicator = params.get("indicator");
+  const indicator = pack.indicators.find((item) => item.code === requestedIndicator);
   state.selectedPackId = pack.id;
   document.title = `${pack.title} · 人类指标资料库`;
   renderIndicatorHero(pack);
   renderIndicatorSiblings(pack);
-  renderDetail(pack);
+  renderDetail(pack, indicator);
 }
 
 function init() {
+  restoreSelection();
+  setupSelectionDrawer();
   setupReveals();
   setupPathBuilder();
   setupReadingTools();
   setupDetailPanelEvents();
   initLibrary();
   initIndicatorDetail();
+  renderRoleGallery();
+  renderSelectionUi();
 }
 
 init();

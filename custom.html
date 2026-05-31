@@ -4,20 +4,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#fbfaf6" />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="canonical" href="https://human-metrics-indicator-site.pages.dev/custom.html" />
-    <title>专题查询 · 人类指标资料库</title>
-    <meta name="description" content="围绕一个具体问题查阅相关指标，按顺序阅读结构、状态、风险和调整方向。" />
-    <meta property="og:title" content="专题查询 · 人类指标资料库" />
-    <meta property="og:description" content="围绕孩子写作业、关系判断、员工观察等真实问题，查阅相关指标资料。" />
-    <meta property="og:image" content="https://human-metrics-indicator-site.pages.dev/assets/share-cover.webp" />
+    <meta http-equiv="refresh" content="0; url=./library.html" />
+    <title>入口已合并 · 人类指标资料库</title>
+    <meta name="robots" content="noindex" />
     <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./styles.css" />
     <script src="./app.js" defer></script>
   </head>
   <body>
-    <a class="skip-link" href="#custom">跳到专题查询</a>
+    <a class="skip-link" href="#merged">跳到页面内容</a>
     <header class="site-header">
       <a class="brand" href="./index.html" aria-label="人类指标资料库首页">
         <span>
@@ -27,58 +22,23 @@
       </a>
       <nav class="top-nav" aria-label="主导航">
         <a href="./index.html">首页</a>
-        <a href="./library.html">指标库</a>
-        <a href="./custom.html" aria-current="page">专题查询</a>
-        <a href="./sample.html">查阅说明</a>
+        <a href="./library.html" aria-current="page">指标库</a>
       </nav>
-      <a class="nav-cta" href="#path-builder">按专题查</a>
+      <button class="nav-cta selection-trigger" type="button" data-selection-trigger>
+        我的组合 <span data-selection-count>0</span>
+      </button>
     </header>
 
-    <main id="top">
-      <section id="custom" class="page-hero split-page-hero custom-query-hero" aria-labelledby="custom-title">
-        <div class="page-hero-copy">
-          <p class="section-kicker">专题查询</p>
-          <h1 id="custom-title"><span>先选一个问题，</span><span>再查相关指标</span></h1>
-          <p>
-            先从真实问题进入，再按相关目录继续查阅。适合第一次进入，不确定该看哪个目录时使用。
-          </p>
-        </div>
-        <figure class="page-visual">
-          <img src="./assets/custom-bundle-v2.webp" alt="桌面上按关系排列的资料卡片" />
-        </figure>
-      </section>
-
-      <section id="path-builder" class="topic-section custom-path-section" aria-labelledby="topic-title">
-        <h2 id="topic-title" class="visually-hidden">按问题查相关指标</h2>
-        <div id="pathQuestionList" class="path-question-list" aria-label="专题问题"></div>
-
-        <div class="custom-path-layout">
-          <aside class="custom-path-sidebar" aria-label="专题辅助筛选">
-            <div class="search-box path-search-box">
-              <label for="pathSearchInput">继续精确查找</label>
-              <input id="pathSearchInput" type="search" placeholder="输入：正行、记忆力、婚恋、管理" autocomplete="off" />
-            </div>
-            <div class="path-filter-block">
-              <p class="control-label">分类辅助</p>
-              <div id="pathCategoryList" class="path-category-list" aria-label="专题分类"></div>
-            </div>
-            <p class="path-sidebar-note">
-              先按问题进入，再读当前目录；需要更细的条目时，可以回到指标库继续查。
-            </p>
-          </aside>
-
-          <article id="pathResult" class="path-result custom-path-result" aria-live="polite"></article>
-          <aside id="pathRelated" class="custom-related-panel" aria-label="问题相关目录"></aside>
+    <main id="merged">
+      <section class="page-hero notice-hero" aria-labelledby="merged-title">
+        <p class="section-kicker">入口已合并</p>
+        <h1 id="merged-title">请从指标库继续查阅</h1>
+        <p>当前入口已经合并到指标库。你可以按方向进入，也可以打开全部指标目录。</p>
+        <div class="hero-actions">
+          <a class="text-action primary-link" href="./library.html">进入指标库</a>
+          <a class="text-action" href="./catalog.html">查看全部目录</a>
         </div>
       </section>
     </main>
-
-    <footer class="site-footer">
-      <div>
-        <strong>人类指标资料库</strong>
-        <p>日常观察 · 了解当下 · 辅助修正</p>
-      </div>
-      <p><a href="./notice.html">阅读须知</a> · 内容仅供娱乐和日常交流参考，不构成专业建议。</p>
-    </footer>
   </body>
 </html>

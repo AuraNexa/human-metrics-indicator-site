@@ -10,17 +10,17 @@
     <title>人类指标资料库</title>
     <meta
       name="description"
-      content="人类指标资料库：面向公开查阅者，提供修行、婚恋、孩子教育、职场用人等方向的指标资料、专题查询和阅读边界。"
+      content="人类指标资料库：按方向查阅指标资料，并把需要继续看的指标加入自己的组合清单。"
     />
     <meta property="og:title" content="人类指标资料库" />
-    <meta property="og:description" content="查指标、按专题读、理解指标边界。这里是资料阅读型知识网站。" />
+    <meta property="og:description" content="按方向查指标，把需要继续看的指标加入组合清单。" />
     <meta property="og:image" content="https://human-metrics-indicator-site.pages.dev/assets/share-cover.webp" />
     <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./styles.css" />
     <script src="./app.js" defer></script>
   </head>
   <body class="home-page">
-    <a class="skip-link" href="#entry">跳到页面入口</a>
+    <a class="skip-link" href="#home-directions">跳到方向入口</a>
     <header class="site-header">
       <a class="brand" href="./index.html" aria-label="人类指标资料库首页">
         <span>
@@ -31,74 +31,82 @@
       <nav class="top-nav" aria-label="主导航">
         <a href="./index.html" aria-current="page">首页</a>
         <a href="./library.html">指标库</a>
-        <a href="./custom.html">专题查询</a>
-        <a href="./sample.html">查阅说明</a>
       </nav>
-      <a class="nav-cta" href="./library.html">查看目录</a>
+      <button class="nav-cta selection-trigger" type="button" data-selection-trigger>
+        我的组合 <span data-selection-count>0</span>
+      </button>
     </header>
 
     <main id="top">
-      <section class="hero-shell" aria-labelledby="hero-title">
-        <div class="hero-copy">
-          <p class="status-line">指标查询 · 专题查阅 · 阅读边界</p>
-          <h1 id="hero-title">终于知道问题该从哪里看</h1>
-          <p class="hero-lede">
-            一段关系、一个孩子的学习状态、一个员工能不能用，往往不是单个原因。这里把真实问题拆成可查阅的指标，让你先看结构，再看细项。
-          </p>
-          <div class="hero-actions">
-            <a class="text-action primary-link" href="./library.html">进入指标库</a>
-            <a class="text-action" href="./custom.html">按专题查</a>
-          </div>
-          <div class="hero-metrics" aria-label="素材规模">
-            <span><strong>49</strong>资料来源</span>
-            <span><strong>14</strong>指标目录</span>
-            <span><strong>7</strong>查阅方向</span>
-          </div>
+      <section class="home-type-hero" aria-labelledby="hero-title">
+        <p class="section-kicker">指标资料库</p>
+        <h1 id="hero-title">把问题拆成可查的指标</h1>
+        <p>
+          先选一个方向，再进入具体目录。看到需要反复阅读的指标，可以加入自己的组合清单，方便集中查看。
+        </p>
+        <div class="hero-actions">
+          <a class="text-action primary-link" href="./library.html">进入指标库</a>
+          <button class="text-action home-cart-action" type="button" data-selection-trigger>查看我的组合</button>
         </div>
-
-        <figure class="hero-art knowledge-hero-art" aria-label="指标知识插画">
-          <img src="./assets/reading-table-generated.webp" alt="打开的知识书籍、指标图谱和分类档案插画" />
-        </figure>
       </section>
 
-      <section class="question-section" aria-labelledby="question-title">
-        <div class="section-heading compact-heading">
-          <p class="section-kicker">按问题查</p>
-          <h2 id="question-title">先从一个真实问题进入</h2>
-          <p>资料库不是让人先理解全部目录，而是从当下关心的问题开始，顺着相关指标往下读。</p>
+      <section id="home-directions" class="home-directions" aria-labelledby="home-directions-title">
+        <div class="home-directions-head">
+          <h2 id="home-directions-title">先从一个方向开始</h2>
+          <p>方向只是入口，真正的内容在每套指标里。点击卡片可以直接进入对应目录。</p>
         </div>
-        <div class="question-list" aria-label="常见阅读入口">
-          <a href="./library.html?category=child">
-            <span>孩子学习吃力</span>
-            <strong>学习底盘、写作业、家庭关系</strong>
+        <div class="home-type-grid" aria-label="常用指标方向">
+          <a class="home-type-card tone-teal" href="./library.html?category=general">
+            <img src="./assets/indicator-art/ordinary-status.webp" alt="普通人基础状态指标插画" />
+            <span>普通人基础</span>
+            <strong>近期状态、睡眠、压力和行动力</strong>
           </a>
-          <a href="./library.html?category=relationship">
-            <span>一段关系看不清</span>
-            <strong>交往意愿、长期目的、安全边界</strong>
+          <a class="home-type-card tone-purple" href="./library.html?category=child">
+            <img src="./assets/indicator-art/child-learning.webp" alt="孩子学习素质指标插画" />
+            <span>孩子教育</span>
+            <strong>学习底盘、作业、家庭关系和学校处境</strong>
           </a>
-          <a href="./library.html?category=practice">
-            <span>修行状态波动大</span>
-            <strong>正念正心、正行落实、长期稳定</strong>
+          <a class="home-type-card tone-coral" href="./library.html?category=relationship">
+            <img src="./assets/indicator-art/female-boyfriend-screen.webp" alt="婚恋关系指标插画" />
+            <span>婚恋关系</span>
+            <strong>真实投入、长期目的、承诺和边界</strong>
           </a>
-          <a href="./library.html?category=work">
-            <span>员工能不能用</span>
-            <strong>可信任度、岗位适配、隐性消耗</strong>
-          </a>
-          <a href="./library.html?category=school">
-            <span>孩子在学校是否安全</span>
-            <strong>上学安全感、同伴关系、校园风险</strong>
-          </a>
-          <a href="./library.html?category=general">
-            <span>最近状态需要复盘</span>
-            <strong>睡眠、压力、情绪、行动力</strong>
+          <a class="home-type-card tone-ochre" href="./library.html?category=work">
+            <img src="./assets/indicator-art/management-pro.webp" alt="职场用人指标插画" />
+            <span>职场用人</span>
+            <strong>可信任度、岗位适配、管理画像和风险点</strong>
           </a>
         </div>
       </section>
 
-      <section id="entry" class="home-legal-section" aria-label="阅读边界">
+      <section class="home-flow" aria-labelledby="home-flow-title">
+        <div class="home-flow-head">
+          <p class="section-kicker">查阅方式</p>
+          <h2 id="home-flow-title">像整理书签一样组合指标</h2>
+        </div>
+        <div class="home-flow-grid">
+          <article>
+            <span>一</span>
+            <h3>进入目录</h3>
+            <p>先按方向找到一套指标，确认它观察的对象和适用场景。</p>
+          </article>
+          <article>
+            <span>二</span>
+            <h3>阅读细项</h3>
+            <p>在详情页切换代表指标，看含义、风险侧和调整提醒。</p>
+          </article>
+          <article>
+            <span>三</span>
+            <h3>加入组合</h3>
+            <p>把需要继续看的指标加入组合清单，之后集中回看。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="home-legal-section" aria-label="阅读边界">
         <p class="legal-note home-note">
-          内容仅供娱乐、自我观察与日常交流参考，不构成医学、心理、法律、财务、教育或招聘专业建议。详细边界见
-          <a href="./notice.html">阅读须知</a>。
+          内容仅供娱乐、自我观察与日常交流参考，不构成医学、心理、法律、财务、教育或招聘专业建议。
+          <a href="./notice.html">阅读须知</a>
         </p>
       </section>
     </main>
@@ -108,7 +116,7 @@
         <strong>人类指标资料库</strong>
         <p>日常观察 · 了解当下 · 辅助修正</p>
       </div>
-      <p><a href="./notice.html">阅读须知</a> · 所有内容仅供娱乐和日常交流参考，不对任何现实决策结果作保证。</p>
+      <p><a href="./notice.html">阅读须知</a> · 所有内容仅供娱乐和日常交流参考。</p>
     </footer>
   </body>
 </html>

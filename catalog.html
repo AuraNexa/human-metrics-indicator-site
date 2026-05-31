@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#fbfaf6" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://human-metrics-indicator-site.pages.dev/catalog.html" />
+    <title>全部指标目录 · 人类指标资料库</title>
+    <meta name="description" content="查看全部指标目录，按方向筛选并进入单套指标资料页。" />
+    <meta property="og:title" content="全部指标目录 · 人类指标资料库" />
+    <meta property="og:description" content="查看全部指标目录，按方向筛选并进入单套指标资料页。" />
+    <meta property="og:image" content="https://human-metrics-indicator-site.pages.dev/assets/share-cover.webp" />
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#library">跳到全部目录</a>
+    <header class="site-header">
+      <a class="brand" href="./index.html" aria-label="人类指标资料库首页">
+        <span>
+          <strong>人类指标资料库</strong>
+          <small>指标查阅入口</small>
+        </span>
+      </a>
+      <nav class="top-nav" aria-label="主导航">
+        <a href="./index.html">首页</a>
+        <a href="./library.html" aria-current="page">指标库</a>
+      </nav>
+      <button class="nav-cta selection-trigger" type="button" data-selection-trigger>
+        我的组合 <span data-selection-count>0</span>
+      </button>
+    </header>
+
+    <main id="top" class="library-type-page catalog-page">
+      <section class="type-hero catalog-page-hero" aria-labelledby="catalog-title">
+        <p class="section-kicker">全部目录</p>
+        <h1 id="catalog-title">全部指标目录</h1>
+        <p>从这里查看所有已整理的指标资料。你可以先筛选方向，也可以直接搜索具体词。</p>
+        <a class="text-action primary-link" href="./library.html">返回按方向浏览</a>
+      </section>
+
+      <section id="library" class="catalog-index-section is-revealed" aria-label="全部指标目录">
+        <div class="type-toolbar">
+          <div class="search-box">
+            <label for="searchInput">查找指标</label>
+            <input id="searchInput" type="search" placeholder="正行、记忆力、婚恋、管理" autocomplete="off" />
+          </div>
+          <div class="category-area">
+            <p class="control-label">快速筛选</p>
+            <div class="category-list" id="categoryList"></div>
+          </div>
+        </div>
+
+        <div class="catalog-index-head">
+          <span><strong id="resultCount">0</strong> 套目录</span>
+          <p>选择一套指标后进入独立阅读页，查看结构、代表指标和阅读边界。</p>
+        </div>
+
+        <div id="packGrid" class="pack-grid catalog-card-grid"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <strong>人类指标资料库</strong>
+        <p>日常观察 · 了解当下 · 辅助修正</p>
+      </div>
+      <p><a href="./notice.html">阅读须知</a> · 内容仅供娱乐和日常交流参考，不构成专业建议。</p>
+    </footer>
+  </body>
+</html>
