@@ -10,6 +10,8 @@
 - `custom.html`：专题组合
 - `roadmap.html`：整理方法
 - `notice.html`：阅读须知
+- `404.html`：未找到页面
+- `robots.txt` / `sitemap.xml`：搜索引擎入口
 
 ## Cloudflare Pages
 

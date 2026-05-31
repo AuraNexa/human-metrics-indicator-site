@@ -17,9 +17,9 @@ const indicatorPacks = [
     title: "基础指标 1 公开说明",
     count: 12,
     source: "03_基础指标1_公开版指标详细说明.pdf",
-    audience: "公开展示 / 日常自查",
+    audience: "公开阅读 / 日常自查",
     summary:
-      "对外解释各项基础指标的大致含义，强调只代表测评当下状态，适合做公开样板页。",
+      "对外解释各项基础指标的大致含义，强调只代表当下状态，适合做公开阅读页。",
     tags: ["公开版", "免责清晰", "样板内容"],
     groups: [
       { name: "正向指标", note: "正心、正念、正行等，数值越高代表正向状态越明显。" },
@@ -340,7 +340,76 @@ const state = {
   selectedPackId: null,
   activeIndicatorKey: null,
   selectedIndicators: new Map(),
+  activePathId: "child-homework",
 };
+
+const readingPaths = [
+  {
+    id: "child-homework",
+    label: "孩子写作业卡住",
+    title: "孩子写作业为什么卡住",
+    summary: "先分清是任务过重、学习底盘不足、家庭压力放大，还是学校处境正在消耗孩子。",
+    focus: ["作业任务", "学习底盘", "家庭压力", "学校处境"],
+    steps: [
+      { code: "HM-CHD-HW-104", title: "小孩子写作业指标", note: "先看作业量、难度、启动、拖延、情绪和家长干预。", href: "./library.html?category=child" },
+      { code: "HM-CHD-LEARN-014", title: "孩子学习素质基础指标", note: "再看理解、记忆、应用、专注和抗压这类学习底盘。", href: "./library.html?category=child" },
+      { code: "HM-CHD-FAM-029", title: "孩子家庭关系指标", note: "判断家庭关系是否正在把学习问题放大。", href: "./library.html?category=child" },
+      { code: "HM-SCH-093", title: "学校生活与校园风险", note: "最后确认学校环境、同伴关系和安全感。", href: "./library.html?category=school" },
+    ],
+  },
+  {
+    id: "relationship-decision",
+    label: "关系是否继续",
+    title: "一段关系是否值得继续投入",
+    summary: "先看事实行为，再看长期意愿和安全边界，避免只靠当下情绪判断。",
+    focus: ["事实行为", "长期意图", "忠诚边界", "安全风险"],
+    steps: [
+      { code: "REL-M-01", title: "交往意愿", note: "先看对方是否愿意继续了解、见面和推进关系。", href: "./library.html?category=relationship" },
+      { code: "REL-F-02", title: "承诺兑现率", note: "看说过的话、答应的事能不能落地。", href: "./library.html?category=relationship" },
+      { code: "REL-F-03", title: "忠诚边界", note: "确认暧昧、多线、前任和异性关系是否清楚。", href: "./library.html?category=relationship" },
+      { code: "REL-F-04", title: "分手报复风险", note: "安全风险优先于浪漫想象。", href: "./library.html?category=relationship" },
+    ],
+  },
+  {
+    id: "employee-fit",
+    label: "员工能不能用",
+    title: "员工能不能用、放哪里、要防什么",
+    summary: "先看底线和可信任度，再看岗位适配与隐性消耗，最后看是否需要进入管理者画像。",
+    focus: ["底线风险", "可信任度", "岗位适配", "团队消耗"],
+    steps: [
+      { code: "EMP-01", title: "可信任度", note: "从小任务、反馈稳定性和信息透明度开始看。", href: "./library.html?category=work" },
+      { code: "EMP-02", title: "岗位适配度", note: "判断能力、性格和岗位要求是否匹配。", href: "./library.html?category=work" },
+      { code: "EMP-03", title: "隐性消耗度", note: "观察是否制造沟通、情绪、人际或流程消耗。", href: "./library.html?category=work" },
+      { code: "HM-MGT-421", title: "管理人员评价指标体系", note: "若涉及管理岗，再看权力、用人、决策和组织风险。", href: "./library.html?category=work" },
+    ],
+  },
+  {
+    id: "practice-wave",
+    label: "修行状态波动",
+    title: "修行状态为什么忽高忽低",
+    summary: "把心、念、行拆开看，再回到长期稳定度和五毒四心风险，不用单次状态否定自己。",
+    focus: ["正心正念", "行动落实", "长期稳定", "心性风险"],
+    steps: [
+      { code: "PRAC-01", title: "正念正心", note: "先看念头和出发点是否端正、清明、少偏差。", href: "./library.html?category=practice" },
+      { code: "PRAC-02", title: "正行落实", note: "再看有没有把认知落到真实行动。", href: "./library.html?category=practice" },
+      { code: "PRAC-03", title: "长期稳定度", note: "记录哪些场景最容易引发波动。", href: "./library.html?category=practice" },
+      { code: "HM-POISON-009", title: "五毒四心指标体系", note: "最后看更深层的贪、嗔、痴、慢、疑和外在显化。", href: "./library.html?category=practice" },
+    ],
+  },
+  {
+    id: "recent-state",
+    label: "近期状态复盘",
+    title: "最近状态不稳，先从哪里看",
+    summary: "先看身体恢复、睡眠、压力和情绪，再判断是否需要进入修行、关系或职场目录。",
+    focus: ["睡眠恢复", "压力", "情绪", "行动力"],
+    steps: [
+      { code: "GEN-02", title: "睡眠恢复度", note: "先确认身体和精神有没有真正恢复。", href: "./library.html?category=general" },
+      { code: "GEN-04", title: "压力值", note: "看现实负荷是否超过可承载范围。", href: "./library.html?category=general" },
+      { code: "GEN-03", title: "情绪稳定度", note: "把情绪高峰和重大决定分开。", href: "./library.html?category=general" },
+      { code: "HM-PRAC-DAY", title: "修行者基础指标日常自查", note: "如果反复波动，再回到心、念、行做周期复看。", href: "./library.html?category=practice" },
+    ],
+  },
+];
 
 function createIndicator(code, name, polarity, definition, low, high, improve) {
   return { code, name, polarity, definition, low, high, improve };
@@ -374,6 +443,163 @@ function matchesPack(pack) {
 
 function currentPacks() {
   return indicatorPacks.filter(matchesPack);
+}
+
+function categoryLabel(categoryId) {
+  return categories.find((item) => item.id === categoryId)?.label || "综合资料";
+}
+
+function accessLabel(pack) {
+  const text = `${pack.audience} ${pack.tags.join(" ")}`;
+  if (text.includes("内部")) return "内部结构参考";
+  if (text.includes("公开")) return "公开阅读";
+  return "场景阅读";
+}
+
+function readingGuideFor(pack) {
+  const guides = {
+    general: {
+      scene: "适合先看一个人的近期状态、能量、压力和行动倾向，再决定是否需要继续追细项。",
+      order: "先读身体、睡眠、情绪和压力，再读行动、人际和近期阻力。不要一开始就盯单个高低点。",
+      caution: "不要把近期状态当成长期命运，也不要用一个波动值解释所有问题。",
+      next: "如果发现压力或情绪明显，再转到修行与心性、家庭关系或职场目录继续看。",
+    },
+    practice: {
+      scene: "适合修行者做周期复看，判断想法、心性、行动和稳定度是否在同一个方向上。",
+      order: "先看正心、正念，再看正行落实，最后看波动、复盘和修正意愿。",
+      caution: "不要只看自己想得好不好，更要看有没有持续行动；也不要用低分羞辱自己。",
+      next: "读完后可把 3 个最明显的短板写成一周修正计划，再回到基础状态目录复看。",
+    },
+    child: {
+      scene: "适合父母理解孩子学习、家庭关系和学校处境，避免只用成绩或情绪下判断。",
+      order: "先看孩子是否听懂、记住、会用，再看专注、主动性、抗压和家庭学校环境。",
+      caution: "不要拿指标给孩子贴标签，也不要把一次状态当成能力上限。",
+      next: "学习底盘读完后，建议继续看家庭关系、学校风险和写作业目录。",
+    },
+    relationship: {
+      scene: "适合在暧昧、交往、婚恋选择前，看清关系投入、边界、长期意愿和安全风险。",
+      order: "先看事实行为，再看关系意图，最后看安全边界和长期匹配。先证据，后感受。",
+      caution: "不要用指标替自己审判别人，也不要为了证明喜欢或不喜欢而挑选性阅读。",
+      next: "读完关系目录后，可回到普通人基础状态和总指标池，看对方的稳定性与底层风险。",
+    },
+    work: {
+      scene: "适合老板、管理者或合作方在识人用人时，看一个人能不能用、放哪里、要防什么。",
+      order: "先看底线和可信任度，再看岗位适配、协作成本和关键风险，最后看专项能力。",
+      caution: "不要只凭单次面试或单项能力做决定，底线风险要优先于才华。",
+      next: "若涉及管理岗，继续看管理人员评价指标；若涉及普通岗位，先把员工隐性指标读透。",
+    },
+    school: {
+      scene: "适合家长从孩子视角理解学校生活，而不是只听成绩、老师反馈或表面情绪。",
+      order: "先看安全感和适应，再看同学、老师、霸凌风险，最后看父母是否需要介入。",
+      caution: "不要把孩子不说话理解成没事，也不要用恐吓式追问获取信息。",
+      next: "学校风险读完后，建议继续看家庭关系和写作业目录，判断压力是否互相放大。",
+    },
+    system: {
+      scene: "适合先理解整套指标资料如何拆问题、建目录、做边界，再进入具体场景。",
+      order: "先读项目总纲，再看个人总指标池，最后按孩子、婚恋、职场或修行场景抽取。",
+      caution: "不要把总纲当成直接结论；总纲是地图，具体判断仍要回到场景和样例指标。",
+      next: "读完总纲后，建议选择一个真实问题进入对应目录，而不是一次看完所有内容。",
+    },
+  };
+
+  return guides[pack.category] || guides.general;
+}
+
+function relatedPacksFor(pack) {
+  const sameCategory = indicatorPacks.filter((item) => item.category === pack.category && item.id !== pack.id);
+  const systemPacks = indicatorPacks.filter((item) => item.category === "system" && item.id !== pack.id);
+  return [...sameCategory, ...systemPacks].slice(0, 3);
+}
+
+function readStoredJson(key, fallback) {
+  try {
+    const raw = window.localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function writeStoredJson(key, value) {
+  try {
+    window.localStorage.setItem(key, JSON.stringify(value));
+  } catch {
+    return false;
+  }
+  return true;
+}
+
+function rememberPack(pack) {
+  if (!pack) return;
+  const recent = readStoredJson("hmRecentPacks", []);
+  const next = [pack.id, ...recent.filter((id) => id !== pack.id)].slice(0, 5);
+  writeStoredJson("hmRecentPacks", next);
+}
+
+function recentPacksFor(pack) {
+  const recentIds = readStoredJson("hmRecentPacks", []);
+  return recentIds
+    .filter((id) => id !== pack.id)
+    .map((id) => indicatorPacks.find((item) => item.id === id))
+    .filter(Boolean)
+    .slice(0, 3);
+}
+
+function renderPathBuilder() {
+  const list = byId("pathQuestionList");
+  const result = byId("pathResult");
+  if (!list || !result) return;
+
+  const activePath = readingPaths.find((item) => item.id === state.activePathId) || readingPaths[0];
+  list.innerHTML = readingPaths
+    .map(
+      (path) => `
+        <button class="path-question ${path.id === activePath.id ? "is-active" : ""}" type="button" data-path="${path.id}">
+          ${path.label}
+        </button>
+      `
+    )
+    .join("");
+
+  result.innerHTML = `
+    <div class="path-result-head">
+      <p class="detail-eyebrow">当前阅读路径</p>
+      <h3>${activePath.title}</h3>
+      <p>${activePath.summary}</p>
+      <div class="path-focus">
+        ${activePath.focus.map((item) => `<span>${item}</span>`).join("")}
+      </div>
+    </div>
+    <ol class="path-steps">
+      ${activePath.steps
+        .map(
+          (step, index) => `
+            <li>
+              <span>${String(index + 1).padStart(2, "0")}</span>
+              <div>
+                <strong>${step.title}</strong>
+                <small>${step.code}</small>
+                <p>${step.note}</p>
+                <a href="${step.href}">进入相关目录</a>
+              </div>
+            </li>
+          `
+        )
+        .join("")}
+    </ol>
+  `;
+}
+
+function setupPathBuilder() {
+  const list = byId("pathQuestionList");
+  if (!list) return;
+  renderPathBuilder();
+  list.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-path]");
+    if (!button) return;
+    state.activePathId = button.dataset.path;
+    renderPathBuilder();
+  });
 }
 
 function renderCategories() {
@@ -444,6 +670,9 @@ function renderDetail(pack, indicator = null) {
   }
 
   const activeIndicator = indicator || pack.indicators[0];
+  const guide = readingGuideFor(pack);
+  const relatedPacks = relatedPacksFor(pack);
+  const recentPacks = recentPacksFor(pack);
   state.activeIndicatorKey = `${pack.id}:${activeIndicator.code}`;
   host.innerHTML = `
     <p class="detail-eyebrow">当前目录</p>
@@ -451,9 +680,45 @@ function renderDetail(pack, indicator = null) {
       <span>${pack.code}</span>
       <span>${pack.count} 项</span>
       <span>${pack.audience}</span>
+      <button class="copy-code-button" type="button" data-copy-code="${pack.code}">复制编号</button>
     </p>
     <h3>${pack.title}</h3>
     <p>${pack.summary}</p>
+
+    <div class="detail-facts" aria-label="资料信息">
+      <div>
+        <span>所属方向</span>
+        <strong>${categoryLabel(pack.category)}</strong>
+      </div>
+      <div>
+        <span>阅读状态</span>
+        <strong>${accessLabel(pack)}</strong>
+      </div>
+      <div>
+        <span>资料来源</span>
+        <strong>${pack.source}</strong>
+      </div>
+      <div>
+        <span>整理时间</span>
+        <strong>2026-05-31</strong>
+      </div>
+    </div>
+
+    <p class="detail-subtitle">阅读方式</p>
+    <div class="detail-reading-guide">
+      <div>
+        <strong>适用场景</strong>
+        <span>${guide.scene}</span>
+      </div>
+      <div>
+        <strong>阅读顺序</strong>
+        <span>${guide.order}</span>
+      </div>
+      <div>
+        <strong>避免误用</strong>
+        <span>${guide.caution}</span>
+      </div>
+    </div>
 
     <p class="detail-subtitle">结构</p>
     <div class="detail-groups">
@@ -512,7 +777,42 @@ function renderDetail(pack, indicator = null) {
         查看专题阅读方式
       </a>
     </div>
+
+    <p class="detail-subtitle">继续阅读</p>
+    <p class="detail-next-copy">${guide.next}</p>
+    <div class="related-pack-list" aria-label="相关目录">
+      ${relatedPacks
+        .map(
+          (item) => `
+          <button class="related-pack-button" type="button" data-related-pack="${item.id}">
+            <strong>${item.title}</strong>
+            <span>${item.code} · ${item.count} 项</span>
+          </button>
+        `
+        )
+        .join("")}
+    </div>
+    ${
+      recentPacks.length
+        ? `
+          <p class="detail-subtitle">最近阅读</p>
+          <div class="related-pack-list" aria-label="最近阅读目录">
+            ${recentPacks
+              .map(
+                (item) => `
+                <button class="related-pack-button" type="button" data-related-pack="${item.id}">
+                  <strong>${item.title}</strong>
+                  <span>${item.code} · ${item.count} 项</span>
+                </button>
+              `
+              )
+              .join("")}
+          </div>
+        `
+        : ""
+    }
   `;
+  rememberPack(pack);
 }
 
 function renderComposer() {
@@ -525,7 +825,7 @@ function renderComposer() {
 
   if (count === 0) {
     status.textContent = "还没有加入阅读清单";
-    hint.textContent = "后续版本会支持把指标加入本地专题清单，当前版本先展示阅读路径。";
+    hint.textContent = "可以先按一个真实问题，挑出至少 15 项相关指标，形成一条阅读线索。";
     list.innerHTML = "";
     return;
   }
@@ -535,7 +835,7 @@ function renderComposer() {
     hint.textContent = "每个专题建议至少覆盖 15 项，避免样本太少导致解释过轻。";
   } else {
     status.textContent = "专题数量已达标";
-    hint.textContent = "后续版本可保留为本地专题目录，并生成复查页或说明页。";
+    hint.textContent = "这一组可以作为临时专题目录，用来复看同一个真实问题。";
   }
 
   list.innerHTML = Array.from(state.selectedIndicators.values())
@@ -574,11 +874,36 @@ function setupEvents() {
   });
 
   byId("detailPanel")?.addEventListener("click", (event) => {
+    const copyButton = event.target.closest("[data-copy-code]");
+    if (copyButton) {
+      const original = copyButton.textContent;
+      const code = copyButton.dataset.copyCode;
+      const done = () => {
+        copyButton.textContent = "已复制";
+        window.setTimeout(() => {
+          copyButton.textContent = original;
+        }, 1400);
+      };
+      if (navigator.clipboard?.writeText) {
+        navigator.clipboard.writeText(code).then(done, done);
+      } else {
+        done();
+      }
+      return;
+    }
+
     const indicatorButton = event.target.closest("[data-indicator]");
     if (indicatorButton) {
       const pack = indicatorPacks.find((item) => item.id === state.selectedPackId);
       const indicator = pack?.indicators.find((item) => item.code === indicatorButton.dataset.indicator);
       if (pack && indicator) renderDetail(pack, indicator);
+      return;
+    }
+
+    const relatedButton = event.target.closest("[data-related-pack]");
+    if (relatedButton) {
+      selectPack(relatedButton.dataset.relatedPack);
+      byId("detailPanel")?.scrollIntoView({ behavior: "smooth", block: "start" });
       return;
     }
 
@@ -615,7 +940,7 @@ function setupEvents() {
 
 function setupReveals() {
   const items = document.querySelectorAll(
-    ".hero-copy, .hero-art, .page-visual, .knowledge-index-visual, .knowledge-index-copy, .index-link, .question-list a, .page-hero, .section-heading, .library-sidebar, .library-main, .detail-panel, .composer-board, .sample-side, .sample-doc, .topic-list article, .notice-section article, .schema-grid article, .timeline li"
+    ".hero-copy, .hero-art, .page-visual, .knowledge-index-visual, .knowledge-index-copy, .index-link, .question-list a, .page-hero, .section-heading, .library-sidebar, .library-main, .composer-board, .path-result, .sample-index-card, .sample-side, .sample-doc, .topic-list article, .notice-section article, .schema-grid article, .version-grid article, .timeline li"
   );
 
   if (!("IntersectionObserver" in window)) {
@@ -642,6 +967,49 @@ function setupReveals() {
   items.forEach((item) => observer.observe(item));
 }
 
+function setupReadingTools() {
+  if (document.querySelector(".reader-tools")) return;
+
+  const clampScale = (value) => Math.min(1.08, Math.max(0.94, value));
+  const storedScale = Number(window.localStorage?.getItem("hmReaderScale") || "1");
+  let readerScale = Number.isFinite(storedScale) ? clampScale(storedScale) : 1;
+
+  const applyScale = () => {
+    document.documentElement.style.fontSize = `${Math.round(readerScale * 100)}%`;
+    try {
+      window.localStorage.setItem("hmReaderScale", String(readerScale));
+    } catch {
+      return false;
+    }
+    return true;
+  };
+
+  applyScale();
+
+  const tools = document.createElement("div");
+  tools.className = "reader-tools";
+  tools.setAttribute("aria-label", "阅读辅助");
+  tools.innerHTML = `
+    <button type="button" data-reader-size="-0.04">字小</button>
+    <button type="button" data-reader-size="0.04">字大</button>
+    <button type="button" data-back-top>顶部</button>
+  `;
+  document.body.appendChild(tools);
+
+  tools.addEventListener("click", (event) => {
+    const sizeButton = event.target.closest("[data-reader-size]");
+    if (sizeButton) {
+      readerScale = clampScale(readerScale + Number(sizeButton.dataset.readerSize));
+      applyScale();
+      return;
+    }
+
+    if (event.target.closest("[data-back-top]")) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  });
+}
+
 function initLibrary() {
   if (!byId("categoryList")) return;
   const params = new URLSearchParams(window.location.search);
@@ -662,6 +1030,8 @@ function initLibrary() {
 
 function init() {
   setupReveals();
+  setupPathBuilder();
+  setupReadingTools();
   initLibrary();
 }
 
