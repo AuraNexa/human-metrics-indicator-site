@@ -34,53 +34,45 @@
       <a class="nav-cta" href="./custom.html">按专题查</a>
     </header>
 
-    <main id="top">
-      <section class="page-hero split-page-hero" aria-labelledby="library-hero-title">
-        <div class="page-hero-copy">
+    <main id="top" class="library-document-page">
+      <section id="library" class="library-browse-section" aria-labelledby="library-title">
+        <aside class="library-left-panel" aria-label="指标查找和分类">
           <p class="section-kicker">指标库</p>
-          <h1 id="library-hero-title"><span>按场景进入，</span><span>按指标拆解。</span></h1>
-          <p>
-            面向公开查阅，把不同场景的指标资料放到同一个入口。你可以顺着分类翻，也可以直接查一个具体词。
-          </p>
-        </div>
-        <figure class="page-visual">
-          <img src="./assets/reading-table-generated.webp" alt="打开的纸质目录、索引页、标签和读书札记" />
-        </figure>
-      </section>
+          <h1 id="library-title">指标库</h1>
 
-      <section id="library" class="library-section library-page-section" aria-labelledby="library-title">
-        <div class="section-heading compact-heading">
-          <p class="section-kicker">目录检索</p>
-          <h2 id="library-title">内容是主体，目录只是索引。</h2>
-          <p>先用上方筛选找到方向。选中条目后，页面以完整资料说明为主，旁边的目录只负责切换和定位。</p>
-        </div>
+          <div class="search-box">
+            <label for="searchInput">查找指标</label>
+            <input id="searchInput" type="search" placeholder="正行、记忆力、婚恋" autocomplete="off" />
+          </div>
 
-        <div class="library-layout">
-          <section class="library-sidebar library-controls" aria-label="查找和分类">
-            <div class="search-box">
-              <label for="searchInput">在目录里查找</label>
-              <input
-                id="searchInput"
-                type="search"
-                placeholder="输入：正行、记忆力、婚恋、管理"
-                autocomplete="off"
-              />
+          <div class="category-area">
+            <p class="control-label">选择方向</p>
+            <div class="category-list" id="categoryList"></div>
+          </div>
+
+          <div class="source-note">
+            <strong>资料范围</strong>
+            <span>左侧用于查找和分类，右侧保持完整资料阅读。当前覆盖资料总纲、修行、孩子、婚恋、学校、员工、管理和普通人基础状态。</span>
+          </div>
+        </aside>
+
+        <div class="library-document-area">
+          <section class="library-topic-hero" aria-labelledby="library-topic-title">
+            <div>
+              <p class="section-kicker" id="libraryTopicLabel">指标资料 / 14 套目录</p>
+              <h2 id="libraryTopicTitle">从指标目录进入。</h2>
+              <p id="libraryTopicCopy">筛选后直接进入当前目录。读者先读完整说明，再用右侧小目录切换相关资料。</p>
             </div>
-            <div class="category-area">
-              <p class="control-label">选择方向</p>
-              <div class="category-list" id="categoryList"></div>
-            </div>
-            <div class="source-note">
-              <strong>资料范围</strong>
-              <span>49 个文件，覆盖资料总纲、修行、孩子、婚恋、学校、员工、管理、普通人基础状态。</span>
-            </div>
+            <figure class="library-topic-visual">
+              <img src="./assets/reading-table-generated.webp" alt="打开的纸质目录、索引页、标签和读书札记" />
+            </figure>
           </section>
 
           <div class="library-reader">
             <section class="library-main" aria-live="polite">
               <div class="catalog-summary">
                 <span><strong id="resultCount">0</strong> 套目录</span>
-                <small>快速切换</small>
+                <small>相关目录</small>
               </div>
               <div id="packGrid" class="pack-grid"></div>
             </section>

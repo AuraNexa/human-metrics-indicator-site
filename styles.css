@@ -19,7 +19,7 @@
   --coral-soft: #f8e6df;
   --green-soft: #e9f2e8;
   --radius: 8px;
-  --max: 1180px;
+  --max: 1420px;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --shadow-soft: 0 14px 40px rgba(63, 53, 41, 0.07);
 }
@@ -775,6 +775,114 @@ h3 {
   padding-top: 34px;
 }
 
+.library-document-page {
+  width: min(100% - 80px, var(--max));
+  margin: 0 auto;
+}
+
+.library-browse-section {
+  display: grid;
+  grid-template-columns: minmax(260px, 300px) minmax(0, 1fr);
+  gap: 58px;
+  padding: 44px 0 88px;
+  align-items: start;
+}
+
+.library-left-panel {
+  position: sticky;
+  top: 96px;
+  min-width: 0;
+  padding-top: 18px;
+}
+
+.library-left-panel h1 {
+  margin: 16px 0 28px;
+  font-size: 2.65rem;
+  line-height: 1.08;
+}
+
+.library-left-panel .search-box {
+  margin-bottom: 26px;
+}
+
+.library-left-panel .category-list {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+
+.library-left-panel .category-button {
+  width: 100%;
+  min-height: 52px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.library-left-panel .category-button strong {
+  font-size: 0.98rem;
+}
+
+.library-left-panel .category-button.is-active {
+  color: var(--teal);
+  border-bottom-color: var(--line);
+}
+
+.library-left-panel .source-note {
+  display: block;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+  font-size: 0.84rem;
+}
+
+.library-left-panel .source-note strong,
+.library-left-panel .source-note span {
+  display: block;
+}
+
+.library-left-panel .source-note span {
+  margin-top: 10px;
+  color: var(--muted);
+}
+
+.library-document-area {
+  min-width: 0;
+}
+
+.library-topic-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 390px);
+  gap: 42px;
+  align-items: center;
+  padding: 24px 0 44px;
+  border-bottom: 1px solid var(--line);
+}
+
+.library-topic-hero h2 {
+  margin: 14px 0 20px;
+  font-size: clamp(3.15rem, 5.1vw, 4.55rem);
+  line-height: 1.03;
+}
+
+.library-topic-hero p:last-child {
+  max-width: 46rem;
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.08rem;
+  line-height: 1.82;
+}
+
+.library-topic-visual {
+  margin: 0;
+}
+
+.library-topic-visual img {
+  width: 100%;
+  aspect-ratio: 1.18;
+  border-radius: var(--radius);
+  object-fit: cover;
+  box-shadow: 0 18px 50px rgba(76, 65, 48, 0.08);
+}
+
 .section-heading {
   display: grid;
   grid-template-columns: minmax(280px, 0.44fr) 1fr;
@@ -801,10 +909,11 @@ h3 {
 
 .library-reader {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(250px, 320px);
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 300px);
   grid-template-areas: "article index";
-  gap: 64px;
+  gap: 54px;
   align-items: start;
+  padding-top: 36px;
 }
 
 .library-sidebar,
@@ -2121,6 +2230,8 @@ h3 {
   .home-page .hero-shell,
   .knowledge-index-section,
   .split-page-hero,
+  .library-browse-section,
+  .library-topic-hero,
   .benchmark-band,
   .section-heading,
   .composer-section,
@@ -2155,6 +2266,33 @@ h3 {
   .page-visual {
     max-width: 860px;
     margin: 0 auto;
+  }
+
+  .library-left-panel {
+    position: static;
+    display: grid;
+    grid-template-columns: minmax(220px, 0.36fr) 1fr;
+    gap: 20px 36px;
+    padding-top: 0;
+  }
+
+  .library-left-panel .section-kicker,
+  .library-left-panel h1 {
+    grid-column: 1;
+  }
+
+  .library-left-panel .search-box {
+    grid-column: 1;
+  }
+
+  .library-left-panel .category-area {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    align-self: end;
+  }
+
+  .library-left-panel .source-note {
+    grid-column: 1 / -1;
   }
 
   .library-controls {
@@ -2251,6 +2389,7 @@ h3 {
   .entry-section,
   .question-section,
   .page-hero,
+  .library-document-page,
   .library-section,
   .model-section,
   .release-section,
@@ -2278,6 +2417,33 @@ h3 {
 
   .page-hero h1 {
     font-size: 3.4rem;
+  }
+
+  .library-browse-section {
+    gap: 34px;
+    padding: 42px 0 72px;
+  }
+
+  .library-left-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .library-left-panel .section-kicker,
+  .library-left-panel h1,
+  .library-left-panel .search-box,
+  .library-left-panel .category-area,
+  .library-left-panel .source-note {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .library-topic-hero {
+    gap: 28px;
+    padding: 10px 0 34px;
+  }
+
+  .library-topic-hero h2 {
+    font-size: 2.8rem;
   }
 
   h2 {
@@ -2462,6 +2628,14 @@ h3 {
 
   .page-hero h1 {
     font-size: 2.5rem;
+  }
+
+  .library-left-panel h1 {
+    font-size: 2.5rem;
+  }
+
+  .library-topic-hero h2 {
+    font-size: 2.32rem;
   }
 
   h2 {
