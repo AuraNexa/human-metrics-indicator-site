@@ -3,11 +3,15 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Human Metrics 人类指标库</title>
+    <title>Human Metrics 人类指标资料库</title>
     <meta
       name="description"
-      content="人类指标库：把修行、婚恋、孩子教育、职场用人等复杂目标拆成可查看、可理解、可组合的指标地图。"
+      content="人类指标资料库：把修行、婚恋、孩子教育、职场用人等复杂问题整理成可查阅的指标资料、阅读样板和专题目录。"
     />
+    <meta property="og:title" content="Human Metrics 人类指标资料库" />
+    <meta property="og:description" content="看目录、读样板、理解指标边界。这里是资料阅读型知识网站。" />
+    <meta property="og:image" content="./assets/human-metrics-hero-v2.webp" />
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./styles.css" />
     <script src="./app.js" defer></script>
   </head>
@@ -17,50 +21,85 @@
       <a class="brand" href="./index.html" aria-label="Human Metrics 首页">
         <span>
           <strong>Human Metrics</strong>
-          <small>人类指标库</small>
+          <small>人类指标资料库</small>
         </span>
       </a>
       <nav class="top-nav" aria-label="主导航">
         <a href="./index.html" aria-current="page">首页</a>
         <a href="./library.html">指标库</a>
-        <a href="./custom.html">组合指标</a>
-        <a href="./roadmap.html">制作路线</a>
+        <a href="./sample.html">阅读样板</a>
+        <a href="./custom.html">专题组合</a>
+        <a href="./roadmap.html">整理方法</a>
       </nav>
-      <a class="nav-cta" href="./library.html">进入指标库</a>
+      <a class="nav-cta" href="./library.html">查看目录</a>
     </header>
 
     <main id="top">
       <section class="hero-shell" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <p class="status-line">知识索引 · 指标说明 · 场景目录</p>
-          <h1 id="hero-title">一套可查的人类指标说明书</h1>
+          <p class="status-line">资料索引 · 指标说明 · 阅读样板</p>
+          <h1 id="hero-title">人类指标资料库</h1>
           <p class="hero-lede">
-            把婚姻、修行、孩子教育、职场用人和个人状态，整理成能查阅、能理解、能组合的知识目录。
+            把婚姻、修行、孩子教育、职场用人和个人状态，整理成能查阅、能理解、能复看的资料目录。重点是看资料、读样板、理解边界。
           </p>
           <div class="hero-actions">
-            <a class="text-action primary-link" href="./library.html">浏览公开指标</a>
-            <a class="text-action" href="./custom.html">了解组合指标</a>
+            <a class="text-action primary-link" href="./library.html">进入资料目录</a>
+            <a class="text-action" href="./sample.html">看完整样板</a>
           </div>
           <div class="hero-metrics" aria-label="素材规模">
             <span><strong>49</strong>素材文件</span>
             <span><strong>14</strong>首批目录</span>
-            <span><strong>7</strong>核心方向</span>
+            <span><strong>7</strong>阅读方向</span>
           </div>
         </div>
 
         <figure class="hero-art knowledge-hero-art" aria-label="指标知识插画">
-          <img src="./assets/human-metrics-hero-v2.png" alt="打开的知识书籍、指标图谱和分类档案插画" />
+          <img src="./assets/human-metrics-hero-v2.webp" alt="打开的知识书籍、指标图谱和分类档案插画" />
         </figure>
+      </section>
+
+      <section class="question-section" aria-labelledby="question-title">
+        <div class="section-heading compact-heading">
+          <p class="section-kicker">按问题查</p>
+          <h2 id="question-title">先从一个真实问题进入。</h2>
+          <p>资料库不是让人先理解全部目录，而是从当下关心的问题开始，顺着相关指标往下读。</p>
+        </div>
+        <div class="question-list" aria-label="常见阅读入口">
+          <a href="./library.html?category=child">
+            <span>孩子学习吃力</span>
+            <strong>学习底盘、写作业、家庭关系</strong>
+          </a>
+          <a href="./library.html?category=relationship">
+            <span>一段关系看不清</span>
+            <strong>交往意愿、长期目的、安全边界</strong>
+          </a>
+          <a href="./library.html?category=practice">
+            <span>修行状态波动大</span>
+            <strong>正念正心、正行落实、长期稳定</strong>
+          </a>
+          <a href="./library.html?category=work">
+            <span>员工能不能用</span>
+            <strong>可信任度、岗位适配、隐性消耗</strong>
+          </a>
+          <a href="./library.html?category=school">
+            <span>孩子在学校是否安全</span>
+            <strong>上学安全感、同伴关系、校园风险</strong>
+          </a>
+          <a href="./library.html?category=general">
+            <span>最近状态需要复盘</span>
+            <strong>睡眠、压力、情绪、行动力</strong>
+          </a>
+        </div>
       </section>
 
       <section id="entry" class="entry-section knowledge-index-section" aria-labelledby="entry-title">
         <figure class="knowledge-index-visual">
-          <img src="./assets/library-archive-v2.png" alt="五组知识档案夹和放大镜组成的指标目录插画" />
+          <img src="./assets/library-archive-v2.webp" alt="五组知识档案夹和放大镜组成的指标目录插画" />
         </figure>
         <div class="knowledge-index-copy">
           <p class="section-kicker">从目录进入</p>
           <h2 id="entry-title">先选一个你关心的问题。</h2>
-          <p>首页只保留入口。具体指标、筛选、详情和组合规则放到独立页面，阅读起来更像知识库。</p>
+          <p>首页只保留入口。具体指标、筛选、详情、样板和专题阅读路径放到独立页面，阅读起来更像资料馆。</p>
 
           <div class="home-entry-list" aria-label="快速进入指标方向">
             <a class="index-link node-practice" href="./library.html?category=practice">
@@ -82,17 +121,18 @@
         </div>
 
         <p class="legal-note home-note">
-          内容仅供娱乐、自我观察与日常交流参考，不构成医学、心理、法律、财务、教育或招聘专业建议。
+          内容仅供娱乐、自我观察与日常交流参考，不构成医学、心理、法律、财务、教育或招聘专业建议。详细边界见
+          <a href="./notice.html">阅读须知</a>。
         </p>
       </section>
     </main>
 
     <footer class="site-footer">
       <div>
-        <strong>Human Metrics 人类指标库</strong>
+        <strong>Human Metrics 人类指标资料库</strong>
         <p>日常观察 · 了解当下 · 辅助修正</p>
       </div>
-      <p>所有内容仅供娱乐和日常交流参考，不对任何现实决策结果作保证。</p>
+      <p><a href="./notice.html">阅读须知</a> · 所有内容仅供娱乐和日常交流参考，不对任何现实决策结果作保证。</p>
     </footer>
   </body>
 </html>

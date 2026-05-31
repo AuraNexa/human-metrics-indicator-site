@@ -4,7 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>指标库 · Human Metrics</title>
-    <meta name="description" content="按场景浏览人类指标库，查看指标目录、样例指标和解释边界。" />
+    <meta name="description" content="按场景浏览人类指标资料，查看目录、样例指标和解释边界。" />
+    <meta property="og:title" content="指标库 · Human Metrics" />
+    <meta property="og:description" content="按场景浏览指标资料，查看目录、样例指标和阅读边界。" />
+    <meta property="og:image" content="./assets/catalog-reading-v3.webp" />
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./styles.css" />
     <script src="./app.js" defer></script>
   </head>
@@ -14,16 +18,17 @@
       <a class="brand" href="./index.html" aria-label="Human Metrics 首页">
         <span>
           <strong>Human Metrics</strong>
-          <small>人类指标库</small>
+          <small>人类指标资料库</small>
         </span>
       </a>
       <nav class="top-nav" aria-label="主导航">
         <a href="./index.html">首页</a>
         <a href="./library.html" aria-current="page">指标库</a>
-        <a href="./custom.html">组合指标</a>
-        <a href="./roadmap.html">制作路线</a>
+        <a href="./sample.html">阅读样板</a>
+        <a href="./custom.html">专题组合</a>
+        <a href="./roadmap.html">整理方法</a>
       </nav>
-      <a class="nav-cta" href="./custom.html">组合指标</a>
+      <a class="nav-cta" href="./sample.html">看样板</a>
     </header>
 
     <main id="top">
@@ -32,11 +37,11 @@
           <p class="section-kicker">指标库</p>
           <h1 id="library-hero-title">按场景进入，按指标拆解。</h1>
           <p>
-            第一版先把公开展示、内部指标池和场景组合整理成可阅读的目录。你可以顺着分类翻，也可以直接查一个具体词。
+            把公开说明、内部指标池和场景专题整理成可阅读的目录。你可以顺着分类翻，也可以直接查一个具体词。
           </p>
         </div>
         <figure class="page-visual">
-          <img src="./assets/catalog-reading-v3.png" alt="打开的纸质目录、索引页、标签和读书札记" />
+          <img src="./assets/catalog-reading-v3.webp" alt="打开的纸质目录、索引页、标签和读书札记" />
         </figure>
       </section>
 
@@ -44,7 +49,7 @@
         <div class="section-heading compact-heading">
           <p class="section-kicker">目录检索</p>
           <h2 id="library-title">指标目录</h2>
-          <p>先选大类，再看目录条目。点开条目后，详情区只显示当前目录的结构和样例指标。</p>
+          <p>先选大类，再看目录条目。点开条目后，详情区只显示当前目录的结构、样例指标和阅读边界。</p>
         </div>
 
         <div class="library-layout">
@@ -90,10 +95,10 @@
 
     <footer class="site-footer">
       <div>
-        <strong>Human Metrics 人类指标库</strong>
+        <strong>Human Metrics 人类指标资料库</strong>
         <p>日常观察 · 了解当下 · 辅助修正</p>
       </div>
-      <p>内容仅供娱乐和日常交流参考，不构成专业建议。</p>
+      <p><a href="./notice.html">阅读须知</a> · 内容仅供娱乐和日常交流参考，不构成专业建议。</p>
     </footer>
   </body>
 </html>

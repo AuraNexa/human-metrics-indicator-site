@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Human Metrics">
+  <rect width="64" height="64" rx="12" fill="#fbfaf6"/>
+  <path d="M16 17h32v5H16zM16 30h32v5H16zM16 43h32v5H16z" fill="#22302d"/>
+  <circle cx="48" cy="19.5" r="4.5" fill="#2f9d91"/>
+  <circle cx="28" cy="32.5" r="4.5" fill="#8064ad"/>
+  <circle cx="39" cy="45.5" r="4.5" fill="#d9a530"/>
+</svg>

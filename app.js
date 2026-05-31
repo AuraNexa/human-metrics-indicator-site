@@ -132,7 +132,7 @@ const indicatorPacks = [
     title: "小孩子写作业指标",
     count: 104,
     source: "小孩子写作业指标_B版本_标准实用交付版 (1).pdf",
-    audience: "家长购买后标准交付",
+    audience: "家长阅读 / 标准说明",
     summary:
       "从作业负荷、会不会、专注启动、情绪压力、家长干预和结果损耗看作业问题。",
     tags: ["12 大类", "家长能看懂", "标准交付"],
@@ -508,9 +508,9 @@ function renderDetail(pack, indicator = null) {
           <dd>${activeIndicator.improve}</dd>
         </div>
       </dl>
-      <button class="add-button" type="button" data-add-indicator="${activeIndicator.code}">
-        摘入组合草稿
-      </button>
+      <a class="add-button" href="./custom.html">
+        查看专题阅读方式
+      </a>
     </div>
   `;
 }
@@ -524,18 +524,18 @@ function renderComposer() {
   const list = byId("selectedIndicators");
 
   if (count === 0) {
-    status.textContent = "还没有加入指标";
-    hint.textContent = "在指标详情里点击“加入组合”，这里会实时显示组合进度。";
+    status.textContent = "还没有加入阅读清单";
+    hint.textContent = "后续版本会支持把指标加入本地专题清单，当前版本先展示阅读路径。";
     list.innerHTML = "";
     return;
   }
 
   if (count < 15) {
-    status.textContent = `还差 ${15 - count} 项可形成组合`;
-    hint.textContent = "首版建议每个自定义组合至少 15 项，避免样本太少导致解释过轻。";
+    status.textContent = `还差 ${15 - count} 项可形成专题`;
+    hint.textContent = "每个专题建议至少覆盖 15 项，避免样本太少导致解释过轻。";
   } else {
-    status.textContent = "组合数量已达标";
-    hint.textContent = "后续版本可保留为专属目录，并生成复查页或说明页。";
+    status.textContent = "专题数量已达标";
+    hint.textContent = "后续版本可保留为本地专题目录，并生成复查页或说明页。";
   }
 
   list.innerHTML = Array.from(state.selectedIndicators.values())
@@ -615,7 +615,7 @@ function setupEvents() {
 
 function setupReveals() {
   const items = document.querySelectorAll(
-    ".hero-copy, .hero-art, .page-visual, .knowledge-index-visual, .knowledge-index-copy, .index-link, .page-hero, .section-heading, .library-sidebar, .library-main, .detail-panel, .composer-board, .schema-grid article, .timeline li"
+    ".hero-copy, .hero-art, .page-visual, .knowledge-index-visual, .knowledge-index-copy, .index-link, .question-list a, .page-hero, .section-heading, .library-sidebar, .library-main, .detail-panel, .composer-board, .sample-side, .sample-doc, .topic-list article, .notice-section article, .schema-grid article, .timeline li"
   );
 
   if (!("IntersectionObserver" in window)) {
