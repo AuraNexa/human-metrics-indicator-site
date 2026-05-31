@@ -6,7 +6,7 @@ const categories = [
   { id: "relationship", label: "婚恋关系", short: "Love" },
   { id: "work", label: "职场用人", short: "Work" },
   { id: "school", label: "学校风险", short: "School" },
-  { id: "system", label: "项目总纲", short: "System" },
+  { id: "system", label: "资料总纲", short: "System" },
 ];
 
 const indicatorPacks = [
@@ -20,7 +20,7 @@ const indicatorPacks = [
     audience: "公开阅读 / 日常自查",
     summary:
       "对外解释各项基础指标的大致含义，强调只代表当下状态，适合做公开阅读页。",
-    tags: ["公开版", "免责清晰", "样板内容"],
+    tags: ["公开版", "免责清晰", "公开说明"],
     groups: [
       { name: "正向指标", note: "正心、正念、正行等，数值越高代表正向状态越明显。" },
       { name: "负向指标", note: "用于观察当下偏差、阻力或风险，不做永久定性。" },
@@ -85,11 +85,11 @@ const indicatorPacks = [
     code: "HM-POISON-009",
     title: "五毒四心指标体系",
     count: 9,
-    source: "五毒四心指标体系_内部完整版本.docx",
-    audience: "内部服务人员 / 深度解释",
+    source: "五毒四心指标体系完整说明",
+    audience: "深度阅读 / 心性风险理解",
     summary:
       "五毒是深层污染源，四心是在人际、身份、利益和比较中的外在显化。",
-    tags: ["内部版", "心性风险", "修行阻力"],
+    tags: ["深度版", "心性风险", "修行阻力"],
     groups: [
       { name: "五毒", note: "贪、嗔、痴、慢、疑，观察较深层的心性污染源。" },
       { name: "四心", note: "嫉妒心、虚荣心、分别心、攀比心，观察外在显化。" },
@@ -108,11 +108,11 @@ const indicatorPacks = [
     code: "HM-CHD-LEARN-014",
     title: "孩子学习素质基础指标",
     count: 14,
-    source: "child_learning_quality_internal_detailed.pdf",
+    source: "孩子学习素质基础指标详细说明",
     audience: "父母 / 咨询人员 / 服务人员",
     summary:
       "判断孩子是否具备常规知识学习、课堂学习、考试学习的基础底盘，避免只盯成绩。",
-    tags: ["学习底盘", "父母沟通", "内部详细版"],
+    tags: ["学习底盘", "父母沟通", "详细说明"],
     groups: [
       { name: "吸收能力", note: "理解能力、记忆力、应用能力。" },
       { name: "学习状态", note: "兴趣、主动性、专注、坐得住。" },
@@ -131,7 +131,7 @@ const indicatorPacks = [
     code: "HM-CHD-HW-104",
     title: "小孩子写作业指标",
     count: 104,
-    source: "小孩子写作业指标_B版本_标准实用交付版 (1).pdf",
+    source: "小孩子写作业指标标准说明",
     audience: "家长阅读 / 标准说明",
     summary:
       "从作业负荷、会不会、专注启动、情绪压力、家长干预和结果损耗看作业问题。",
@@ -154,11 +154,11 @@ const indicatorPacks = [
     code: "HM-CHD-FAM-029",
     title: "孩子家庭关系指标",
     count: 29,
-    source: "孩子家庭关系指标体系_29项_内部培训详细版.pdf",
-    audience: "内部培训 / 亲子关系解读",
+    source: "孩子家庭关系指标体系 29 项详细说明",
+    audience: "亲子关系查阅 / 家庭观察",
     summary:
       "站在孩子角度，看家庭关系是在滋养孩子，还是在控制、压迫、消耗、伤害孩子。",
-    tags: ["孩子视角", "亲子关系", "内部培训"],
+    tags: ["孩子视角", "亲子关系", "详细说明"],
     groups: [
       { name: "关系滋养", note: "被爱感、家庭安全感、被理解感、亲子信任度。" },
       { name: "关系压力", note: "情绪压迫、家庭控制、父母施压、委屈和怨气。" },
@@ -177,7 +177,7 @@ const indicatorPacks = [
     code: "HM-SCH-093",
     title: "小孩子学校生活与校园风险",
     count: 93,
-    source: "B版本：学校指标标准实用交付版.pdf",
+    source: "学校生活与校园风险指标标准说明",
     audience: "家长 / 校园风险排查",
     summary:
       "看见孩子在学校里的真实处境：适应、课堂、同学、老师、霸凌、坏影响、早恋和家校信息。",
@@ -200,11 +200,11 @@ const indicatorPacks = [
     code: "HM-REL-F-025",
     title: "女性选择男友 25 项前置筛查",
     count: 25,
-    source: "女性选择男友指标_S版本_25项前置筛查.pdf",
+    source: "女性选择男友 25 项前置筛查说明",
     audience: "女性婚恋选择 / 咨询辅助",
     summary:
       "用较少指标判断一个男人值不值得继续投入感情、时间、金钱和婚恋期待。",
-    tags: ["S 版本", "前置筛查", "安全边界"],
+    tags: ["前置筛查", "安全边界", "关系观察"],
     groups: [
       { name: "感情真实", note: "爱意真实度、情感投入、主动投入、不善言辞。" },
       { name: "长期目的", note: "交往意图、认真程度、长期关系意愿、结婚导向。" },
@@ -293,17 +293,17 @@ const indicatorPacks = [
     title: "评价一个人的总指标体系",
     count: 525,
     source: "评价一个人的总指标体系_V0.2_完整总指标池.docx",
-    audience: "内部识人 / 筛人 / 育人 / 用人",
+    audience: "识人 / 用人 / 关系观察",
     summary:
       "28 个横向模块构成完整总指标池，适合作为所有场景目录的上游母库。",
-    tags: ["母库", "28 类", "内部组合"],
+    tags: ["母库", "28 类", "完整结构"],
     groups: [
       { name: "内在与认知", note: "心性、人品、自我认知、智慧、事实识别、主心骨。" },
       { name: "行动与关系", note: "情绪、自律、执行、成长、人情世故、合作、信任风险。" },
       { name: "人生场景", note: "事业、管理、家庭、亲密关系、子女教育、修行、能量状态。" },
     ],
     indicators: [
-      createIndicator("POOL-01", "内在心性", "母类", "作为个人判断的底层模块，影响其他能力如何被使用。", "心性底盘弱，能力可能反向放大风险。", "心性稳定时，能力更容易用于成事。", "对外整理时拆成普通人版、员工版、修行人版。"),
+      createIndicator("POOL-01", "内在心性", "母类", "作为个人判断的底层模块，影响其他能力如何被使用。", "心性底盘弱，能力可能反向放大风险。", "心性稳定时，能力更容易用于成事。", "对外查阅时可拆成普通人版、员工版、修行人版。"),
       createIndicator("POOL-02", "事实识别", "母类", "观察能不能分清事实、解释、情绪和幻想。", "容易被话术、情绪或偏见带偏。", "能抓住事实和证据。", "所有关系判断都应先过事实层。"),
       createIndicator("POOL-03", "关系合作", "母类", "观察在合作、亲密、人际和团队中的稳定性。", "容易纠缠、误判或破坏合作。", "边界清楚，合作成本低。", "按场景抽取，不做大而全打分。"),
       createIndicator("POOL-04", "修行专项", "母类", "为修行人保留专项指标，如心性、能量、状态和行为落地。", "容易只听道理不落地。", "能持续修正并稳定行动。", "和日常自查指标联动。"),
@@ -313,21 +313,21 @@ const indicatorPacks = [
     id: "human-manual",
     category: "system",
     code: "HM-MANUAL",
-    title: "人类说明书项目总纲",
+    title: "人类说明书资料总纲",
     count: 9,
-    source: "人类说明书_项目总纲_详细文字版_一字不差 (1).docx",
-    audience: "品牌总表达 / 项目介绍",
+    source: "人类说明书资料总纲",
+    audience: "资料总览 / 理念说明",
     summary:
       "从看见真相、认知重构、指标化检查、规则学习，到修正训练、身心灵处理和法界认知。",
-    tags: ["项目定位", "总纲", "品牌叙事"],
+    tags: ["资料定位", "总纲", "阅读入口"],
     groups: [
       { name: "看见真相", note: "解释痛苦、关系、家庭、修行和命运背后的运行逻辑。" },
       { name: "指标化检查", note: "把问题拆出来，看见真实状态、短板和修正方向。" },
       { name: "修正与训练", note: "把规则落实到表达、选择、情绪、关系、习惯和行动中。" },
     ],
     indicators: [
-      createIndicator("MAN-01", "展示真相", "阶段", "先让人看到过去没有看到的真相。", "只停留在安慰，问题结构看不清。", "能看见自己反复卡住的底层逻辑。", "首页可作为品牌理念入口。"),
-      createIndicator("MAN-02", "认知重构", "阶段", "用新的思维模型替换旧认知、旧判断和旧关系模式。", "知道痛苦但仍用旧模型处理。", "判断方式开始改变。", "用案例和指标详情支撑。"),
+      createIndicator("MAN-01", "看见真相", "阶段", "先让人看到过去没有看到的真相。", "只停留在安慰，问题结构看不清。", "能看见自己反复卡住的底层逻辑。", "可作为理解资料库理念的入口。"),
+      createIndicator("MAN-02", "认知重构", "阶段", "用新的思维模型替换旧认知、旧判断和旧关系模式。", "知道痛苦但仍用旧模型处理。", "判断方式开始改变。", "用实际问题和指标详情支撑。"),
       createIndicator("MAN-03", "指标化检查", "阶段", "通过指标系统看见真实状态、问题结构和短板。", "只能凭感觉判断自己。", "知道自己现在在哪里、缺什么。", "网站核心内容围绕这一项展开。"),
       createIndicator("MAN-04", "规则学习", "阶段", "理解问题背后的运行规则。", "只看结果，不知道为什么重复出错。", "能从规则层面找到修正方向。", "把每个指标都连接到规则解释。"),
     ],
@@ -451,7 +451,7 @@ function categoryLabel(categoryId) {
 
 function accessLabel(pack) {
   const text = `${pack.audience} ${pack.tags.join(" ")}`;
-  if (text.includes("内部")) return "内部结构参考";
+  if (text.includes("详细")) return "结构参考";
   if (text.includes("公开")) return "公开阅读";
   return "场景阅读";
 }
@@ -496,8 +496,8 @@ function readingGuideFor(pack) {
     },
     system: {
       scene: "适合先理解整套指标资料如何拆问题、建目录、做边界，再进入具体场景。",
-      order: "先读项目总纲，再看个人总指标池，最后按孩子、婚恋、职场或修行场景抽取。",
-      caution: "不要把总纲当成直接结论；总纲是地图，具体判断仍要回到场景和样例指标。",
+      order: "先读资料总纲，再看个人总指标池，最后按孩子、婚恋、职场或修行场景抽取。",
+      caution: "不要把总纲当成直接结论；总纲是地图，具体判断仍要回到场景和代表指标。",
       next: "读完总纲后，建议选择一个真实问题进入对应目录，而不是一次看完所有内容。",
     },
   };
@@ -664,7 +664,7 @@ function renderDetail(pack, indicator = null) {
     host.innerHTML = `
       <p class="detail-eyebrow">当前目录</p>
       <p class="empty-title">选择一个指标目录</p>
-      <p class="empty-copy">点击任意目录条目，即可查看结构、适用场景、样例指标和表达边界。</p>
+      <p class="empty-copy">点击任意目录条目，即可查看结构、适用场景、代表指标和表达边界。</p>
     `;
     return;
   }
@@ -699,7 +699,7 @@ function renderDetail(pack, indicator = null) {
         <strong>${pack.source}</strong>
       </div>
       <div>
-        <span>整理时间</span>
+        <span>更新日期</span>
         <strong>2026-05-31</strong>
       </div>
     </div>
@@ -734,8 +734,8 @@ function renderDetail(pack, indicator = null) {
         .join("")}
     </div>
 
-    <p class="detail-subtitle">样例指标</p>
-    <div class="indicator-list" aria-label="样例指标">
+    <p class="detail-subtitle">代表指标</p>
+    <div class="indicator-list" aria-label="代表指标">
       ${pack.indicators
         .map(
           (item) => `
@@ -749,7 +749,7 @@ function renderDetail(pack, indicator = null) {
     </div>
 
     <div class="indicator-detail">
-      <p class="detail-eyebrow">当前样例</p>
+      <p class="detail-eyebrow">当前指标</p>
       <p class="detail-meta-line">
         <span>${activeIndicator.code}</span>
         <span>${activeIndicator.polarity}</span>
@@ -774,7 +774,7 @@ function renderDetail(pack, indicator = null) {
         </div>
       </dl>
       <a class="add-button" href="./custom.html">
-        查看专题阅读方式
+        按专题继续查
       </a>
     </div>
 
@@ -831,11 +831,11 @@ function renderComposer() {
   }
 
   if (count < 15) {
-    status.textContent = `还差 ${15 - count} 项可形成专题`;
-    hint.textContent = "每个专题建议至少覆盖 15 项，避免样本太少导致解释过轻。";
+    status.textContent = `还差 ${15 - count} 项可形成完整查阅路径`;
+    hint.textContent = "建议至少覆盖 15 项，避免只看单个角度。";
   } else {
-    status.textContent = "专题数量已达标";
-    hint.textContent = "这一组可以作为临时专题目录，用来复看同一个真实问题。";
+    status.textContent = "已形成完整查阅路径";
+    hint.textContent = "这一组可以用来复看同一个真实问题。";
   }
 
   list.innerHTML = Array.from(state.selectedIndicators.values())

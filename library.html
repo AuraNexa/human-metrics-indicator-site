@@ -8,9 +8,9 @@
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="canonical" href="https://human-metrics-indicator-site.pages.dev/library.html" />
     <title>指标库 · Human Metrics</title>
-    <meta name="description" content="按场景浏览人类指标资料，查看目录、样例指标和解释边界。" />
+    <meta name="description" content="按场景浏览人类指标资料，查看目录、代表指标和解释边界。" />
     <meta property="og:title" content="指标库 · Human Metrics" />
-    <meta property="og:description" content="按场景浏览指标资料，查看目录、样例指标和阅读边界。" />
+    <meta property="og:description" content="按场景浏览指标资料，查看目录、代表指标和阅读边界。" />
     <meta property="og:image" content="https://human-metrics-indicator-site.pages.dev/assets/share-cover.webp" />
     <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./styles.css" />
@@ -28,11 +28,10 @@
       <nav class="top-nav" aria-label="主导航">
         <a href="./index.html">首页</a>
         <a href="./library.html" aria-current="page">指标库</a>
-        <a href="./sample.html">阅读样板</a>
-        <a href="./custom.html">专题组合</a>
-        <a href="./roadmap.html">整理方法</a>
+        <a href="./custom.html">专题查询</a>
+        <a href="./sample.html">查阅说明</a>
       </nav>
-      <a class="nav-cta" href="./sample.html">看样板</a>
+      <a class="nav-cta" href="./custom.html">按专题查</a>
     </header>
 
     <main id="top">
@@ -41,7 +40,7 @@
           <p class="section-kicker">指标库</p>
           <h1 id="library-hero-title">按场景进入，按指标拆解。</h1>
           <p>
-            把公开说明、内部指标池和场景专题整理成可阅读的目录。你可以顺着分类翻，也可以直接查一个具体词。
+            面向公开查阅，把不同场景的指标资料放到同一个入口。你可以顺着分类翻，也可以直接查一个具体词。
           </p>
         </div>
         <figure class="page-visual">
@@ -52,8 +51,8 @@
       <section id="library" class="library-section library-page-section" aria-labelledby="library-title">
         <div class="section-heading compact-heading">
           <p class="section-kicker">目录检索</p>
-          <h2 id="library-title">指标目录</h2>
-          <p>先选大类，再看目录条目。点开条目后，详情区只显示当前目录的结构、样例指标和阅读边界。</p>
+          <h2 id="library-title">内容是主体，目录只是索引。</h2>
+          <p>先用上方筛选找到方向。选中条目后，页面以完整资料说明为主，旁边的目录只负责切换和定位。</p>
         </div>
 
         <div class="library-layout">
@@ -73,7 +72,7 @@
             </div>
             <div class="source-note">
               <strong>资料范围</strong>
-              <span>49 个文件，覆盖项目总纲、修行、孩子、婚恋、学校、员工、管理、普通人基础状态。</span>
+              <span>49 个文件，覆盖资料总纲、修行、孩子、婚恋、学校、员工、管理、普通人基础状态。</span>
             </div>
           </section>
 
@@ -81,7 +80,7 @@
             <section class="library-main" aria-live="polite">
               <div class="catalog-summary">
                 <span><strong id="resultCount">0</strong> 套目录</span>
-                <small>先看目录条目，选中后展开当前目录的结构、边界和样例。</small>
+                <small>快速切换</small>
               </div>
               <div id="packGrid" class="pack-grid"></div>
             </section>
@@ -89,7 +88,7 @@
             <aside class="detail-panel" aria-label="指标详情">
               <div class="detail-card" id="detailPanel">
                 <p class="empty-title">选择一个指标目录</p>
-                <p class="empty-copy">点击任意目录条目，即可查看结构、样例指标和表达边界。</p>
+                <p class="empty-copy">点击任意目录条目，即可查看结构、代表指标和表达边界。</p>
               </div>
             </aside>
           </div>
