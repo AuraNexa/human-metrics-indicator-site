@@ -44,11 +44,11 @@
         <div class="section-heading compact-heading">
           <p class="section-kicker">目录检索</p>
           <h2 id="library-title">指标目录</h2>
-          <p>像翻一本手册一样查看指标。左边是大类，中间是目录条目，右边是当前条目的读书札记。</p>
+          <p>先选大类，再看目录条目。点开条目后，详情区只显示当前目录的结构和样例指标。</p>
         </div>
 
         <div class="library-layout">
-          <aside class="library-sidebar" aria-label="指标分类">
+          <section class="library-sidebar library-controls" aria-label="查找和分类">
             <div class="search-box">
               <label for="searchInput">在目录里查找</label>
               <input
@@ -58,27 +58,32 @@
                 autocomplete="off"
               />
             </div>
-            <div class="category-list" id="categoryList"></div>
+            <div class="category-area">
+              <p class="control-label">选择方向</p>
+              <div class="category-list" id="categoryList"></div>
+            </div>
             <div class="source-note">
               <strong>资料范围</strong>
               <span>49 个文件，覆盖项目总纲、修行、孩子、婚恋、学校、员工、管理、普通人基础状态。</span>
             </div>
-          </aside>
-
-          <section class="library-main" aria-live="polite">
-            <div class="catalog-summary">
-              <span><strong id="resultCount">0</strong> 套目录</span>
-              <small>点击任意条目，右侧展开结构和样例指标。</small>
-            </div>
-            <div id="packGrid" class="pack-grid"></div>
           </section>
 
-          <aside class="detail-panel" aria-label="指标详情">
-            <div class="detail-card" id="detailPanel">
-              <p class="empty-title">选择一个指标目录</p>
-              <p class="empty-copy">点击任意目录条目，即可查看结构、样例指标和表达边界。</p>
-            </div>
-          </aside>
+          <div class="library-reader">
+            <section class="library-main" aria-live="polite">
+              <div class="catalog-summary">
+                <span><strong id="resultCount">0</strong> 套目录</span>
+                <small>先看目录条目，选中后展开当前目录的结构、边界和样例。</small>
+              </div>
+              <div id="packGrid" class="pack-grid"></div>
+            </section>
+
+            <aside class="detail-panel" aria-label="指标详情">
+              <div class="detail-card" id="detailPanel">
+                <p class="empty-title">选择一个指标目录</p>
+                <p class="empty-copy">点击任意目录条目，即可查看结构、样例指标和表达边界。</p>
+              </div>
+            </aside>
+          </div>
         </div>
       </section>
     </main>

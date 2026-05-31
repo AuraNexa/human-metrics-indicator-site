@@ -399,11 +399,12 @@ function renderPacks() {
   byId("resultCount").textContent = String(packs.length);
   const host = byId("packGrid");
   host.innerHTML = packs
-    .map((pack) => {
+    .map((pack, index) => {
       const category = categories.find((item) => item.id === pack.category);
       return `
         <button class="pack-card ${state.selectedPackId === pack.id ? "is-active" : ""}" type="button" data-pack="${pack.id}">
           <div class="pack-meta">
+            <span class="pack-number">${String(index + 1).padStart(2, "0")}</span>
             <span class="pack-code">${pack.code}</span>
             <span>${category ? category.label : ""} / ${pack.count} 项</span>
           </div>
@@ -419,7 +420,11 @@ function renderPacks() {
 
   if (!packs.length) {
     host.innerHTML = `
-      <div class="pack-card">
+      <div class="pack-card empty-pack-card">
+        <div class="pack-meta">
+          <span class="pack-number">00</span>
+          <span>未匹配</span>
+        </div>
         <h3>没有找到匹配内容</h3>
         <p>换一个关键词试试，例如“孩子”“正行”“风险”“婚恋”“管理”。</p>
       </div>
@@ -431,6 +436,7 @@ function renderDetail(pack, indicator = null) {
   const host = byId("detailPanel");
   if (!pack) {
     host.innerHTML = `
+      <p class="detail-eyebrow">当前目录</p>
       <p class="empty-title">选择一个指标目录</p>
       <p class="empty-copy">点击任意目录条目，即可查看结构、适用场景、样例指标和表达边界。</p>
     `;
@@ -440,6 +446,7 @@ function renderDetail(pack, indicator = null) {
   const activeIndicator = indicator || pack.indicators[0];
   state.activeIndicatorKey = `${pack.id}:${activeIndicator.code}`;
   host.innerHTML = `
+    <p class="detail-eyebrow">当前目录</p>
     <p class="detail-meta-line">
       <span>${pack.code}</span>
       <span>${pack.count} 项</span>
@@ -467,7 +474,7 @@ function renderDetail(pack, indicator = null) {
       ${pack.indicators
         .map(
           (item) => `
-          <button class="indicator-row" type="button" data-indicator="${item.code}">
+          <button class="indicator-row ${item.code === activeIndicator.code ? "is-active" : ""}" type="button" data-indicator="${item.code}">
             <strong>${item.name}</strong>
             <span>${item.code} · ${item.polarity}</span>
           </button>
@@ -477,6 +484,7 @@ function renderDetail(pack, indicator = null) {
     </div>
 
     <div class="indicator-detail">
+      <p class="detail-eyebrow">当前样例</p>
       <p class="detail-meta-line">
         <span>${activeIndicator.code}</span>
         <span>${activeIndicator.polarity}</span>
