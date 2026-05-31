@@ -31,67 +31,44 @@
         <a href="./custom.html" aria-current="page">专题查询</a>
         <a href="./sample.html">查阅说明</a>
       </nav>
-      <a class="nav-cta" href="./library.html">查看目录</a>
+      <a class="nav-cta" href="#path-builder">按专题查</a>
     </header>
 
     <main id="top">
-      <section id="custom" class="page-hero split-page-hero" aria-labelledby="custom-title">
+      <section id="custom" class="page-hero split-page-hero custom-query-hero" aria-labelledby="custom-title">
         <div class="page-hero-copy">
           <p class="section-kicker">专题查询</p>
-          <h1 id="custom-title"><span>围绕一个问题，</span><span>串起几套资料。</span></h1>
+          <h1 id="custom-title"><span>先选一个问题，</span><span>再查相关指标。</span></h1>
           <p>
-            固定目录适合查单项，专题查询适合围绕一个完整问题阅读：比如孩子写作业、关系是否继续、员工能不能用、管理风险复盘。
+            先从真实问题进入，再按相关目录继续查阅。适合第一次进入，不确定该看哪个目录时使用。
           </p>
-          <div class="hero-actions">
-            <a class="text-action primary-link" href="#path-builder">选择问题</a>
-            <a class="text-action" href="./library.html">进入指标库</a>
-          </div>
         </div>
         <figure class="page-visual">
-          <img src="./assets/custom-bundle-v2.webp" alt="成组摆放的指标卡片和分类标签" />
+          <img src="./assets/custom-bundle-v2.webp" alt="桌面上按关系排列的资料卡片" />
         </figure>
       </section>
 
-      <section class="composer-section standalone-composer" aria-labelledby="composer-title">
-        <div>
-          <p class="section-kicker">查阅规则</p>
-          <h2 id="composer-title">一个问题，通常要看多项指标。</h2>
-          <p>
-            少量指标只能解释一个角度。围绕真实问题查阅时，需要同时看目标、状态、风险、行为和调整方向，才不容易被单项结论带偏。
-          </p>
-        </div>
-        <div class="composer-board">
-          <div class="rule-number" aria-hidden="true">
-            <strong>15</strong>
-            <span>项起读</span>
-          </div>
-          <div>
-            <h3>按问题串起相关指标</h3>
-            <p>
-              可以从多个指标方向里找到相关条目，形成“孩子学习观察清单”“技术人员观察清单”“亲密关系复盘清单”等查阅路径。
-            </p>
-            <div class="selected-list">
-              <span>跨目录查阅</span>
-              <span>按问题进入</span>
-              <span>看边界</span>
-              <span>看相关项</span>
-            </div>
-          </div>
-        </div>
-      </section>
+      <section id="path-builder" class="topic-section custom-path-section" aria-labelledby="topic-title">
+        <h2 id="topic-title" class="visually-hidden">按问题查相关指标</h2>
+        <div id="pathQuestionList" class="path-question-list" aria-label="专题问题"></div>
 
-      <section id="path-builder" class="path-builder-section topic-section" aria-labelledby="topic-title">
-        <div class="section-heading compact-heading">
-          <p class="section-kicker">专题路径</p>
-          <h2 id="topic-title">按问题生成阅读路径</h2>
-          <p>专题不是新的评判结论，只是把相关资料放到同一条阅读线上。先选一个问题，再按建议顺序查看。</p>
-        </div>
-        <div class="path-builder">
-          <div>
-            <p class="control-label">选择一个问题</p>
-            <div id="pathQuestionList" class="path-question-list" aria-label="专题问题"></div>
-          </div>
-          <article id="pathResult" class="path-result" aria-live="polite"></article>
+        <div class="custom-path-layout">
+          <aside class="custom-path-sidebar" aria-label="专题辅助筛选">
+            <div class="search-box path-search-box">
+              <label for="pathSearchInput">继续精确查找</label>
+              <input id="pathSearchInput" type="search" placeholder="输入：正行、记忆力、婚恋、管理" autocomplete="off" />
+            </div>
+            <div class="path-filter-block">
+              <p class="control-label">分类辅助</p>
+              <div id="pathCategoryList" class="path-category-list" aria-label="专题分类"></div>
+            </div>
+            <p class="path-sidebar-note">
+              先按问题进入，再读当前目录；需要更细的条目时，可以回到指标库继续查。
+            </p>
+          </aside>
+
+          <article id="pathResult" class="path-result custom-path-result" aria-live="polite"></article>
+          <aside id="pathRelated" class="custom-related-panel" aria-label="问题相关目录"></aside>
         </div>
       </section>
     </main>

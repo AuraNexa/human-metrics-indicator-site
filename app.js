@@ -340,73 +340,90 @@ const state = {
   selectedPackId: null,
   activeIndicatorKey: null,
   selectedIndicators: new Map(),
+  pathCategory: "all",
+  pathQuery: "",
   activePathId: "child-homework",
 };
 
 const readingPaths = [
   {
     id: "child-homework",
-    label: "孩子写作业卡住",
-    title: "孩子写作业为什么卡住",
-    summary: "先分清是任务过重、学习底盘不足、家庭压力放大，还是学校处境正在消耗孩子。",
-    focus: ["作业任务", "学习底盘", "家庭压力", "学校处境"],
-    steps: [
-      { code: "HM-CHD-HW-104", title: "小孩子写作业指标", note: "先看作业量、难度、启动、拖延、情绪和家长干预。", href: "./library.html?category=child" },
-      { code: "HM-CHD-LEARN-014", title: "孩子学习素质基础指标", note: "再看理解、记忆、应用、专注和抗压这类学习底盘。", href: "./library.html?category=child" },
-      { code: "HM-CHD-FAM-029", title: "孩子家庭关系指标", note: "判断家庭关系是否正在把学习问题放大。", href: "./library.html?category=child" },
-      { code: "HM-SCH-093", title: "学校生活与校园风险", note: "最后确认学校环境、同伴关系和安全感。", href: "./library.html?category=school" },
+    category: "child",
+    label: "孩子学习吃力",
+    brief: "学习底盘、写作业、家庭关系",
+    title: "孩子学习素质基础指标",
+    summary: "先看学习底盘，再继续看写作业、家庭关系和学校风险，避免只用成绩判断孩子状态。",
+    primaryPackId: "child-learning",
+    indicatorCodes: ["LEARN-01", "LEARN-02", "LEARN-03", "LEARN-04"],
+    sequence: [
+      { title: "第一步", note: "理解、记忆、应用能力。" },
+      { title: "第二步", note: "专注、主动性和抗压。" },
+      { title: "第三步", note: "家庭关系和学校处境。" },
+    ],
+    related: [
+      { packId: "child-learning", note: "当前阅读" },
+      { packId: "homework", note: "下一步" },
+      { packId: "family-relationship", note: "补充判断" },
     ],
   },
   {
     id: "relationship-decision",
+    category: "relationship",
     label: "关系是否继续",
-    title: "一段关系是否值得继续投入",
-    summary: "先看事实行为，再看长期意愿和安全边界，避免只靠当下情绪判断。",
-    focus: ["事实行为", "长期意图", "忠诚边界", "安全风险"],
-    steps: [
-      { code: "REL-M-01", title: "交往意愿", note: "先看对方是否愿意继续了解、见面和推进关系。", href: "./library.html?category=relationship" },
-      { code: "REL-F-02", title: "承诺兑现率", note: "看说过的话、答应的事能不能落地。", href: "./library.html?category=relationship" },
-      { code: "REL-F-03", title: "忠诚边界", note: "确认暧昧、多线、前任和异性关系是否清楚。", href: "./library.html?category=relationship" },
-      { code: "REL-F-04", title: "分手报复风险", note: "安全风险优先于浪漫想象。", href: "./library.html?category=relationship" },
+    brief: "事实行为、长期意愿、安全边界",
+    title: "女性选择男友 25 项前置筛查",
+    summary: "先看真实投入和兑现，再继续看长期目的、忠诚边界和安全风险，避免只靠当下情绪判断。",
+    primaryPackId: "female-boyfriend-screen",
+    indicatorCodes: ["REL-F-01", "REL-F-02", "REL-F-03", "REL-F-04"],
+    sequence: [
+      { title: "第一步", note: "爱意真实度和承诺兑现。" },
+      { title: "第二步", note: "长期关系意愿和责任感。" },
+      { title: "第三步", note: "忠诚边界和分手风险。" },
+    ],
+    related: [
+      { packId: "female-boyfriend-screen", note: "当前阅读" },
+      { packId: "male-read-interest", note: "双向理解" },
+      { packId: "person-total-pool", note: "上游母库" },
     ],
   },
   {
     id: "employee-fit",
+    category: "work",
     label: "员工能不能用",
-    title: "员工能不能用、放哪里、要防什么",
-    summary: "先看底线和可信任度，再看岗位适配与隐性消耗，最后看是否需要进入管理者画像。",
-    focus: ["底线风险", "可信任度", "岗位适配", "团队消耗"],
-    steps: [
-      { code: "EMP-01", title: "可信任度", note: "从小任务、反馈稳定性和信息透明度开始看。", href: "./library.html?category=work" },
-      { code: "EMP-02", title: "岗位适配度", note: "判断能力、性格和岗位要求是否匹配。", href: "./library.html?category=work" },
-      { code: "EMP-03", title: "隐性消耗度", note: "观察是否制造沟通、情绪、人际或流程消耗。", href: "./library.html?category=work" },
-      { code: "HM-MGT-421", title: "管理人员评价指标体系", note: "若涉及管理岗，再看权力、用人、决策和组织风险。", href: "./library.html?category=work" },
+    brief: "可信任度、岗位适配、隐性消耗",
+    title: "员工隐性指标",
+    summary: "先看底线和可信任度，再看岗位适配与隐性消耗，帮助判断能不能用、放哪里、要防什么。",
+    primaryPackId: "employee-simple",
+    indicatorCodes: ["EMP-01", "EMP-02", "EMP-03", "EMP-04"],
+    sequence: [
+      { title: "第一步", note: "可信任度和信息透明。" },
+      { title: "第二步", note: "岗位适配和承载能力。" },
+      { title: "第三步", note: "隐性消耗和底线风险。" },
+    ],
+    related: [
+      { packId: "employee-simple", note: "当前阅读" },
+      { packId: "management-pro", note: "管理岗位" },
+      { packId: "person-total-pool", note: "上游母库" },
     ],
   },
   {
     id: "practice-wave",
+    category: "practice",
     label: "修行状态波动",
-    title: "修行状态为什么忽高忽低",
+    brief: "正念正心、正行落实、长期稳定",
+    title: "修行者基础指标日常自查",
     summary: "把心、念、行拆开看，再回到长期稳定度和五毒四心风险，不用单次状态否定自己。",
-    focus: ["正心正念", "行动落实", "长期稳定", "心性风险"],
-    steps: [
-      { code: "PRAC-01", title: "正念正心", note: "先看念头和出发点是否端正、清明、少偏差。", href: "./library.html?category=practice" },
-      { code: "PRAC-02", title: "正行落实", note: "再看有没有把认知落到真实行动。", href: "./library.html?category=practice" },
-      { code: "PRAC-03", title: "长期稳定度", note: "记录哪些场景最容易引发波动。", href: "./library.html?category=practice" },
-      { code: "HM-POISON-009", title: "五毒四心指标体系", note: "最后看更深层的贪、嗔、痴、慢、疑和外在显化。", href: "./library.html?category=practice" },
+    primaryPackId: "practice-daily",
+    indicatorCodes: ["PRAC-01", "PRAC-02", "PRAC-03", "PRAC-04"],
+    sequence: [
+      { title: "第一步", note: "正念正心是否清明。" },
+      { title: "第二步", note: "正行是否真正落地。" },
+      { title: "第三步", note: "长期稳定和心性风险。" },
     ],
-  },
-  {
-    id: "recent-state",
-    label: "近期状态复盘",
-    title: "最近状态不稳，先从哪里看",
-    summary: "先看身体恢复、睡眠、压力和情绪，再判断是否需要进入修行、关系或职场目录。",
-    focus: ["睡眠恢复", "压力", "情绪", "行动力"],
-    steps: [
-      { code: "GEN-02", title: "睡眠恢复度", note: "先确认身体和精神有没有真正恢复。", href: "./library.html?category=general" },
-      { code: "GEN-04", title: "压力值", note: "看现实负荷是否超过可承载范围。", href: "./library.html?category=general" },
-      { code: "GEN-03", title: "情绪稳定度", note: "把情绪高峰和重大决定分开。", href: "./library.html?category=general" },
-      { code: "HM-PRAC-DAY", title: "修行者基础指标日常自查", note: "如果反复波动，再回到心、念、行做周期复看。", href: "./library.html?category=practice" },
+    related: [
+      { packId: "practice-daily", note: "当前阅读" },
+      { packId: "five-poisons", note: "心性风险" },
+      { packId: "ordinary-status", note: "近期状态" },
     ],
   },
 ];
@@ -589,49 +606,161 @@ function recentPacksFor(pack) {
     .slice(0, 3);
 }
 
+function packById(packId) {
+  return indicatorPacks.find((item) => item.id === packId);
+}
+
+function pathCategoryLabel(categoryId) {
+  if (categoryId === "all") return "全部";
+  return categories.find((item) => item.id === categoryId)?.label || "其他";
+}
+
+function pathCategories() {
+  return ["all", "child", "relationship", "work", "practice"].map((id) => ({
+    id,
+    label: pathCategoryLabel(id),
+    count: id === "all" ? readingPaths.length : readingPaths.filter((path) => path.category === id).length,
+  }));
+}
+
+function visibleReadingPaths() {
+  const query = state.pathQuery.trim().toLowerCase();
+  return readingPaths.filter((path) => {
+    const inCategory = state.pathCategory === "all" || path.category === state.pathCategory;
+    if (!inCategory) return false;
+    if (!query) return true;
+    const primaryPack = packById(path.primaryPackId);
+    const relatedText = path.related
+      .map((item) => packById(item.packId))
+      .filter(Boolean)
+      .map((pack) => `${pack.title} ${pack.summary} ${pack.tags.join(" ")}`)
+      .join(" ");
+    const indicatorText = primaryPack
+      ? primaryPack.indicators.map((item) => `${item.name} ${item.definition}`).join(" ")
+      : "";
+    return [
+      path.label,
+      path.brief,
+      path.title,
+      path.summary,
+      pathCategoryLabel(path.category),
+      primaryPack ? `${primaryPack.title} ${primaryPack.summary}` : "",
+      relatedText,
+      indicatorText,
+    ]
+      .join(" ")
+      .toLowerCase()
+      .includes(query);
+  });
+}
+
 function renderPathBuilder() {
   const list = byId("pathQuestionList");
   const result = byId("pathResult");
+  const relatedHost = byId("pathRelated");
+  const categoryHost = byId("pathCategoryList");
   if (!list || !result) return;
 
-  const activePath = readingPaths.find((item) => item.id === state.activePathId) || readingPaths[0];
-  list.innerHTML = readingPaths
-    .map(
-      (path) => `
-        <button class="path-question ${path.id === activePath.id ? "is-active" : ""}" type="button" data-path="${path.id}">
-          ${path.label}
-        </button>
-      `
-    )
-    .join("");
+  const paths = visibleReadingPaths();
+  const activePath =
+    paths.find((item) => item.id === state.activePathId) ||
+    paths[0] ||
+    readingPaths.find((item) => item.id === state.activePathId) ||
+    readingPaths[0];
+  state.activePathId = activePath.id;
+
+  if (categoryHost) {
+    categoryHost.innerHTML = pathCategories()
+      .map(
+        (category) => `
+          <button class="${category.id === state.pathCategory ? "is-active" : ""}" type="button" data-path-category="${category.id}">
+            <strong>${category.label}</strong>
+            <span>${category.count}</span>
+          </button>
+        `
+      )
+      .join("");
+  }
+
+  list.innerHTML = paths.length
+    ? paths
+        .map(
+          (path) => `
+            <button class="path-question ${path.id === activePath.id ? "is-active" : ""}" type="button" data-path="${path.id}">
+              <strong>${path.label}</strong>
+              <span>${path.brief}</span>
+            </button>
+          `
+        )
+        .join("")
+    : `
+      <div class="path-question-empty">
+        <strong>没有匹配的问题</strong>
+        <span>换一个词，或回到全部分类。</span>
+      </div>
+    `;
+
+  const primaryPack = packById(activePath.primaryPackId) || indicatorPacks[0];
+  const indicators = activePath.indicatorCodes
+    .map((code) => primaryPack.indicators.find((item) => item.code === code))
+    .filter(Boolean);
+  const related = activePath.related
+    .map((item) => ({ ...item, pack: packById(item.packId) }))
+    .filter((item) => item.pack);
 
   result.innerHTML = `
     <div class="path-result-head">
-      <p class="detail-eyebrow">当前阅读路径</p>
+      <p class="detail-eyebrow">当前阅读路径 / ${activePath.label}</p>
       <h3>${activePath.title}</h3>
       <p>${activePath.summary}</p>
-      <div class="path-focus">
-        ${activePath.focus.map((item) => `<span>${item}</span>`).join("")}
-      </div>
     </div>
-    <ol class="path-steps">
-      ${activePath.steps
+    <div class="path-sequence" aria-label="阅读顺序">
+      ${activePath.sequence
         .map(
-          (step, index) => `
-            <li>
-              <span>${String(index + 1).padStart(2, "0")}</span>
-              <div>
-                <strong>${step.title}</strong>
-                <small>${step.code}</small>
-                <p>${step.note}</p>
-                <a href="${step.href}">进入相关目录</a>
-              </div>
-            </li>
+          (item) => `
+            <div>
+              <strong>${item.title}</strong>
+              <span>${item.note}</span>
+            </div>
           `
         )
         .join("")}
-    </ol>
+    </div>
+    <div class="path-indicator-grid" aria-label="相关代表指标">
+      ${indicators
+        .map(
+          (item) => `
+            <a class="path-indicator-card" href="./library.html?category=${primaryPack.category}">
+              <strong>${item.name}</strong>
+              <span>${item.code} · ${item.polarity}</span>
+            </a>
+          `
+        )
+        .join("")}
+    </div>
   `;
+
+  if (relatedHost) {
+    relatedHost.innerHTML = `
+      <div class="custom-related-head">
+        <h3>问题相关</h3>
+        <span>${related.length} 套</span>
+      </div>
+      <div class="custom-related-list">
+        ${related
+          .map(
+            ({ pack, note }) => `
+              <a href="./library.html?category=${pack.category}">
+                <span>${pack.code}</span>
+                <strong>${pack.title}</strong>
+                <small>${note}</small>
+              </a>
+            `
+          )
+          .join("")}
+      </div>
+    `;
+  }
 }
 
 function setupPathBuilder() {
@@ -642,6 +771,22 @@ function setupPathBuilder() {
     const button = event.target.closest("[data-path]");
     if (!button) return;
     state.activePathId = button.dataset.path;
+    renderPathBuilder();
+  });
+
+  byId("pathCategoryList")?.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-path-category]");
+    if (!button) return;
+    state.pathCategory = button.dataset.pathCategory;
+    const nextPath = visibleReadingPaths()[0] || readingPaths[0];
+    state.activePathId = nextPath.id;
+    renderPathBuilder();
+  });
+
+  byId("pathSearchInput")?.addEventListener("input", (event) => {
+    state.pathQuery = event.target.value;
+    const nextPath = visibleReadingPaths()[0] || readingPaths[0];
+    state.activePathId = nextPath.id;
     renderPathBuilder();
   });
 }
@@ -966,7 +1111,7 @@ function setupEvents() {
 
 function setupReveals() {
   const items = document.querySelectorAll(
-    ".hero-copy, .hero-art, .page-visual, .knowledge-index-visual, .knowledge-index-copy, .index-link, .question-list a, .page-hero, .section-heading, .library-left-panel, .library-sidebar, .library-main, .composer-board, .path-result, .sample-index-card, .sample-side, .sample-doc, .topic-list article, .notice-section article, .schema-grid article, .version-grid article, .timeline li"
+    ".hero-copy, .hero-art, .page-visual, .knowledge-index-visual, .knowledge-index-copy, .index-link, .question-list a, .page-hero, .section-heading, .library-left-panel, .library-sidebar, .library-main, .composer-board, .sample-index-card, .sample-side, .sample-doc, .topic-list article, .notice-section article, .schema-grid article, .version-grid article, .timeline li"
   );
 
   if (!("IntersectionObserver" in window)) {
