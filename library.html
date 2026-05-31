@@ -34,56 +34,47 @@
       <a class="nav-cta" href="./custom.html">按专题查</a>
     </header>
 
-    <main id="top" class="library-document-page">
-      <section id="library" class="library-browse-section" aria-labelledby="library-title">
-        <aside class="library-left-panel" aria-label="指标查找和分类">
-          <p class="section-kicker">指标库</p>
-          <h1 id="library-title">指标库</h1>
+    <main id="top" class="library-type-page">
+      <section class="type-hero" aria-labelledby="library-title">
+        <p class="section-kicker">指标库</p>
+        <h1 id="library-title">先认识方向，再进入指标。</h1>
+        <p>
+          每套指标先回答一个具体问题：它观察什么、包含哪些代表项、适合在哪些场景查阅。
+        </p>
+        <a class="text-action primary-link" href="#library">浏览全部指标</a>
+      </section>
 
+      <section class="indicator-roles" aria-label="指标方向">
+        <div id="roleGallery" class="role-gallery"></div>
+      </section>
+
+      <section id="library" class="type-profile-section" aria-label="指标详情阅读">
+        <div class="type-toolbar">
           <div class="search-box">
             <label for="searchInput">查找指标</label>
-            <input id="searchInput" type="search" placeholder="正行、记忆力、婚恋" autocomplete="off" />
+            <input id="searchInput" type="search" placeholder="正行、记忆力、婚恋、管理" autocomplete="off" />
           </div>
-
           <div class="category-area">
-            <p class="control-label">选择方向</p>
+            <p class="control-label">快速筛选</p>
             <div class="category-list" id="categoryList"></div>
           </div>
+        </div>
 
-          <div class="source-note">
-            <strong>资料范围</strong>
-            <span>左侧用于查找和分类，右侧保持完整资料阅读。当前覆盖资料总纲、修行、孩子、婚恋、学校、员工、管理和普通人基础状态。</span>
-          </div>
-        </aside>
-
-        <div class="library-document-area">
-          <section class="library-topic-hero" aria-labelledby="library-topic-title">
-            <div>
-              <p class="section-kicker" id="libraryTopicLabel">指标资料 / 14 套目录</p>
-              <h2 id="libraryTopicTitle">从指标目录进入。</h2>
-              <p id="libraryTopicCopy">筛选后直接进入当前目录。读者先读完整说明，再用右侧小目录切换相关资料。</p>
+        <div class="type-profile-layout">
+          <aside class="type-explore" aria-label="当前目录列表">
+            <div class="catalog-summary">
+              <span><strong id="resultCount">0</strong> 套目录</span>
+              <small>当前方向</small>
             </div>
-            <figure class="library-topic-visual">
-              <img src="./assets/reading-table-generated.webp" alt="打开的纸质目录、索引页、标签和读书札记" />
-            </figure>
-          </section>
+            <div id="packGrid" class="pack-grid"></div>
+          </aside>
 
-          <div class="library-reader">
-            <section class="library-main" aria-live="polite">
-              <div class="catalog-summary">
-                <span><strong id="resultCount">0</strong> 套目录</span>
-                <small>相关目录</small>
-              </div>
-              <div id="packGrid" class="pack-grid"></div>
-            </section>
-
-            <aside class="detail-panel" aria-label="指标详情">
-              <div class="detail-card" id="detailPanel">
-                <p class="empty-title">选择一个指标目录</p>
-                <p class="empty-copy">点击任意目录条目，即可查看结构、代表指标和表达边界。</p>
-              </div>
-            </aside>
-          </div>
+          <article class="detail-panel" aria-label="指标详情">
+            <div class="detail-card" id="detailPanel">
+              <p class="empty-title">选择一个指标目录</p>
+              <p class="empty-copy">点击任意目录条目，即可查看结构、代表指标和表达边界。</p>
+            </div>
+          </article>
         </div>
       </section>
     </main>

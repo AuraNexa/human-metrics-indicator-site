@@ -462,59 +462,72 @@ function currentPacks() {
   return indicatorPacks.filter(matchesPack);
 }
 
-const libraryIntros = {
-  all: {
-    title: "从指标目录进入。",
-    copy: "先按方向缩小范围，再进入当前目录阅读。右侧小目录只负责切换，正文保留完整资料说明。",
+const libraryRoles = [
+  {
+    id: "self",
+    label: "状态与修行",
+    word: "状态",
+    tone: "teal",
+    summary: "先看一个人当下状态、心念、行动和长期稳定度。",
+    packIds: ["ordinary-status", "public-basic-one", "practice-daily", "five-poisons"],
   },
-  general: {
-    title: "从近期状态进入。",
-    copy: "先看身体、睡眠、情绪、压力和行动力，再决定是否继续进入关系、职场或修行方向。",
+  {
+    id: "child",
+    label: "孩子成长",
+    word: "孩子",
+    tone: "purple",
+    summary: "从学习底盘、作业、家庭关系和学校处境理解孩子。",
+    packIds: ["child-learning", "homework", "family-relationship", "school-risk"],
   },
-  practice: {
-    title: "从修行状态进入。",
-    copy: "先读正心正念和正行落实，再看长期稳定度、波动原因和心性风险。",
+  {
+    id: "relationship",
+    label: "关系婚恋",
+    word: "关系",
+    tone: "coral",
+    summary: "把好感、承诺、边界和风险拆开看，不只凭情绪判断。",
+    packIds: ["female-boyfriend-screen", "male-read-interest"],
   },
-  child: {
-    title: "从孩子学习问题进入。",
-    copy: "筛选后直接进入当前目录。读者先读完整说明，再用右侧小目录切换相关资料。",
+  {
+    id: "work",
+    label: "职场识人",
+    word: "职场",
+    tone: "ochre",
+    summary: "用于看员工、管理者和人的整体画像，先看底线再看能力。",
+    packIds: ["employee-simple", "management-pro", "person-total-pool", "human-manual"],
   },
-  relationship: {
-    title: "从关系判断进入。",
-    copy: "先看事实行为和长期意愿，再读安全边界、投入程度和关系风险。",
-  },
-  work: {
-    title: "从识人用人进入。",
-    copy: "先看底线和可信任度，再看岗位适配、协作成本和管理风险。",
-  },
-  school: {
-    title: "从学校处境进入。",
-    copy: "先看孩子的安全感和适应状态，再看同学、老师、霸凌风险和父母介入方式。",
-  },
-  system: {
-    title: "从资料总纲进入。",
-    copy: "先理解整套指标资料如何拆问题、建目录和做边界，再进入具体场景。",
-  },
-};
+];
 
-function renderLibraryIntro() {
-  const label = byId("libraryTopicLabel");
-  const title = byId("libraryTopicTitle");
-  const copy = byId("libraryTopicCopy");
-  if (!label || !title || !copy) return;
+function renderRoleGallery() {
+  const host = byId("roleGallery");
+  if (!host) return;
 
-  const packs = currentPacks();
-  const category = categories.find((item) => item.id === state.category);
-  const intro = state.query.trim()
-    ? {
-        title: "查看匹配到的指标目录。",
-        copy: "当前内容已按关键词过滤。选中目录后，右侧保留相关目录切换，正文继续完整阅读。",
-      }
-    : libraryIntros[state.category] || libraryIntros.all;
-
-  label.textContent = `${category?.id === "all" ? "指标资料" : category?.label || "指标资料"} / ${packs.length} 套目录`;
-  title.textContent = intro.title;
-  copy.textContent = intro.copy;
+  host.innerHTML = libraryRoles
+    .map((role) => {
+      const packs = role.packIds.map(packById).filter(Boolean);
+      return `
+        <section class="role-band role-${role.tone}" aria-labelledby="role-${role.id}">
+          <div class="role-band-bg" aria-hidden="true">${role.word}</div>
+          <div class="role-band-head">
+            <h2 id="role-${role.id}">${role.label}</h2>
+            <p>${role.summary}</p>
+          </div>
+          <div class="role-card-grid">
+            ${packs
+              .map(
+                (pack) => `
+                  <button class="role-card ${state.selectedPackId === pack.id ? "is-active" : ""}" type="button" data-role-pack="${pack.id}">
+                    <strong>${pack.title}</strong>
+                    <span>${pack.code} / ${pack.count} 项</span>
+                    <p>${pack.summary}</p>
+                  </button>
+                `
+              )
+              .join("")}
+          </div>
+        </section>
+      `;
+    })
+    .join("");
 }
 
 function readingGuideFor(pack) {
@@ -812,7 +825,7 @@ function renderCategories() {
 function renderPacks() {
   const packs = currentPacks();
   byId("resultCount").textContent = String(packs.length);
-  renderLibraryIntro();
+  renderRoleGallery();
   const host = byId("packGrid");
   host.innerHTML = packs
     .map((pack, index) => {
@@ -1044,6 +1057,22 @@ function setupEvents() {
     selectPack(button.dataset.pack);
   });
 
+  byId("roleGallery")?.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-role-pack]");
+    if (!button) return;
+    const pack = packById(button.dataset.rolePack);
+    if (!pack) return;
+    state.query = "";
+    const searchInput = byId("searchInput");
+    if (searchInput) searchInput.value = "";
+    state.category = pack.category;
+    state.selectedPackId = pack.id;
+    renderCategories();
+    renderPacks();
+    renderDetail(pack);
+    byId("library")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
   byId("detailPanel")?.addEventListener("click", (event) => {
     const copyButton = event.target.closest("[data-copy-code]");
     if (copyButton) {
@@ -1111,7 +1140,7 @@ function setupEvents() {
 
 function setupReveals() {
   const items = document.querySelectorAll(
-    ".hero-copy, .hero-art, .page-visual, .knowledge-index-visual, .knowledge-index-copy, .index-link, .question-list a, .page-hero, .section-heading, .library-left-panel, .library-sidebar, .library-main, .composer-board, .sample-index-card, .sample-side, .sample-doc, .topic-list article, .notice-section article, .schema-grid article, .version-grid article, .timeline li"
+    ".hero-copy, .hero-art, .page-visual, .knowledge-index-visual, .knowledge-index-copy, .index-link, .question-list a, .page-hero, .type-hero, .section-heading, .library-left-panel, .library-sidebar, .library-main, .composer-board, .sample-index-card, .sample-side, .sample-doc, .topic-list article, .notice-section article, .schema-grid article, .version-grid article, .timeline li"
   );
 
   if (!("IntersectionObserver" in window)) {
