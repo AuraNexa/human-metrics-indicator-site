@@ -17,7 +17,7 @@
     <script src="./app.js" defer></script>
   </head>
   <body>
-    <a class="skip-link" href="#directions">跳到指标方向</a>
+    <a class="skip-link" href="#library-directions">跳到指标方向</a>
     <header class="site-header">
       <a class="brand" href="./index.html" aria-label="人类指标资料库首页">
         <span>
@@ -34,22 +34,25 @@
       </button>
     </header>
 
-    <main id="top" class="library-type-page">
-      <section class="type-hero" aria-labelledby="library-title">
-        <h1 id="library-title">指标库</h1>
-        <p>
-          先按方向认识资料，再进入具体指标。每套指标都对应一个真实问题，方便你快速判断该从哪里查起。
-        </p>
-        <a class="text-action primary-link" href="./catalog.html">
-          浏览全部指标
-        </a>
+    <main id="top" class="library-type-page library-visual-page">
+      <section class="library-visual-hero" aria-labelledby="library-title">
+        <div class="library-visual-panel">
+          <div class="library-visual-board" aria-hidden="true">
+            <img src="./assets/indicator-art/ordinary-status.webp" alt="" />
+            <img src="./assets/indicator-art/child-learning.webp" alt="" />
+            <img src="./assets/indicator-art/female-boyfriend-screen.webp" alt="" />
+          </div>
+          <div class="library-visual-copy">
+            <h1 id="library-title">先选一个查阅方向</h1>
+            <p>
+              不用先理解全部目录。根据你关心的人、关系、孩子或工作问题，直接进入对应资料。
+            </p>
+            <a class="text-action primary-link" href="./catalog.html">查看全部目录</a>
+          </div>
+        </div>
       </section>
 
-      <section id="directions" class="indicator-roles" aria-label="指标方向">
-        <div class="role-section-head">
-          <h2>按方向进入</h2>
-          <p>每个方向下方是一组可阅读的指标目录，点击任意卡片即可进入独立资料页。</p>
-        </div>
+      <section id="library-directions" class="indicator-roles" aria-label="指标方向">
         <div id="roleGallery" class="role-gallery"></div>
       </section>
     </main>

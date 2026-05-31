@@ -942,7 +942,6 @@ function renderDetail(pack, indicator = null) {
 
   host.className = `detail-card theme-${pack.category}`;
   const activeIndicator = indicator || pack.indicators[0];
-  const guide = readingGuideFor(pack);
   const standaloneDetail = Boolean(byId("indicatorHero"));
   const activeSelectionKey = selectionKey(pack, activeIndicator);
   const activeIsSelected = state.selectedIndicators.has(activeSelectionKey);
@@ -961,22 +960,6 @@ function renderDetail(pack, indicator = null) {
   state.activeIndicatorKey = `${pack.id}:${activeIndicator.code}`;
   host.innerHTML = `
     ${packHeader}
-
-    <p class="detail-subtitle">阅读方式</p>
-    <div class="detail-reading-guide">
-      <div>
-        <strong>适用场景</strong>
-        <span>${guide.scene}</span>
-      </div>
-      <div>
-        <strong>阅读顺序</strong>
-        <span>${guide.order}</span>
-      </div>
-      <div>
-        <strong>避免误用</strong>
-        <span>${guide.caution}</span>
-      </div>
-    </div>
 
     <p class="detail-subtitle">结构</p>
     <div class="detail-groups">
@@ -1416,6 +1399,11 @@ function renderIndicatorSiblings(pack) {
   const host = byId("indicatorSiblingList");
   if (!host) return;
 
+  const libraryLink = byId("backToLibraryLink");
+  if (libraryLink) {
+    libraryLink.href = `./library.html?category=${encodeURIComponent(pack.category)}`;
+  }
+
   const siblings = indicatorPacks.filter((item) => item.category === pack.category);
   host.innerHTML = `
     <p class="control-label">同方向目录</p>
@@ -1432,6 +1420,40 @@ function renderIndicatorSiblings(pack) {
   `;
 }
 
+function renderIndicatorGuide(pack) {
+  const host = byId("indicatorGuide");
+  if (!host || !pack) return;
+  const guide = readingGuideFor(pack);
+
+  host.innerHTML = `
+    <div class="guide-head">
+      <p class="control-label">查阅提示</p>
+      <span>看细项前先确认</span>
+    </div>
+    <div class="guide-row">
+      <span class="guide-mark">先</span>
+      <p>
+        <strong>适合先看</strong>
+        <span>${guide.scene}</span>
+      </p>
+    </div>
+    <div class="guide-row">
+      <span class="guide-mark">序</span>
+      <p>
+        <strong>阅读顺序</strong>
+        <span>${guide.order}</span>
+      </p>
+    </div>
+    <div class="guide-row">
+      <span class="guide-mark">界</span>
+      <p>
+        <strong>注意边界</strong>
+        <span>${guide.caution}</span>
+      </p>
+    </div>
+  `;
+}
+
 function initIndicatorDetail() {
   if (!byId("indicatorHero")) return;
   const params = new URLSearchParams(window.location.search);
@@ -1442,6 +1464,7 @@ function initIndicatorDetail() {
   document.title = `${pack.title} · 人类指标资料库`;
   renderIndicatorHero(pack);
   renderIndicatorSiblings(pack);
+  renderIndicatorGuide(pack);
   renderDetail(pack, indicator);
 }
 

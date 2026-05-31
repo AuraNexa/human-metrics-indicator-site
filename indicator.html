@@ -39,8 +39,12 @@
 
       <section id="indicator-detail" class="indicator-read-layout" aria-label="指标阅读">
         <aside class="indicator-detail-nav" aria-label="同方向目录">
-          <a class="back-link" href="./catalog.html">返回全部目录</a>
+          <div class="back-link-group" aria-label="返回入口">
+            <a id="backToLibraryLink" class="back-link" href="./library.html">返回指标库</a>
+            <a class="back-link" href="./catalog.html">返回全部目录</a>
+          </div>
           <div id="indicatorSiblingList" class="sibling-list"></div>
+          <div id="indicatorGuide" class="indicator-side-guide"></div>
         </aside>
 
         <article class="detail-panel" aria-label="指标详情">
