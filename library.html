@@ -48,7 +48,7 @@
         <div id="roleGallery" class="role-gallery"></div>
       </section>
 
-      <section id="library" class="type-profile-section" aria-label="指标详情阅读">
+      <section id="library" class="catalog-index-section" aria-label="全部指标目录">
         <div class="type-toolbar">
           <div class="search-box">
             <label for="searchInput">查找指标</label>
@@ -60,22 +60,12 @@
           </div>
         </div>
 
-        <div class="type-profile-layout">
-          <aside class="type-explore" aria-label="当前目录列表">
-            <div class="catalog-summary">
-              <span><strong id="resultCount">0</strong> 套目录</span>
-              <small>当前方向</small>
-            </div>
-            <div id="packGrid" class="pack-grid"></div>
-          </aside>
-
-          <article class="detail-panel" aria-label="指标详情">
-            <div class="detail-card" id="detailPanel">
-              <p class="empty-title">选择一个指标目录</p>
-              <p class="empty-copy">点击任意目录条目，即可查看结构、代表指标和表达边界。</p>
-            </div>
-          </article>
+        <div class="catalog-index-head">
+          <span><strong id="resultCount">0</strong> 套目录</span>
+          <p>选择一套指标后进入独立阅读页，查看结构、代表指标和阅读边界。</p>
         </div>
+
+        <div id="packGrid" class="pack-grid catalog-card-grid"></div>
       </section>
     </main>
 

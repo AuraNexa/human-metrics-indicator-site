@@ -515,11 +515,11 @@ function renderRoleGallery() {
             ${packs
               .map(
                 (pack) => `
-                  <button class="role-card ${state.selectedPackId === pack.id ? "is-active" : ""}" type="button" data-role-pack="${pack.id}">
+                  <a class="role-card" href="${indicatorHref(pack.id)}">
                     <strong>${pack.title}</strong>
                     <span>${pack.code} / ${pack.count} 项</span>
                     <p>${pack.summary}</p>
-                  </button>
+                  </a>
                 `
               )
               .join("")}
@@ -621,6 +621,10 @@ function recentPacksFor(pack) {
 
 function packById(packId) {
   return indicatorPacks.find((item) => item.id === packId);
+}
+
+function indicatorHref(packId) {
+  return `./indicator.html?pack=${encodeURIComponent(packId)}`;
 }
 
 function pathCategoryLabel(categoryId) {
@@ -831,7 +835,7 @@ function renderPacks() {
     .map((pack, index) => {
       const category = categories.find((item) => item.id === pack.category);
       return `
-        <button class="pack-card ${state.selectedPackId === pack.id ? "is-active" : ""}" type="button" data-pack="${pack.id}">
+        <a class="pack-card" href="${indicatorHref(pack.id)}">
           <div class="pack-meta">
             <span class="pack-number">${String(index + 1).padStart(2, "0")}</span>
             <span class="pack-code">${pack.code}</span>
@@ -842,7 +846,7 @@ function renderPacks() {
           <div class="pack-tags">
             ${pack.tags.map((tag) => `<span>${tag}</span>`).join("")}
           </div>
-        </button>
+        </a>
       `;
     })
     .join("");
@@ -876,17 +880,23 @@ function renderDetail(pack, indicator = null) {
   const guide = readingGuideFor(pack);
   const relatedPacks = relatedPacksFor(pack);
   const recentPacks = recentPacksFor(pack);
+  const standaloneDetail = Boolean(byId("indicatorHero"));
+  const packHeader = standaloneDetail
+    ? ""
+    : `
+      <p class="detail-eyebrow">当前目录</p>
+      <p class="detail-meta-line">
+        <span>${pack.code}</span>
+        <span>${pack.count} 项</span>
+        <span>${pack.audience}</span>
+        <button class="copy-code-button" type="button" data-copy-code="${pack.code}">复制编号</button>
+      </p>
+      <h3>${pack.title}</h3>
+      <p>${pack.summary}</p>
+    `;
   state.activeIndicatorKey = `${pack.id}:${activeIndicator.code}`;
   host.innerHTML = `
-    <p class="detail-eyebrow">当前目录</p>
-    <p class="detail-meta-line">
-      <span>${pack.code}</span>
-      <span>${pack.count} 项</span>
-      <span>${pack.audience}</span>
-      <button class="copy-code-button" type="button" data-copy-code="${pack.code}">复制编号</button>
-    </p>
-    <h3>${pack.title}</h3>
-    <p>${pack.summary}</p>
+    ${packHeader}
 
     <p class="detail-subtitle">阅读方式</p>
     <div class="detail-reading-guide">
@@ -968,10 +978,10 @@ function renderDetail(pack, indicator = null) {
       ${relatedPacks
         .map(
           (item) => `
-          <button class="related-pack-button" type="button" data-related-pack="${item.id}">
+          <a class="related-pack-button" href="${indicatorHref(item.id)}">
             <strong>${item.title}</strong>
             <span>${item.code} · ${item.count} 项</span>
-          </button>
+          </a>
         `
         )
         .join("")}
@@ -984,10 +994,10 @@ function renderDetail(pack, indicator = null) {
             ${recentPacks
               .map(
                 (item) => `
-                <button class="related-pack-button" type="button" data-related-pack="${item.id}">
+                <a class="related-pack-button" href="${indicatorHref(item.id)}">
                   <strong>${item.title}</strong>
                   <span>${item.code} · ${item.count} 项</span>
-                </button>
+                </a>
               `
               )
               .join("")}
@@ -1027,21 +1037,11 @@ function renderComposer() {
     .join("");
 }
 
-function selectPack(packId) {
-  const pack = indicatorPacks.find((item) => item.id === packId);
-  if (!pack) return;
-  state.selectedPackId = pack.id;
-  renderPacks();
-  renderDetail(pack);
-}
-
 function selectCategory(categoryId) {
   state.category = categoryId;
-  const packs = currentPacks();
-  state.selectedPackId = packs[0] ? packs[0].id : null;
+  state.selectedPackId = null;
   renderCategories();
   renderPacks();
-  renderDetail(packs[0] || null);
 }
 
 function setupEvents() {
@@ -1051,28 +1051,21 @@ function setupEvents() {
     selectCategory(button.dataset.category);
   });
 
-  byId("packGrid")?.addEventListener("click", (event) => {
-    const button = event.target.closest("[data-pack]");
-    if (!button) return;
-    selectPack(button.dataset.pack);
-  });
-
-  byId("roleGallery")?.addEventListener("click", (event) => {
-    const button = event.target.closest("[data-role-pack]");
-    if (!button) return;
-    const pack = packById(button.dataset.rolePack);
-    if (!pack) return;
-    state.query = "";
-    const searchInput = byId("searchInput");
-    if (searchInput) searchInput.value = "";
-    state.category = pack.category;
-    state.selectedPackId = pack.id;
-    renderCategories();
+  byId("searchInput")?.addEventListener("input", (event) => {
+    state.query = event.target.value;
+    state.selectedPackId = null;
     renderPacks();
-    renderDetail(pack);
-    byId("library")?.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 
+  document.querySelectorAll("[data-jump]").forEach((node) => {
+    node.addEventListener("click", () => {
+      selectCategory(node.dataset.jump);
+      byId("library").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+}
+
+function setupDetailPanelEvents() {
   byId("detailPanel")?.addEventListener("click", (event) => {
     const copyButton = event.target.closest("[data-copy-code]");
     if (copyButton) {
@@ -1100,13 +1093,6 @@ function setupEvents() {
       return;
     }
 
-    const relatedButton = event.target.closest("[data-related-pack]");
-    if (relatedButton) {
-      selectPack(relatedButton.dataset.relatedPack);
-      byId("detailPanel")?.scrollIntoView({ behavior: "smooth", block: "start" });
-      return;
-    }
-
     const addButton = event.target.closest("[data-add-indicator]");
     if (addButton) {
       const pack = indicatorPacks.find((item) => item.id === state.selectedPackId);
@@ -1120,21 +1106,6 @@ function setupEvents() {
       });
       renderComposer();
     }
-  });
-
-  byId("searchInput")?.addEventListener("input", (event) => {
-    state.query = event.target.value;
-    const packs = currentPacks();
-    state.selectedPackId = packs[0] ? packs[0].id : null;
-    renderPacks();
-    renderDetail(packs[0] || null);
-  });
-
-  document.querySelectorAll("[data-jump]").forEach((node) => {
-    node.addEventListener("click", () => {
-      selectCategory(node.dataset.jump);
-      byId("library").scrollIntoView({ behavior: "smooth", block: "start" });
-    });
   });
 }
 
@@ -1217,22 +1188,77 @@ function initLibrary() {
   state.category = categories.some((category) => category.id === requestedCategory)
     ? requestedCategory
     : "all";
-  state.selectedPackId = indicatorPacks[0].id;
+  state.selectedPackId = null;
   renderCategories();
   renderPacks();
-  const packs = currentPacks();
-  state.selectedPackId = packs[0] ? packs[0].id : null;
-  renderPacks();
-  renderDetail(packs[0] || null);
   renderComposer();
   setupEvents();
+}
+
+function categoryLabel(categoryId) {
+  return categories.find((category) => category.id === categoryId)?.label || "指标资料";
+}
+
+function renderIndicatorHero(pack) {
+  const host = byId("indicatorHero");
+  if (!host) return;
+
+  host.className = `indicator-pack-hero tone-${pack.category}`;
+  host.innerHTML = `
+    <div class="indicator-hero-copy">
+      <p class="section-kicker">${categoryLabel(pack.category)}</p>
+      <h1>${pack.title}</h1>
+      <p>${pack.summary}</p>
+      <div class="indicator-hero-meta" aria-label="当前目录信息">
+        <span>${pack.code}</span>
+        <span>${pack.count} 项</span>
+        <span>${pack.audience}</span>
+      </div>
+    </div>
+    <div class="indicator-hero-tags" aria-label="标签">
+      ${pack.tags.map((tag) => `<span>${tag}</span>`).join("")}
+    </div>
+  `;
+}
+
+function renderIndicatorSiblings(pack) {
+  const host = byId("indicatorSiblingList");
+  if (!host) return;
+
+  const siblings = indicatorPacks.filter((item) => item.category === pack.category);
+  host.innerHTML = `
+    <p class="control-label">同方向目录</p>
+    ${siblings
+      .map(
+        (item) => `
+        <a class="${item.id === pack.id ? "is-active" : ""}" href="${indicatorHref(item.id)}">
+          <span>${item.code}</span>
+          <strong>${item.title}</strong>
+        </a>
+      `
+      )
+      .join("")}
+  `;
+}
+
+function initIndicatorDetail() {
+  if (!byId("indicatorHero")) return;
+  const params = new URLSearchParams(window.location.search);
+  const pack = packById(params.get("pack")) || indicatorPacks[0];
+  state.selectedPackId = pack.id;
+  document.title = `${pack.title} · Human Metrics`;
+  renderIndicatorHero(pack);
+  renderIndicatorSiblings(pack);
+  renderDetail(pack);
 }
 
 function init() {
   setupReveals();
   setupPathBuilder();
   setupReadingTools();
+  setupDetailPanelEvents();
   initLibrary();
+  initIndicatorDetail();
 }
 
 init();
