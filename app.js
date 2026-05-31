@@ -500,17 +500,6 @@ function renderLibraryIntro() {
   copy.textContent = intro.copy;
 }
 
-function categoryLabel(categoryId) {
-  return categories.find((item) => item.id === categoryId)?.label || "综合资料";
-}
-
-function accessLabel(pack) {
-  const text = `${pack.audience} ${pack.tags.join(" ")}`;
-  if (text.includes("详细")) return "结构参考";
-  if (text.includes("公开")) return "公开阅读";
-  return "场景阅读";
-}
-
 function readingGuideFor(pack) {
   const guides = {
     general: {
@@ -740,25 +729,6 @@ function renderDetail(pack, indicator = null) {
     </p>
     <h3>${pack.title}</h3>
     <p>${pack.summary}</p>
-
-    <div class="detail-facts" aria-label="资料信息">
-      <div>
-        <span>所属方向</span>
-        <strong>${categoryLabel(pack.category)}</strong>
-      </div>
-      <div>
-        <span>阅读状态</span>
-        <strong>${accessLabel(pack)}</strong>
-      </div>
-      <div>
-        <span>资料来源</span>
-        <strong>${pack.source}</strong>
-      </div>
-      <div>
-        <span>更新日期</span>
-        <strong>2026-05-31</strong>
-      </div>
-    </div>
 
     <p class="detail-subtitle">阅读方式</p>
     <div class="detail-reading-guide">

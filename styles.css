@@ -1729,42 +1729,6 @@ h3 {
   font-weight: 900;
 }
 
-.detail-facts {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0;
-  margin-top: 28px;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-}
-
-.detail-facts div {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 8px;
-  padding: 16px 18px 16px 0;
-  border-right: 1px solid var(--line);
-  border-bottom: 0;
-}
-
-.detail-facts div:last-child {
-  border-right: 0;
-}
-
-.detail-facts span {
-  color: var(--muted);
-  font-size: 0.76rem;
-  font-weight: 850;
-}
-
-.detail-facts strong {
-  color: var(--ink);
-  font-size: 0.84rem;
-  font-weight: 850;
-  line-height: 1.58;
-  overflow-wrap: anywhere;
-}
-
 .detail-reading-guide {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2474,17 +2438,14 @@ h3 {
     order: -1;
   }
 
-  .detail-facts,
   .detail-reading-guide,
   .detail-groups,
   .indicator-detail dl {
     grid-template-columns: 1fr;
   }
 
-  .detail-facts div,
   .detail-reading-guide div,
   .group-row,
-  .detail-facts div:last-child,
   .detail-reading-guide div:last-child,
   .group-row:last-child {
     padding: 14px 0;
@@ -2492,7 +2453,6 @@ h3 {
     border-bottom: 1px solid var(--line);
   }
 
-  .detail-facts div:last-child,
   .detail-reading-guide div:last-child,
   .group-row:last-child {
     border-bottom: 0;
