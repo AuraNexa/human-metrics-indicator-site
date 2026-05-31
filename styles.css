@@ -236,7 +236,8 @@ h1 {
 }
 
 h1 span {
-  display: inline;
+  display: inline-block;
+  white-space: nowrap;
 }
 
 h2 {
