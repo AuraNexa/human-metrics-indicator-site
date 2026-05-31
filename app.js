@@ -516,9 +516,13 @@ function renderRoleGallery() {
               .map(
                 (pack) => `
                   <a class="role-card" href="${indicatorHref(pack.id)}">
+                    <span class="role-card-visual" aria-hidden="true">
+                      <span>${pack.count}</span>
+                    </span>
+                    <span class="role-card-code">${categoryLabel(pack.category)} · ${pack.count} 项</span>
                     <strong>${pack.title}</strong>
-                    <span>${pack.code} / ${pack.count} 项</span>
                     <p>${pack.summary}</p>
+                    <em>进入阅读</em>
                   </a>
                 `
               )
@@ -528,6 +532,23 @@ function renderRoleGallery() {
       `;
     })
     .join("");
+}
+
+function revealCatalog(scroll = true) {
+  const section = byId("library");
+  if (!section) return;
+  section.hidden = false;
+  section.removeAttribute("aria-hidden");
+  section.classList.add("is-revealed");
+  document.querySelectorAll("[data-catalog-trigger]").forEach((trigger) => {
+    trigger.setAttribute("aria-expanded", "true");
+  });
+
+  if (scroll) {
+    window.requestAnimationFrame(() => {
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
 }
 
 function readingGuideFor(pack) {
@@ -838,7 +859,6 @@ function renderPacks() {
         <a class="pack-card" href="${indicatorHref(pack.id)}">
           <div class="pack-meta">
             <span class="pack-number">${String(index + 1).padStart(2, "0")}</span>
-            <span class="pack-code">${pack.code}</span>
             <span>${category ? category.label : ""} / ${pack.count} 项</span>
           </div>
           <h3>${pack.title}</h3>
@@ -1060,7 +1080,15 @@ function setupEvents() {
   document.querySelectorAll("[data-jump]").forEach((node) => {
     node.addEventListener("click", () => {
       selectCategory(node.dataset.jump);
+      revealCatalog(false);
       byId("library").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+
+  document.querySelectorAll("[data-catalog-trigger]").forEach((node) => {
+    node.addEventListener("click", (event) => {
+      event.preventDefault();
+      revealCatalog(true);
     });
   });
 }
@@ -1193,6 +1221,10 @@ function initLibrary() {
   renderPacks();
   renderComposer();
   setupEvents();
+
+  if (window.location.hash === "#library" || requestedCategory) {
+    revealCatalog(window.location.hash === "#library");
+  }
 }
 
 function categoryLabel(categoryId) {
@@ -1246,7 +1278,7 @@ function initIndicatorDetail() {
   const params = new URLSearchParams(window.location.search);
   const pack = packById(params.get("pack")) || indicatorPacks[0];
   state.selectedPackId = pack.id;
-  document.title = `${pack.title} · Human Metrics`;
+  document.title = `${pack.title} · 人类指标资料库`;
   renderIndicatorHero(pack);
   renderIndicatorSiblings(pack);
   renderDetail(pack);
