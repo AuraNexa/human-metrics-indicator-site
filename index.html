@@ -38,31 +38,63 @@
     </header>
 
     <main id="top">
-      <section class="home-cover" aria-labelledby="hero-title">
-        <div class="home-cover-copy">
-          <p class="section-kicker">指标资料库</p>
-          <h1 id="hero-title">把问题拆成可查的指标</h1>
+      <section class="home-problem-hero" aria-labelledby="hero-title">
+        <div class="home-problem-copy">
+          <h1 id="hero-title">先把问题说清楚，再去查指标</h1>
           <p>
-            每套指标先回答一个具体问题：它观察什么、适合在哪些场景查阅、哪些细项值得继续看。
+            <span>一段关系、一个孩子的状态、一个员工能不能用，通常不是单一原因。</span>
+            <span>这里把问题拆成可以查阅的指标。</span>
           </p>
-          <div class="hero-actions">
-            <a class="button primary" href="./library.html">进入指标库</a>
-            <button class="button secondary home-cart-action" type="button" data-selection-trigger>查看我的组合</button>
+          <div class="home-problem-actions">
+            <a class="button primary" href="./library.html">开始查阅</a>
+            <a class="button secondary" href="./catalog.html">查看全部目录</a>
           </div>
-          <div class="home-cover-stats" aria-label="资料概览">
-            <span><strong>14</strong> 套目录</span>
-            <span><strong>7</strong> 个方向</span>
-            <span><strong>49</strong> 份资料来源</span>
+          <div class="home-problem-scene" aria-hidden="true">
+            <img src="./assets/indicator-art/ordinary-status.webp" alt="" />
+            <img src="./assets/indicator-art/family-relationship.webp" alt="" />
+            <img src="./assets/indicator-art/management-pro.webp" alt="" />
           </div>
         </div>
-        <figure class="home-cover-visual">
-          <img src="./assets/library-archive-v2.webp" alt="指标资料整理桌面" />
-        </figure>
       </section>
 
-      <section id="home-directions" class="home-directions" aria-labelledby="home-directions-title">
+      <div class="home-problem-stats" aria-label="资料概览">
+        <span><strong>14</strong> 套目录</span>
+        <span><strong>49</strong> 份资料来源</span>
+        <span><strong>7</strong> 个查阅方向</span>
+      </div>
+
+      <section id="home-directions" class="home-question-entry" aria-labelledby="home-directions-title">
+        <div class="home-question-copy">
+          <h2 id="home-directions-title"><span>从一个</span><span>具体问题开始</span></h2>
+          <p>不必先看完整目录。选择最接近你当下关心的问题，再进入对应资料。</p>
+        </div>
+        <div class="home-question-grid" aria-label="常见查阅问题">
+          <a class="home-question-card tone-purple" href="./indicator.html?pack=child-learning">
+            <span>孩子学习吃力</span>
+            <strong>学习底盘、作业、家庭关系</strong>
+            <p>先看孩子是否听懂、记住、会用。</p>
+          </a>
+          <a class="home-question-card tone-coral" href="./indicator.html?pack=female-boyfriend-screen">
+            <span>一段关系看不清</span>
+            <strong>真实投入、长期目的、安全边界</strong>
+            <p>看持续行为，而不是只听表达。</p>
+          </a>
+          <a class="home-question-card tone-ochre" href="./indicator.html?pack=employee-simple">
+            <span>员工能不能用</span>
+            <strong>可信任度、岗位适配、隐性消耗</strong>
+            <p>先看底线，再看能力。</p>
+          </a>
+          <a class="home-question-card tone-teal" href="./indicator.html?pack=ordinary-status">
+            <span>近期状态波动大</span>
+            <strong>睡眠、压力、情绪、行动力</strong>
+            <p>先确认当下状态，再追细项。</p>
+          </a>
+        </div>
+      </section>
+
+      <section class="home-directions" aria-labelledby="home-direction-strip-title">
         <div class="home-directions-head">
-          <h2 id="home-directions-title">先从一个方向开始</h2>
+          <h2 id="home-direction-strip-title">按方向进入</h2>
           <p>方向只是入口，真正的内容在每套指标里。点击卡片可以直接进入对应目录。</p>
         </div>
         <div class="home-type-grid" aria-label="常用指标方向">
@@ -89,44 +121,10 @@
         </div>
       </section>
 
-      <section class="home-flow" aria-labelledby="home-flow-title">
-        <div class="home-flow-head">
-          <p class="section-kicker">查阅方式</p>
-          <h2 id="home-flow-title">查目录，看细项，加入组合</h2>
-          <p>遇到以后想搭配查询的指标，可以先放进自己的组合，之后围绕同一个问题一起查看。</p>
-        </div>
-        <div class="home-flow-grid">
-          <article>
-            <span>一</span>
-            <h3>进入目录</h3>
-            <p>先按方向找到一套指标，确认它观察的对象和适用场景。</p>
-          </article>
-          <article>
-            <span>二</span>
-            <h3>阅读细项</h3>
-            <p>在详情页切换代表指标，看含义、风险侧和调整提醒。</p>
-          </article>
-          <article>
-            <span>三</span>
-            <h3>加入组合</h3>
-            <p>把相关指标放进组合，之后可以按同一个问题搭配查询。</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="home-legal-section" aria-label="阅读边界">
-        <p class="legal-note home-note">
-          内容仅供娱乐、自我观察与日常交流参考，不构成医学、心理、法律、财务、教育或招聘专业建议。
-          <a href="./notice.html">阅读须知</a>
-        </p>
-      </section>
     </main>
 
     <footer class="site-footer">
-      <div>
-        <strong>人类指标资料库&nbsp;&nbsp;|&nbsp;&nbsp;日常观察· 了解当下· 辅助修正</strong>
-      </div>
-      <p><a href="./notice.html">阅读须知</a> · 所有内容仅供娱乐和日常交流参考。</p>
+      <p>内容仅供娱乐、自我观察与日常交流参考，不构成医学、心理、法律、财务、教育或招聘专业建议。<a href="./notice.html">阅读须知</a></p>
     </footer>
   </body>
 </html>

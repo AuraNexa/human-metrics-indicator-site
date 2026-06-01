@@ -895,9 +895,29 @@ function renderPacks() {
   byId("resultCount").textContent = String(packs.length);
   renderRoleGallery();
   const host = byId("packGrid");
+  const useCatalogRows = host.classList.contains("catalog-row-list");
   host.innerHTML = packs
     .map((pack, index) => {
       const category = categories.find((item) => item.id === pack.category);
+      if (useCatalogRows) {
+        return `
+          <a class="pack-card catalog-row-card category-${pack.category}" href="${indicatorHref(pack.id)}">
+            <span class="catalog-row-image">
+              <img src="./assets/indicator-art/${pack.id}.webp" alt="${pack.title}插画" />
+            </span>
+            <span class="catalog-row-content">
+              <span class="pack-meta">
+                <span>${category ? category.label : ""} · ${pack.count} 项</span>
+              </span>
+              <h3>${pack.title}</h3>
+              <p>${pack.summary}</p>
+              <span class="pack-tags">
+                ${pack.tags.map((tag) => `<span>${tag}</span>`).join("")}
+              </span>
+            </span>
+          </a>
+        `;
+      }
       return `
         <a class="pack-card category-${pack.category}" href="${indicatorHref(pack.id)}">
           <div class="pack-meta">
@@ -916,7 +936,7 @@ function renderPacks() {
 
   if (!packs.length) {
     host.innerHTML = `
-      <div class="pack-card empty-pack-card">
+      <div class="pack-card empty-pack-card ${useCatalogRows ? "catalog-row-card" : ""}">
         <div class="pack-meta">
           <span class="pack-number">00</span>
           <span>未匹配</span>

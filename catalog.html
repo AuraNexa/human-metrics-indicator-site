@@ -35,38 +35,48 @@
     </header>
 
     <main id="top" class="library-type-page catalog-page">
-      <section class="type-hero catalog-page-hero" aria-labelledby="catalog-title">
-        <h1 id="catalog-title">全部指标目录</h1>
-        <p>从这里查看所有已整理的指标资料。你可以先筛选方向，也可以直接搜索具体词。</p>
-        <a class="text-action primary-link" href="./library.html">返回按方向浏览</a>
+      <section class="catalog-choice-hero" aria-labelledby="catalog-title">
+        <article class="library-choice choice-c" aria-labelledby="catalog-title">
+          <div class="choice-window" aria-hidden="true">
+            <img src="./assets/library-archive-v2.webp" alt="" />
+          </div>
+          <div class="library-choice-copy">
+            <p class="choice-kicker">资料柜入口</p>
+            <h1 id="catalog-title">全部目录</h1>
+            <p>像翻资料卡一样，先选方向，再进入单套资料；也可以直接搜索具体词。</p>
+            <a class="text-action primary-link" href="./library.html">返回指标库</a>
+          </div>
+        </article>
       </section>
 
-      <section id="library" class="catalog-index-section is-revealed" aria-label="全部指标目录">
-        <div class="type-toolbar">
-          <div class="search-box">
+      <section id="library" class="catalog-archive-section is-revealed" aria-label="全部指标目录">
+        <aside class="catalog-archive-side">
+          <div class="search-box catalog-search-box">
             <label for="searchInput">查找指标</label>
             <input id="searchInput" type="search" placeholder="正行、记忆力、婚恋、管理" autocomplete="off" />
           </div>
-          <div class="category-area">
-            <p class="control-label">快速筛选</p>
-            <div class="category-list" id="categoryList"></div>
+          <div class="catalog-direction-index">
+            <h2>方向索引</h2>
+            <div class="category-list catalog-direction-list" id="categoryList"></div>
           </div>
-        </div>
+        </aside>
 
-        <div class="catalog-index-head">
-          <span><strong id="resultCount">0</strong> 套目录</span>
-          <p>选择一套指标后进入独立阅读页，查看结构、代表指标和阅读边界。</p>
-        </div>
+        <div class="catalog-archive-main">
+          <div class="catalog-index-head">
+            <span><strong id="resultCount">0</strong> 套目录</span>
+            <p>
+              <span>选择一套资料进入独立阅读页，继续查看细项。</span>
+              <span>也可以把以后想搭配查询的指标加入组合。</span>
+            </p>
+          </div>
 
-        <div id="packGrid" class="pack-grid catalog-card-grid"></div>
+          <div id="packGrid" class="pack-grid catalog-row-list"></div>
+        </div>
       </section>
     </main>
 
     <footer class="site-footer">
-      <div>
-        <strong>人类指标资料库&nbsp;&nbsp;|&nbsp;&nbsp;日常观察· 了解当下· 辅助修正</strong>
-      </div>
-      <p><a href="./notice.html">阅读须知</a> · 内容仅供娱乐和日常交流参考，不构成专业建议。</p>
+      <p>内容仅供娱乐、自我观察与日常交流参考，不构成医学、心理、法律、财务、教育或招聘专业建议。<a href="./notice.html">阅读须知</a></p>
     </footer>
   </body>
 </html>
