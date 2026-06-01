@@ -1328,6 +1328,9 @@ function setupReveals() {
 }
 
 function setupReadingTools() {
+  const hasLongReadingArea = document.querySelector(".indicator-detail-page, .notice-section");
+  if (!hasLongReadingArea) return;
+
   if (document.querySelector(".reader-tools")) return;
 
   const clampScale = (value) => Math.min(1.08, Math.max(0.94, value));
