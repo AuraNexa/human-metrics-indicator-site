@@ -973,11 +973,11 @@ h3 {
 }
 
 .home-question-copy h2 {
-  max-width: 12em;
+  max-width: none;
   margin: 0;
-  font-size: clamp(3rem, 5vw, 5.15rem);
-  line-height: 1.02;
-  text-wrap: balance;
+  font-size: 4rem;
+  line-height: 1.05;
+  white-space: nowrap;
 }
 
 .home-question-copy p {
@@ -5140,6 +5140,12 @@ h3 {
   }
 }
 
+@media (max-width: 1280px) and (min-width: 1121px) {
+  .home-question-copy h2 {
+    font-size: 3.5rem;
+  }
+}
+
 @media (max-width: 780px) {
   html {
     scroll-padding-top: 152px;
@@ -5170,6 +5176,10 @@ h3 {
     flex: 0 0 auto;
     text-align: left;
     white-space: nowrap;
+  }
+
+  .home-question-copy h2 {
+    font-size: 3.35rem;
   }
 
   .hero-shell,
@@ -5760,6 +5770,10 @@ h3 {
 
   .home-page h1 {
     font-size: 2.7rem;
+  }
+
+  .home-question-copy h2 {
+    font-size: 2.28rem;
   }
 
   .page-hero h1 {
