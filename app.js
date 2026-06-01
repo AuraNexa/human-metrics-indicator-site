@@ -540,6 +540,216 @@ const libraryRoles = [
   },
 ];
 
+const directionProfiles = {
+  general: {
+    category: "general",
+    tone: "teal",
+    label: "普通人基础",
+    word: "状态",
+    title: "先看近期状态，再追细项",
+    lead: "适合先判断一个人当下是否稳定，再继续看睡眠、压力、情绪、行动和基础方向。",
+    imageIds: ["ordinary-status", "public-basic-one", "practice-daily"],
+    issueTitle: "这一类主要解决什么",
+    issueLead: "先把状态看清楚，再决定要不要继续查关系、工作、修行或家庭细项。",
+    issues: [
+      { title: "近期状态波动大", strong: "睡眠、压力、情绪、行动力", note: "先看当下恢复和承载，不急着下长期结论。" },
+      { title: "看不清一个人的底色", strong: "正心、正念、正行、正气", note: "用基础项看出发点、念头和行为是否一致。" },
+      { title: "只知道不舒服，不知道卡在哪", strong: "身体、头脑、人际、近期阻力", note: "把模糊感受拆成可继续查阅的方向。" },
+    ],
+    packIds: ["ordinary-status", "public-basic-one"],
+    relatedIds: ["practice-daily", "five-poisons"],
+  },
+  child: {
+    category: "child",
+    tone: "purple",
+    label: "孩子教育",
+    word: "孩子",
+    title: "先看孩子处境，再看学习表现",
+    lead: "适合父母从孩子视角看学习底盘、写作业、家庭关系和学校处境，避免只盯成绩。",
+    imageIds: ["child-learning", "homework", "family-relationship"],
+    issueTitle: "这一类主要解决什么",
+    issueLead: "先分清是能力、状态、家庭还是学校环境在影响孩子，再进入对应资料。",
+    issues: [
+      { title: "孩子学习吃力", strong: "理解、记忆、应用、抗压", note: "先看学习底盘，再决定是否增加训练量。" },
+      { title: "写作业反复拉扯", strong: "作业负荷、专注启动、家长干预", note: "把不会、拖延、抗拒和家庭放大分开看。" },
+      { title: "孩子在家或学校不对劲", strong: "被爱感、安全感、同学关系、校园风险", note: "用环境和关系线索补充判断。" },
+    ],
+    packIds: ["child-learning", "homework", "family-relationship", "school-risk"],
+    relatedIds: ["ordinary-status", "person-total-pool"],
+  },
+  relationship: {
+    category: "relationship",
+    tone: "coral",
+    label: "婚恋关系",
+    word: "关系",
+    title: "先看持续行动，再看关系边界",
+    lead: "适合在暧昧、交往和婚恋选择里，把好感、投入、承诺、长期目的和安全风险拆开看。",
+    imageIds: ["female-boyfriend-screen", "male-read-interest", "person-total-pool"],
+    issueTitle: "这一类主要解决什么",
+    issueLead: "先看事实行为，再看长期意愿；不要只靠情绪、承诺或一两次表现判断。",
+    issues: [
+      { title: "这段关系要不要继续", strong: "真实投入、承诺兑现、安全边界", note: "把当下感受放回持续行为里观察。" },
+      { title: "对方到底有没有意愿", strong: "交往意愿、主动值、回应质量", note: "看关系是否自然推进，而不是单看回复速度。" },
+      { title: "怕以后出现风险", strong: "忠诚边界、分手风险、长期目的", note: "先把底线问题提前看清楚。" },
+    ],
+    packIds: ["female-boyfriend-screen", "male-read-interest"],
+    relatedIds: ["ordinary-status", "person-total-pool"],
+  },
+  work: {
+    category: "work",
+    tone: "ochre",
+    label: "职场用人",
+    word: "职场",
+    title: "先看底线风险，再看岗位适配",
+    lead: "适合老板、管理者和合作方先判断一个人能不能用、放哪里、要防什么，再看能力细项。",
+    imageIds: ["employee-simple", "management-pro", "person-total-pool"],
+    issueTitle: "这一类主要解决什么",
+    issueLead: "用人先看底线和稳定性，再看岗位、沟通、管理画像和阶段能力。",
+    issues: [
+      { title: "员工能不能用", strong: "可信任度、岗位适配、隐性消耗", note: "先看合作成本和底线，再看能力表现。" },
+      { title: "管理者是否可靠", strong: "心性、决策、执行、用人能力", note: "关键岗位不能只看资历和口才。" },
+      { title: "想做一套识人组合", strong: "底盘、风险、专项能力", note: "把以后要搭配查询的指标加入组合。" },
+    ],
+    packIds: ["employee-simple", "management-pro", "person-total-pool", "human-manual"],
+    relatedIds: ["ordinary-status", "female-boyfriend-screen"],
+  },
+};
+
+function splitDirectionTitle(title) {
+  return title
+    .split("，")
+    .map((part, index, parts) => `<span>${part}${index < parts.length - 1 ? "，" : ""}</span>`)
+    .join("");
+}
+
+function renderDirectionPage() {
+  const host = byId("directionPage");
+  if (!host) return false;
+
+  const params = new URLSearchParams(window.location.search);
+  const profile = directionProfiles[params.get("category")];
+  const defaultContent = byId("libraryDefaultContent");
+
+  if (!profile) {
+    host.hidden = true;
+    host.innerHTML = "";
+    defaultContent?.removeAttribute("hidden");
+    document.body.removeAttribute("data-section-tone");
+    return false;
+  }
+
+  const packs = profile.packIds.map(packById).filter(Boolean);
+  const relatedPacks = profile.relatedIds.map(packById).filter(Boolean);
+  defaultContent?.setAttribute("hidden", "");
+  document.body.setAttribute("data-section-tone", profile.category);
+  document.title = `${profile.label} · 人类指标资料库`;
+  host.hidden = false;
+  host.className = `direction-page direction-${profile.tone} category-${profile.category}`;
+  host.innerHTML = `
+    <section class="direction-detail-hero" aria-labelledby="direction-title">
+      <div class="direction-detail-copy">
+        <a class="direction-back-link" href="./library.html">返回指标库</a>
+        <p class="choice-kicker">${profile.label}</p>
+        <h1 id="direction-title">${splitDirectionTitle(profile.title)}</h1>
+        <p>${profile.lead}</p>
+        <div class="direction-hero-actions">
+          <a class="button primary" href="#direction-packs">查看本方向资料</a>
+          <a class="button secondary" href="./catalog.html">全部目录</a>
+        </div>
+      </div>
+      <div class="direction-visual-stack" aria-hidden="true">
+        ${profile.imageIds
+          .map((id) => {
+            const pack = packById(id);
+            return pack
+              ? `
+                <span>
+                  <img src="./assets/indicator-art/${id}.webp" alt="" />
+                </span>
+              `
+              : "";
+          })
+          .join("")}
+      </div>
+    </section>
+
+    <section class="direction-issue-section" aria-labelledby="direction-issues-title">
+      <div class="direction-section-head">
+        <div>
+          <p class="choice-kicker">查阅入口</p>
+          <h2 id="direction-issues-title">${profile.issueTitle}</h2>
+        </div>
+        <p>${profile.issueLead}</p>
+      </div>
+      <div class="direction-issue-grid">
+        ${profile.issues
+          .map(
+            (issue) => `
+              <article>
+                <span>${issue.title}</span>
+                <strong>${issue.strong}</strong>
+                <p>${issue.note}</p>
+              </article>
+            `
+          )
+          .join("")}
+      </div>
+    </section>
+
+    <section id="direction-packs" class="direction-pack-section" aria-labelledby="direction-pack-title">
+      <div class="direction-pack-head">
+        <div>
+          <p class="choice-kicker">本方向资料</p>
+          <h2 id="direction-pack-title">${profile.label}</h2>
+        </div>
+        <p>选择一套资料进入独立阅读页。后面需要反复搭配查询时，可以把相关指标加入自己的组合。</p>
+      </div>
+      <div class="direction-pack-list">
+        ${packs
+          .map(
+            (pack) => `
+              <a class="direction-pack-card category-${pack.category}" href="${indicatorHref(pack.id)}">
+                <span class="direction-pack-image">
+                  <img src="./assets/indicator-art/${pack.id}.webp" alt="${pack.title}插画" loading="lazy" />
+                </span>
+                <span class="direction-pack-copy">
+                  <span class="pack-meta">${categoryLabel(pack.category)} · ${pack.count} 项</span>
+                  <strong>${pack.title}</strong>
+                  <em>${pack.summary}</em>
+                </span>
+                <span class="direction-pack-action">进入阅读</span>
+              </a>
+            `
+          )
+          .join("")}
+      </div>
+      ${
+        relatedPacks.length
+          ? `
+            <div class="direction-related">
+              <p class="choice-kicker">也可以继续看</p>
+              <div>
+                ${relatedPacks
+                  .map(
+                    (pack) => `
+                      <a href="${indicatorHref(pack.id)}">
+                        <span>${categoryLabel(pack.category)} · ${pack.count} 项</span>
+                        <strong>${pack.title}</strong>
+                      </a>
+                    `
+                  )
+                  .join("")}
+              </div>
+            </div>
+          `
+          : ""
+      }
+    </section>
+  `;
+
+  return true;
+}
+
 function renderRoleGallery() {
   const host = byId("roleGallery");
   if (!host) return;
@@ -1500,6 +1710,7 @@ function init() {
   setupDetailPanelEvents();
   initLibrary();
   initIndicatorDetail();
+  renderDirectionPage();
   renderRoleGallery();
   renderSelectionUi();
 }
