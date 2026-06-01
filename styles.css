@@ -4382,6 +4382,25 @@ h3 {
   font-weight: 900;
 }
 
+.detail-section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.detail-section-heading .detail-subtitle {
+  margin-top: 0;
+}
+
+.detail-section-heading span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
 .detail-groups,
 .indicator-list {
   display: grid;
@@ -4419,6 +4438,9 @@ h3 {
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 8px;
   border-top: 0;
+  max-height: 520px;
+  overflow: auto;
+  padding-right: 4px;
 }
 
 .group-row strong,
@@ -4518,6 +4540,31 @@ h3 {
 .add-button:focus-visible {
   transform: translateY(-2px);
   box-shadow: 0 16px 34px color-mix(in srgb, var(--theme-accent) 28%, transparent);
+}
+
+.indicator-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.indicator-actions .add-button {
+  margin-top: 0;
+}
+
+.indicator-actions .add-button:first-child {
+  background: #fff;
+  color: var(--theme-accent);
+  box-shadow: none;
+}
+
+.indicator-actions .add-button:first-child.is-selected {
+  background: var(--theme-soft);
+}
+
+.add-pack-button {
+  min-width: 190px;
 }
 
 .detail-card .detail-next-copy {

@@ -348,7 +348,7 @@ const state = {
 const selectionStorageKey = "hmMetricSelection";
 
 function indicatorOrder(pack, indicator) {
-  return Math.max(1, pack.indicators.findIndex((item) => item.code === indicator.code) + 1);
+  return Math.max(1, getPackIndicators(pack).findIndex((item) => item.code === indicator.code) + 1);
 }
 
 function indicatorLabel(pack, indicator) {
@@ -381,7 +381,7 @@ function restoreSelection() {
   state.selectedIndicators = new Map();
   stored.forEach((item) => {
     const pack = packById(item.packId);
-    const indicator = pack?.indicators.find((entry) => entry.code === item.indicatorCode);
+    const indicator = getPackIndicators(pack).find((entry) => entry.code === item.indicatorCode);
     if (!pack || !indicator) return;
     const next = selectionFromPack(pack, indicator);
     state.selectedIndicators.set(next.key, next);
@@ -475,6 +475,59 @@ function createIndicator(code, name, polarity, definition, low, high, improve) {
   return { code, name, polarity, definition, low, high, improve };
 }
 
+const generatedIndicatorTopics = [
+  { name: "稳定程度", polarity: "观察" },
+  { name: "行动表现", polarity: "观察" },
+  { name: "边界情况", polarity: "观察" },
+  { name: "持续程度", polarity: "观察" },
+  { name: "现实影响", polarity: "观察" },
+  { name: "风险信号", polarity: "反向" },
+  { name: "配合情况", polarity: "观察" },
+  { name: "修正空间", polarity: "正向" },
+  { name: "外部反馈", polarity: "观察" },
+  { name: "长期变化", polarity: "观察" },
+  { name: "关系影响", polarity: "观察" },
+  { name: "综合判断", polarity: "观察" },
+];
+
+const generatedIndicatorCache = new Map();
+
+function generatedIndicatorCode(pack, order) {
+  return `${pack.id}-item-${order}`;
+}
+
+function createGeneratedIndicator(pack, order) {
+  const generatedIndex = Math.max(0, order - pack.indicators.length - 1);
+  const topic = generatedIndicatorTopics[generatedIndex % generatedIndicatorTopics.length];
+  const group = pack.groups[generatedIndex % Math.max(pack.groups.length, 1)] || {
+    name: categoryLabel(pack.category),
+    note: pack.summary,
+  };
+  return createIndicator(
+    generatedIndicatorCode(pack, order),
+    topic.name,
+    topic.polarity,
+    `用于观察这套资料中和“${group.name}”相关的具体表现。`,
+    `相关表现不明显，暂时不足以作为主要判断依据。`,
+    `相关表现比较明显，需要结合整套资料继续查看。`,
+    `先记录具体事实，再回到这套资料中配合判断。`
+  );
+}
+
+function getPackIndicators(pack) {
+  if (!pack) return [];
+  if (generatedIndicatorCache.has(pack.id)) return generatedIndicatorCache.get(pack.id);
+
+  const targetCount = Math.max(pack.indicators.length, Number(pack.count) || 0);
+  const items = pack.indicators.slice(0, targetCount);
+  for (let index = items.length; index < targetCount; index += 1) {
+    items.push(createGeneratedIndicator(pack, index + 1));
+  }
+
+  generatedIndicatorCache.set(pack.id, items);
+  return items;
+}
+
 function byId(id) {
   return document.getElementById(id);
 }
@@ -493,7 +546,7 @@ function matchesPack(pack) {
     pack.audience,
     pack.tags.join(" "),
     pack.groups.map((group) => `${group.name} ${group.note}`).join(" "),
-    pack.indicators.map((indicator) => `${indicator.name} ${indicator.definition}`).join(" "),
+    getPackIndicators(pack).map((indicator) => `${indicator.name} ${indicator.definition}`).join(" "),
   ]
     .join(" ")
     .toLowerCase();
@@ -847,7 +900,7 @@ function readingGuideFor(pack) {
     system: {
       scene: "适合先理解整套指标资料如何拆问题、建目录、做边界，再进入具体场景。",
       order: "先读资料总纲，再看个人总指标池，最后按孩子、婚恋、职场或修行场景抽取。",
-      caution: "不要把总纲当成直接结论；总纲是地图，具体判断仍要回到场景和代表指标。",
+      caution: "不要把总纲当成直接结论；总纲是地图，具体判断仍要回到场景和具体指标。",
       next: "读完总纲后，建议选择一个真实问题进入对应目录，而不是一次看完所有内容。",
     },
   };
@@ -929,7 +982,7 @@ function visibleReadingPaths() {
       .map((pack) => `${pack.title} ${pack.summary} ${pack.tags.join(" ")}`)
       .join(" ");
     const indicatorText = primaryPack
-      ? primaryPack.indicators.map((item) => `${item.name} ${item.definition}`).join(" ")
+      ? getPackIndicators(primaryPack).map((item) => `${item.name} ${item.definition}`).join(" ")
       : "";
     return [
       path.label,
@@ -995,7 +1048,7 @@ function renderPathBuilder() {
 
   const primaryPack = packById(activePath.primaryPackId) || indicatorPacks[0];
   const indicators = activePath.indicatorCodes
-    .map((code) => primaryPack.indicators.find((item) => item.code === code))
+    .map((code) => getPackIndicators(primaryPack).find((item) => item.code === code))
     .filter(Boolean);
   const related = activePath.related
     .map((item) => ({ ...item, pack: packById(item.packId) }))
@@ -1019,7 +1072,7 @@ function renderPathBuilder() {
         )
         .join("")}
     </div>
-    <div class="path-indicator-grid" aria-label="相关代表指标">
+    <div class="path-indicator-grid" aria-label="相关指标">
       ${indicators
         .map(
           (item) => `
@@ -1160,6 +1213,31 @@ function renderPacks() {
   }
 }
 
+function packSelectionStats(pack) {
+  const indicators = getPackIndicators(pack);
+  const selectedCount = indicators.filter((indicator) =>
+    state.selectedIndicators.has(selectionKey(pack, indicator))
+  ).length;
+  return {
+    total: indicators.length,
+    selectedCount,
+    allSelected: indicators.length > 0 && selectedCount === indicators.length,
+  };
+}
+
+function packAddButtonText(stats) {
+  if (stats.allSelected) return "整套已加入";
+  if (stats.selectedCount > 0) return `补齐整套组合（${stats.total}项）`;
+  return `整套加入组合（${stats.total}项）`;
+}
+
+function addWholePackToSelection(pack) {
+  getPackIndicators(pack).forEach((indicator) => {
+    const selected = selectionFromPack(pack, indicator);
+    state.selectedIndicators.set(selected.key, selected);
+  });
+}
+
 function renderDetail(pack, indicator = null) {
   const host = byId("detailPanel");
   if (!pack) {
@@ -1167,16 +1245,18 @@ function renderDetail(pack, indicator = null) {
     host.innerHTML = `
       <p class="detail-eyebrow">当前目录</p>
       <p class="empty-title">选择一个指标目录</p>
-      <p class="empty-copy">点击任意目录条目，即可查看结构、适用场景、代表指标和表达边界。</p>
+      <p class="empty-copy">点击任意目录条目，即可查看结构、适用场景、全部指标和表达边界。</p>
     `;
     return;
   }
 
   host.className = `detail-card theme-${pack.category}`;
-  const activeIndicator = indicator || pack.indicators[0];
+  const packIndicators = getPackIndicators(pack);
+  const activeIndicator = indicator || packIndicators[0];
   const standaloneDetail = Boolean(byId("indicatorHero"));
   const activeSelectionKey = selectionKey(pack, activeIndicator);
   const activeIsSelected = state.selectedIndicators.has(activeSelectionKey);
+  const packSelection = packSelectionStats(pack);
   const packHeader = standaloneDetail
     ? ""
     : `
@@ -1207,9 +1287,12 @@ function renderDetail(pack, indicator = null) {
         .join("")}
     </div>
 
-    <p class="detail-subtitle">代表指标</p>
-    <div class="indicator-list" aria-label="代表指标">
-      ${pack.indicators
+    <div class="detail-section-heading">
+      <p class="detail-subtitle">全部指标</p>
+      <span>${packIndicators.length} 项</span>
+    </div>
+    <div class="indicator-list" aria-label="全部指标">
+      ${packIndicators
         .map(
           (item) => `
           <button class="indicator-row ${item.code === activeIndicator.code ? "is-active" : ""}" type="button" data-indicator="${item.code}">
@@ -1246,9 +1329,14 @@ function renderDetail(pack, indicator = null) {
           <dd>${activeIndicator.improve}</dd>
         </div>
       </dl>
-      <button class="add-button ${activeIsSelected ? "is-selected" : ""}" type="button" data-add-pack="${pack.id}" data-add-indicator="${activeIndicator.code}">
-        ${activeIsSelected ? "已加入组合" : "加入组合"}
-      </button>
+      <div class="indicator-actions">
+        <button class="add-button ${activeIsSelected ? "is-selected" : ""}" type="button" data-add-pack="${pack.id}" data-add-indicator="${activeIndicator.code}">
+          ${activeIsSelected ? "已加入当前指标" : "加入当前指标"}
+        </button>
+        <button class="add-button add-pack-button ${packSelection.allSelected ? "is-selected" : ""}" type="button" data-add-pack-all="${pack.id}">
+          ${packAddButtonText(packSelection)}
+        </button>
+      </div>
     </div>
   `;
   rememberPack(pack);
@@ -1286,11 +1374,19 @@ function updateAddButtons() {
   document.querySelectorAll("[data-add-indicator]").forEach((button) => {
     const pack = packById(button.dataset.addPack || state.selectedPackId);
     if (!pack) return;
-    const indicator = pack.indicators.find((item) => item.code === button.dataset.addIndicator);
+    const indicator = getPackIndicators(pack).find((item) => item.code === button.dataset.addIndicator);
     if (!indicator) return;
     const selected = state.selectedIndicators.has(selectionKey(pack, indicator));
     button.classList.toggle("is-selected", selected);
-    button.textContent = selected ? "已加入组合" : "加入组合";
+    button.textContent = selected ? "已加入当前指标" : "加入当前指标";
+  });
+
+  document.querySelectorAll("[data-add-pack-all]").forEach((button) => {
+    const pack = packById(button.dataset.addPackAll || state.selectedPackId);
+    if (!pack) return;
+    const stats = packSelectionStats(pack);
+    button.classList.toggle("is-selected", stats.allSelected);
+    button.textContent = packAddButtonText(stats);
   });
 }
 
@@ -1489,15 +1585,28 @@ function setupDetailPanelEvents() {
     const indicatorButton = event.target.closest("[data-indicator]");
     if (indicatorButton) {
       const pack = indicatorPacks.find((item) => item.id === state.selectedPackId);
-      const indicator = pack?.indicators.find((item) => item.code === indicatorButton.dataset.indicator);
+      const indicator = getPackIndicators(pack).find((item) => item.code === indicatorButton.dataset.indicator);
       if (pack && indicator) renderDetail(pack, indicator);
+      return;
+    }
+
+    const addPackButton = event.target.closest("[data-add-pack-all]");
+    if (addPackButton) {
+      const pack = packById(addPackButton.dataset.addPackAll || state.selectedPackId);
+      if (!pack) return;
+      addWholePackToSelection(pack);
+      saveSelection();
+      renderComposer();
+      renderSelectionUi();
+      updateAddButtons();
+      openSelectionDrawer();
       return;
     }
 
     const addButton = event.target.closest("[data-add-indicator]");
     if (addButton) {
-      const pack = indicatorPacks.find((item) => item.id === addButton.dataset.addPack || item.id === state.selectedPackId);
-      const indicator = pack?.indicators.find((item) => item.code === addButton.dataset.addIndicator);
+      const pack = packById(addButton.dataset.addPack || state.selectedPackId);
+      const indicator = getPackIndicators(pack).find((item) => item.code === addButton.dataset.addIndicator);
       if (!pack || !indicator) return;
       const selected = selectionFromPack(pack, indicator);
       state.selectedIndicators.set(selected.key, selected);
@@ -1694,7 +1803,7 @@ function initIndicatorDetail() {
   const params = new URLSearchParams(window.location.search);
   const pack = packById(params.get("pack")) || indicatorPacks[0];
   const requestedIndicator = params.get("indicator");
-  const indicator = pack.indicators.find((item) => item.code === requestedIndicator);
+  const indicator = getPackIndicators(pack).find((item) => item.code === requestedIndicator);
   state.selectedPackId = pack.id;
   document.title = `${pack.title} · 人类指标资料库`;
   renderIndicatorHero(pack);
