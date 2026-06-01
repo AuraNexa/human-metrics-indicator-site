@@ -15,7 +15,7 @@ const indicatorPacks = [
     category: "general",
     code: "HM-BASE-001",
     title: "基础指标 1 公开说明",
-    count: 12,
+    count: 18,
     source: "03_基础指标1_公开版指标详细说明.pdf",
     audience: "公开阅读 / 日常自查",
     summary:
@@ -61,7 +61,7 @@ const indicatorPacks = [
     category: "practice",
     code: "HM-PRAC-DAY",
     title: "修行者基础指标日常自查",
-    count: 18,
+    count: 20,
     source: "A_修行者基础指标日常自查_简明版.pdf / B_修行者基础指标日常自查_详细说明版.pdf",
     audience: "修行者 / 学员日常复盘",
     summary:
@@ -109,7 +109,7 @@ const indicatorPacks = [
     title: "孩子学习素质基础指标",
     count: 14,
     source: "孩子学习素质基础指标详细说明",
-    audience: "父母 / 咨询人员 / 服务人员",
+    audience: "父母 / 养育者 / 观察者",
     summary:
       "判断孩子是否具备常规知识学习、课堂学习、考试学习的基础底盘，避免只盯成绩。",
     tags: ["学习底盘", "父母沟通", "详细说明"],
@@ -130,7 +130,7 @@ const indicatorPacks = [
     category: "child",
     code: "HM-CHD-HW-104",
     title: "小孩子写作业指标",
-    count: 104,
+    count: 102,
     source: "小孩子写作业指标标准说明",
     audience: "家长阅读 / 标准说明",
     summary:
@@ -291,7 +291,7 @@ const indicatorPacks = [
     category: "system",
     code: "HM-PERSON-V02",
     title: "评价一个人的总指标体系",
-    count: 525,
+    count: 535,
     source: "评价一个人的总指标体系_V0.2_完整总指标池.docx",
     audience: "识人 / 用人 / 关系观察",
     summary:
@@ -475,6 +475,65 @@ function createIndicator(code, name, polarity, definition, low, high, improve) {
   return { code, name, polarity, definition, low, high, improve };
 }
 
+const sourceIndicatorPrefixes = {
+  "public-basic-one": "BASE",
+  "ordinary-status": "GEN",
+  "practice-daily": "PRAC",
+  "five-poisons": "POI",
+  "child-learning": "LEARN",
+  homework: "HW",
+  "family-relationship": "FAM",
+  "school-risk": "SCH",
+  "female-boyfriend-screen": "REL-F",
+  "male-read-interest": "REL-M",
+  "management-pro": "MGT",
+  "employee-simple": "EMP",
+  "person-total-pool": "POOL",
+  "human-manual": "MAN",
+};
+
+function sourceIndicatorCode(pack, order) {
+  const prefix = sourceIndicatorPrefixes[pack.id] || "ITEM";
+  const width = order >= 100 ? 3 : 2;
+  return `${prefix}-${String(order).padStart(width, "0")}`;
+}
+
+function sourceIndicatorText(polarity, type, name) {
+  if (polarity === "反向") {
+    if (type === "low") return `${name}相关风险或负担暂时不明显。`;
+    if (type === "high") return `${name}相关风险或负担比较明显，需要优先留意。`;
+  }
+  if (polarity === "阶段") {
+    if (type === "low") return `这一阶段还没有充分进入，需要先补足前置理解。`;
+    if (type === "high") return `这一阶段已经比较清楚，可以继续往后衔接。`;
+  }
+  if (type === "low") return `${name}表现不足时，先回到具体事实观察。`;
+  if (type === "high") return `${name}表现较明显时，可作为继续判断的参考。`;
+  return `先记录具体场景，再结合整套资料继续查看。`;
+}
+
+function createSourceIndicator(pack, source, index) {
+  const order = index + 1;
+  const code = source.code || sourceIndicatorCode(pack, order);
+  const existing = pack.indicators.find((item) => item.code === code || item.name === source.name);
+  const name = source.name || existing?.name || `第 ${order} 项`;
+  const polarity = source.polarity || existing?.polarity || "观察";
+  const definition =
+    source.definition ||
+    existing?.definition ||
+    `观察“${name}”在“${pack.title}”中的具体表现。`;
+
+  return createIndicator(
+    code,
+    name,
+    polarity,
+    definition,
+    source.low || existing?.low || sourceIndicatorText(polarity, "low", name),
+    source.high || existing?.high || sourceIndicatorText(polarity, "high", name),
+    source.improve || existing?.improve || sourceIndicatorText(polarity, "improve", name)
+  );
+}
+
 const generatedIndicatorTopics = [
   { name: "稳定程度", polarity: "观察" },
   { name: "行动表现", polarity: "观察" },
@@ -517,6 +576,13 @@ function createGeneratedIndicator(pack, order) {
 function getPackIndicators(pack) {
   if (!pack) return [];
   if (generatedIndicatorCache.has(pack.id)) return generatedIndicatorCache.get(pack.id);
+
+  const sourceItems = window.hmSourceIndicators?.[pack.id] || [];
+  if (sourceItems.length > 0) {
+    const items = sourceItems.map((source, index) => createSourceIndicator(pack, source, index));
+    generatedIndicatorCache.set(pack.id, items);
+    return items;
+  }
 
   const targetCount = Math.max(pack.indicators.length, Number(pack.count) || 0);
   const items = pack.indicators.slice(0, targetCount);
