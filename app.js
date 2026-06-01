@@ -674,25 +674,27 @@ function renderDirectionPage() {
     </section>
 
     <section class="direction-issue-section" aria-labelledby="direction-issues-title">
+      <div class="direction-issue-shell">
       <div class="direction-section-head">
         <div>
-          <p class="choice-kicker">查阅入口</p>
-          <h2 id="direction-issues-title">${profile.issueTitle}</h2>
+          <p class="choice-kicker">本方向先看</p>
+          <h2 id="direction-issues-title">三个判断入口</h2>
         </div>
         <p>${profile.issueLead}</p>
       </div>
       <div class="direction-issue-grid">
         ${profile.issues
           .map(
-            (issue) => `
+            (issue, index) => `
               <article>
-                <span>${issue.title}</span>
+                <span>${String(index + 1).padStart(2, "0")}</span>
                 <strong>${issue.strong}</strong>
                 <p>${issue.note}</p>
               </article>
             `
           )
           .join("")}
+      </div>
       </div>
     </section>
 
